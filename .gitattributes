@@ -1,0 +1,41 @@
+# ------------------------------------------------------------------------------
+# Export ignore — files excluded from `git archive` release zips.
+# Keep in sync with .distignore (used by `wp dist-archive`).
+# ------------------------------------------------------------------------------
+
+# Git / tooling meta
+.claude/             export-ignore
+.distignore          export-ignore
+.gitattributes       export-ignore
+.gitignore           export-ignore
+.github/             export-ignore
+.nvmrc               export-ignore
+.phpcs.xml.dist      export-ignore
+
+# Build tooling
+bin/                 export-ignore
+composer.json        export-ignore
+composer.lock        export-ignore
+node_modules/        export-ignore
+package.json         export-ignore
+phpstan.neon         export-ignore
+phpunit.xml          export-ignore
+pnpm-lock.yaml       export-ignore
+pnpm-workspace.yaml  export-ignore
+webpack.config.js    export-ignore
+
+# Source (JS compiled to build/)
+assets/js/admin/     export-ignore
+
+# Tests
+tests/               export-ignore
+
+# Dev docs
+myrk-brand.md        export-ignore
+myrk-spec.md         export-ignore
+
+# Pro tier (not in free distribution)
+pro/                 export-ignore
+
+# Vendor (built separately in release pipeline)
+vendor/              export-ignore
