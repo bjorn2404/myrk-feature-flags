@@ -1,0 +1,842 @@
+# Copyright (C) 2026 Myrk
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Myrk 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/myrk\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-19T21:34:06+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: myrk\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: myrk.php
+#: src/Admin/FlagsScreen.php:38
+msgid "Myrk"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: myrk.php
+msgid "https://myrk.build"
+msgstr ""
+
+#. Description of the plugin
+#: myrk.php
+msgid "Enterprise feature flags for WordPress. Trunk-based development, progressive rollout, automatic rewind."
+msgstr ""
+
+#: src/Admin/EditScreen.php:40
+msgid "Edit Flag — Myrk"
+msgstr ""
+
+#: src/Admin/EditScreen.php:41
+msgid "Edit Flag"
+msgstr ""
+
+#: src/Admin/FlagsScreen.php:37
+msgid "Myrk — Feature Flags"
+msgstr ""
+
+#: src/Admin/FlagsScreen.php:49
+#: src/Admin/FlagsScreen.php:50
+#: assets/js/admin/flags/FlagsScreen.jsx:303
+msgid "Feature Flags"
+msgstr ""
+
+#: src/Admin/GroupsScreen.php:36
+msgid "Groups — Myrk"
+msgstr ""
+
+#: src/Admin/GroupsScreen.php:37
+#: assets/js/admin/groups/GroupsScreen.jsx:251
+msgid "Groups"
+msgstr ""
+
+#: src/Api/AbstractController.php:35
+msgid "You do not have permission to manage feature flags."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Api/AbstractController.php:74
+#, php-format
+msgid "Flag \"%s\" not found."
+msgstr ""
+
+#. translators: %s: environment name
+#: src/Api/AbstractController.php:89
+#, php-format
+msgid "Invalid environment \"%s\". Must be one of: production, staging, development, local."
+msgstr ""
+
+#: src/Api/EnvironmentsController.php:146
+msgid "No valid fields provided to update."
+msgstr ""
+
+#: src/Api/EnvsController.php:77
+msgid "\"from\" and \"to\" environments must differ."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Api/EvaluateController.php:69
+#, php-format
+msgid "Flag \"%s\" is not registered."
+msgstr ""
+
+#: src/Api/EvaluateController.php:115
+msgid "Rate limit exceeded. Maximum 60 requests per minute."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Api/FlagsController.php:266
+#, php-format
+msgid "Flag \"%s\" already exists."
+msgstr ""
+
+#: src/Api/FlagsController.php:287
+msgid "Failed to create flag."
+msgstr ""
+
+#: src/Api/FlagsController.php:409
+msgid "Pass confirm=true to permanently delete a flag and all its state."
+msgstr ""
+
+#: src/Api/FlagsController.php:421
+msgid "Failed to delete flag."
+msgstr ""
+
+#: src/Api/FlagsController.php:492
+msgid "Flag key must start with a lowercase letter and contain only lowercase letters, digits, and underscores."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Api/GroupsController.php:143
+#, php-format
+msgid "Group \"%s\" already exists."
+msgstr ""
+
+#: src/Api/GroupsController.php:160
+#: src/Cli/GroupsCommand.php:208
+#: assets/js/admin/flags/EditScreen.jsx:126
+msgid "Failed to create group."
+msgstr ""
+
+#: src/Api/GroupsController.php:261
+msgid "Failed to delete group."
+msgstr ""
+
+#. translators: %d: group ID
+#: src/Api/GroupsController.php:302
+#, php-format
+msgid "Group %d not found."
+msgstr ""
+
+#: src/Api/TargetsController.php:187
+msgid "Failed to create targeting rule."
+msgstr ""
+
+#. translators: %d: target ID
+#: src/Api/TargetsController.php:278
+#, php-format
+msgid "Targeting rule %d not found."
+msgstr ""
+
+#: src/Cli/EnvsCommand.php:86
+msgid "--from and --to are required."
+msgstr ""
+
+#: src/Cli/EnvsCommand.php:90
+msgid "--from and --to must differ."
+msgstr ""
+
+#. translators: %s: environment name
+#: src/Cli/EnvsCommand.php:96
+#: src/Cli/EnvsCommand.php:100
+#, php-format
+msgid "Invalid environment: %s"
+msgstr ""
+
+#. translators: %s: environment name
+#: src/Cli/EnvsCommand.php:120
+#, php-format
+msgid "No flag states found in %s environment."
+msgstr ""
+
+#. translators: %s: git commit SHA
+#: src/Cli/EnvsCommand.php:166
+#: src/Cli/FlagsCommand.php:260
+#: src/Cli/FlagsCommand.php:319
+#: src/Cli/FlagsCommand.php:374
+#, php-format
+msgid " [commit %s]"
+msgstr ""
+
+#. translators: 1: count of flags, 2: source environment, 3: target environment
+#: src/Cli/EnvsCommand.php:172
+#, php-format
+msgid "Would copy %1$d flag state(s) from %2$s to %3$s (dry run — no changes made)."
+msgstr ""
+
+#. translators: 1: count of flags, 2: source environment, 3: target environment
+#: src/Cli/EnvsCommand.php:182
+#, php-format
+msgid "Copied %1$d flag state(s) from %2$s to %3$s"
+msgstr ""
+
+#. translators: %s: comma-separated list of skipped flag keys
+#: src/Cli/EnvsCommand.php:192
+#, php-format
+msgid "Skipped: %s"
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:153
+#: src/Cli/FlagsCommand.php:605
+#, php-format
+msgid "Flag '%s' not found."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:182
+#, php-format
+msgid "Flag key:    %s"
+msgstr ""
+
+#. translators: %s: flag label
+#: src/Cli/FlagsCommand.php:184
+#, php-format
+msgid "Label:       %s"
+msgstr ""
+
+#. translators: %s: flag description
+#: src/Cli/FlagsCommand.php:186
+#, php-format
+msgid "Description: %s"
+msgstr ""
+
+#. translators: %s: registration status (yes or orphaned)
+#: src/Cli/FlagsCommand.php:188
+#, php-format
+msgid "Registered:  %s"
+msgstr ""
+
+#: src/Cli/FlagsCommand.php:202
+msgid "(no environment state — use `wp myrk flags init` or enable/disable commands)"
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:256
+#, php-format
+msgid "Failed to enable '%s'. Is the flag registered in code?"
+msgstr ""
+
+#. translators: 1: flag key, 2: rollout percentage, 3: environment name
+#: src/Cli/FlagsCommand.php:264
+#, php-format
+msgid "Enabled %1$s at %2$d%% in %3$s"
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:315
+#, php-format
+msgid "Failed to disable '%s'. Is the flag registered in code?"
+msgstr ""
+
+#. translators: 1: flag key, 2: environment name
+#: src/Cli/FlagsCommand.php:323
+#, php-format
+msgid "Disabled %1$s in %2$s"
+msgstr ""
+
+#. translators: 1: flag key, 2: rollout percentage, 3: environment name
+#: src/Cli/FlagsCommand.php:378
+#, php-format
+msgid "Set %1$s to %2$d%% in %3$s"
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:415
+#, php-format
+msgid "'%s' is not registered in code. Register it with Myrk::register() first."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:424
+#, php-format
+msgid "Failed to initialize flag row for '%s'."
+msgstr ""
+
+#. translators: 1: flag key, 2: environment name
+#: src/Cli/FlagsCommand.php:430
+#, php-format
+msgid "Flag '%1$s' is already initialized in %2$s. No changes made."
+msgstr ""
+
+#. translators: 1: flag key, 2: environment name
+#: src/Cli/FlagsCommand.php:446
+#, php-format
+msgid "Initialized '%1$s' in %2$s at 0%% (disabled)."
+msgstr ""
+
+#: src/Cli/FlagsCommand.php:484
+msgid "No orphaned flags found."
+msgstr ""
+
+#. translators: %d: number of orphaned flags removed
+#: src/Cli/FlagsCommand.php:502
+#, php-format
+msgid "Pruned %d orphaned flag(s)."
+msgstr ""
+
+#. translators: %d: number of orphaned flags that would be removed
+#: src/Cli/FlagsCommand.php:505
+#, php-format
+msgid "%d orphaned flag(s) would be removed (re-run without --dry-run to apply)."
+msgstr ""
+
+#. translators: %s: directory path
+#: src/Cli/FlagsCommand.php:545
+#, php-format
+msgid "Path '%s' does not exist."
+msgstr ""
+
+#. translators: 1: flag key, 2: directory path
+#: src/Cli/FlagsCommand.php:552
+#, php-format
+msgid "No references to '%1$s' found in %2$s."
+msgstr ""
+
+#. translators: 1: number of references found, 2: flag key
+#: src/Cli/FlagsCommand.php:567
+#, php-format
+msgid "Found %1$d reference(s) to \"%2$s\"."
+msgstr ""
+
+#. translators: %s: flag key
+#: src/Cli/FlagsCommand.php:613
+#, php-format
+msgid "Removed group from '%s'."
+msgstr ""
+
+#: src/Cli/FlagsCommand.php:619
+msgid "Provide a group_name or use --remove to unassign."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/FlagsCommand.php:625
+#, php-format
+msgid "Group '%s' not found. Create it first with `wp myrk groups create`."
+msgstr ""
+
+#. translators: 1: flag key, 2: group name
+#: src/Cli/FlagsCommand.php:631
+#, php-format
+msgid "Assigned '%1$s' to group '%2$s'."
+msgstr ""
+
+#: src/Cli/FlagsCommand.php:645
+msgid "flag_key is required."
+msgstr ""
+
+#: src/Cli/GroupsCommand.php:53
+msgid "No groups found."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:128
+#, php-format
+msgid "Name:         %s"
+msgstr ""
+
+#. translators: %s: group description
+#: src/Cli/GroupsCommand.php:130
+#, php-format
+msgid "Description:  %s"
+msgstr ""
+
+#. translators: %s: external reference identifier
+#: src/Cli/GroupsCommand.php:133
+#, php-format
+msgid "External ref: %s"
+msgstr ""
+
+#. translators: %s: external reference URL
+#: src/Cli/GroupsCommand.php:137
+#, php-format
+msgid "Ref URL:      %s"
+msgstr ""
+
+#: src/Cli/GroupsCommand.php:142
+msgid "(no flags in this group)"
+msgstr ""
+
+#: src/Cli/GroupsCommand.php:190
+#: src/Cli/GroupsCommand.php:333
+msgid "name is required."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:195
+#, php-format
+msgid "A group named '%s' already exists."
+msgstr ""
+
+#. translators: 1: group name, 2: new group ID
+#: src/Cli/GroupsCommand.php:212
+#, php-format
+msgid "Created group '%1$s' (ID %2$d)."
+msgstr ""
+
+#: src/Cli/GroupsCommand.php:268
+msgid "No changes specified."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:275
+#, php-format
+msgid "Updated group '%s'."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:308
+#, php-format
+msgid "Delete group '%s'? Flags in this group will be ungrouped."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:314
+#, php-format
+msgid "Failed to delete group '%s'."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:318
+#, php-format
+msgid "Deleted group '%s'."
+msgstr ""
+
+#. translators: %s: group name
+#: src/Cli/GroupsCommand.php:339
+#, php-format
+msgid "Group '%s' not found."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:27
+msgid "Stepwise (safe default)"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:28
+msgid "Immediate (instant rollback)"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:32
+msgid "IP address"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:33
+msgid "Session ID"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:34
+msgid "Device fingerprint"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:38
+msgid "Temporary — stale-eligible"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:39
+msgid "Permanent — excluded from stale detection"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:96
+msgid "Could not load flag."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:107
+msgid "Must start with a lowercase letter and contain only lowercase letters, digits, and underscores."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:110
+msgid "Label is required."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:168
+#: assets/js/admin/groups/GroupsScreen.jsx:123
+msgid "Save failed."
+msgstr ""
+
+#. translators: %s: flag key
+#: assets/js/admin/flags/EditScreen.jsx:183
+#, js-format
+msgid "Edit Flag: %s"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:184
+#: assets/js/admin/flags/FlagsScreen.jsx:306
+msgid "Add New Flag"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:187
+msgid "— No group —"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:210
+msgid "← All flags"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:221
+msgid "Flag Definition"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:227
+#: assets/js/admin/flags/FlagsScreen.jsx:82
+msgid "Flag Key"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:233
+msgid "Flag key cannot be changed after creation."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:234
+msgid "Lowercase letters, digits, and underscores. E.g. new_checkout"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:246
+#: assets/js/admin/flags/FlagsScreen.jsx:91
+msgid "Label"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:249
+msgid "A short, human-readable name shown in this admin screen."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:259
+#: assets/js/admin/groups/GroupsScreen.jsx:160
+#: assets/js/admin/groups/GroupsScreen.jsx:302
+msgid "Description"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:262
+msgid "Helps your team remember what this flag controls and when it's safe to remove."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:273
+msgid "Organisation"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:279
+#: assets/js/admin/flags/FlagsScreen.jsx:97
+msgid "Group"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:283
+msgid "Organise related flags by sprint, release, or initiative."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:292
+msgid "+ New group"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:297
+msgid "Group name"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:300
+#: assets/js/admin/groups/GroupsScreen.jsx:291
+msgid "e.g. Sprint 42"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:309
+msgid "Create"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:316
+#: assets/js/admin/flags/EditScreen.jsx:427
+#: assets/js/admin/groups/GroupsScreen.jsx:347
+msgid "Cancel"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:323
+#: assets/js/admin/flags/FlagsScreen.jsx:106
+msgid "Tags"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:326
+msgid "payments, checkout, v2-redesign"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:327
+msgid "Comma-separated. Used for filtering in the flags list."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:337
+msgid "Behaviour"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:342
+msgid "Lifecycle"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:346
+msgid "Permanent flags are excluded from stale detection."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:351
+msgid "Default state"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:352
+msgid "Returned when the flag has no environment state or the circuit breaker is tripped."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:359
+msgid "Rewind strategy"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:363
+msgid "How the circuit breaker rolls the flag back."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:368
+msgid "Anonymous identifier strategy"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:372
+msgid "Used for percentage rollout when no logged-in user is available."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:384
+#: assets/js/admin/flags/FlagsScreen.jsx:152
+msgid "Rollout"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:388
+#: assets/js/admin/flags/FlagsScreen.jsx:138
+#: assets/js/admin/flags/FlagsScreen.jsx:145
+msgid "Enabled"
+msgstr ""
+
+#. translators: %s: environment name
+#: assets/js/admin/flags/EditScreen.jsx:391
+#, js-format
+msgid "Status in the %s environment."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:399
+msgid "Rollout percentage"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:405
+msgid "Percentage of users who see this flag as enabled."
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:422
+msgid "Update Flag"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:422
+msgid "Create Flag"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:460
+msgid "Use in code"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:42
+msgid "Failed to load flags."
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:129
+msgid "Status"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:134
+msgid "No state"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:138
+#: assets/js/admin/flags/FlagsScreen.jsx:146
+msgid "Disabled"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:170
+msgid "Targets"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:179
+msgid "Last Changed"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:190
+#: assets/js/admin/flags/FlagsScreen.jsx:194
+msgid "Stale"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:199
+msgid "In Code"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:204
+msgid "Orphaned"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:215
+msgid "Enable (100%)"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:226
+msgid "Failed to enable flag."
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:232
+msgid "Disable"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:243
+msgid "Failed to disable flag."
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:249
+#: assets/js/admin/groups/GroupsScreen.jsx:215
+msgid "Edit"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:274
+msgid "All groups"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:354
+msgid "No feature flags yet"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:357
+msgid "Feature flags let you ship code that's switched off by default, then enable it per environment or roll it out to a percentage of users — no redeploy needed."
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:360
+msgid "Register a flag in your theme or plugin, then manage it here:"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:373
+msgid "Add your first flag"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:383
+msgid "Environment"
+msgstr ""
+
+#: assets/js/admin/flags/FlagsScreen.jsx:400
+msgid "just now"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:60
+msgid "Failed to load groups."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:94
+msgid "Group name is required."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:97
+msgid "Must be a valid URL."
+msgstr ""
+
+#. translators: %s: group name
+#: assets/js/admin/groups/GroupsScreen.jsx:133
+#, js-format
+msgid "Delete group \"%s\"? Flags in this group will be ungrouped."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:140
+#, js-format
+msgid "\"%s\" deleted."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:143
+msgid "Delete failed."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:154
+#: assets/js/admin/groups/GroupsScreen.jsx:288
+msgid "Name"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:169
+msgid "Flags"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:187
+msgid "External Ref"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:221
+msgid "Delete"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:259
+msgid "Add New Group"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:280
+msgid "New Group"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:281
+#, js-format
+msgid "Edit: %s"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:292
+msgid "Used to group flags in the flags list and in code via the group: argument."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:305
+msgid "What does this group represent?"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:311
+msgid "External reference"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:314
+msgid "e.g. JIRA-123 or #sprint-42"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:315
+msgid "Short identifier — shown as a link in the table if a URL is provided."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:321
+msgid "External reference URL"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:342
+msgid "Create Group"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:342
+msgid "Update Group"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:387
+msgid "No groups yet"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:389
+msgid "Groups let you organise flags by sprint, release, or initiative — and link them to your project management tool."
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:392
+msgid "You can also create a group in code:"
+msgstr ""
+
+#: assets/js/admin/groups/GroupsScreen.jsx:400
+msgid "Add your first group"
+msgstr ""

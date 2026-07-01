@@ -1,0 +1,397 @@
+/* Myrk admin — feature flag control panel */
+
+:root {
+	/* Brand */
+	--myrk-teal:         #0d9488; /* primary teal — light surfaces */
+	--myrk-teal-bg:      #f0fdfa; /* teal wash for enabled states */
+	--myrk-teal-border:  #99f6e4; /* teal border for enabled states */
+	--myrk-teal-glow:    #2dd4bf; /* bright teal — dark surfaces only */
+
+	/* Dark surface — same value WP uses for its sidebar; reads native */
+	--myrk-dark:         #1d2327;
+	--myrk-dark-raise:   #2c3338; /* one step lighter, for active states on dark */
+
+	/* Code / monospace */
+	--myrk-code-font:   ui-monospace, 'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
+
+	/* Text */
+	--myrk-text-muted:     #8c8f94;
+	--myrk-text-primary:   #1d2327;
+	--myrk-text-secondary: #50575e;
+
+	/* Borders */
+	--myrk-border:      rgba(0, 0, 0, 0.12);
+	--myrk-border-soft: rgba(0, 0, 0, 0.06);
+
+	/* Rollout — dark track so the colored fill pops like a pipeline gauge */
+	--myrk-rollout-full:    var(--myrk-teal-glow); /* bright teal on dark track */
+	--myrk-rollout-partial: #2563eb;
+	--myrk-rollout-track:   var(--myrk-dark);
+}
+
+/* -------------------------------------------------------------------------
+   Page background — dot-grid texture on Myrk pages only.
+   WordPress adds body.toplevel_page_myrk / body.admin_page_myrk-edit-flag
+   automatically; no JS needed. The gray base color is unchanged — this just
+   adds a barely-there 1px dot every 24px for a premium developer-tool feel.
+------------------------------------------------------------------------- */
+
+body.toplevel_page_myrk,
+body.admin_page_myrk-edit-flag {
+	background-image: radial-gradient( circle, rgba(0, 0, 0, 0.13) 1px, transparent 1px );
+	background-size:  20px 20px;
+}
+
+/* Data table and edit cards float as white surfaces on the textured background —
+   the same contrast pattern used across LaunchDarkly, Flagsmith, Statsig etc. */
+.myrk-table-card {
+	background:    #fff;
+	border:        1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 6px;
+	box-shadow:    0 1px 4px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.04);
+	margin-top:    8px;
+	overflow:      hidden;
+}
+
+/* -------------------------------------------------------------------------
+   Brand mark — stacked, floated top-right of the page header.
+   Floats out of vertical flow so the h1 / action row sits at the natural top.
+   Note: ᛗ renders via system font here; convert to SVG path for production.
+------------------------------------------------------------------------- */
+
+/* .wrap margin-top (10px) is outside its box — our nested wrappers sit at
+   the content edge with no top offset. This restores the same visual spacing
+   the standard WP heading (direct child of .wrap) gets "for free". */
+.myrk-screen {
+	padding-top: 9px;
+	position:    relative;
+}
+
+.myrk-brand-mark {
+	align-items:    center;
+	display:        flex;
+	flex-direction: column;
+	gap:            4px;
+	position:       absolute;
+	right:          0;
+	top:            0;
+}
+
+/* 32px fits within the heading row height (~52px) without overflowing into content below. */
+.myrk-brand-mark__rune {
+	color:       var(--myrk-teal);
+	font-size:   32px;
+	line-height: 1;
+}
+
+.myrk-brand-mark__wordmark {
+	color:          var(--myrk-text-primary);
+	font-family:    var(--myrk-code-font);
+	font-size:      13px;
+	font-weight:    500;
+	letter-spacing: 0.16em;
+	text-transform: lowercase;
+}
+
+/* -------------------------------------------------------------------------
+   Environment indicator (read-only — shows current WP environment)
+------------------------------------------------------------------------- */
+
+/* Group filter — lives in the DataViews header slot (right side of toolbar row) */
+.myrk-group-filter {
+	min-width: 150px;
+}
+
+.myrk-group-filter .components-select-control__input {
+	font-size:   12px;
+	height:      28px;
+	padding-top: 2px;
+}
+
+.myrk-env-indicator {
+	align-items: center;
+	display:     flex;
+	gap:         8px;
+	margin:      12px 0 4px;
+}
+
+.myrk-env-indicator__label {
+	color:          var(--myrk-text-muted);
+	font-size:      11px;
+	font-weight:    600;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.myrk-env-indicator__value {
+	color:          var(--myrk-teal);
+	font-family:    var(--myrk-code-font);
+	font-size:      11px;
+	font-weight:    600;
+	text-transform: capitalize;
+}
+
+/* -------------------------------------------------------------------------
+   Flag key (identifier — rendered as a code token)
+------------------------------------------------------------------------- */
+
+.myrk-flag-key {
+	background:     rgba(0, 0, 0, 0.05);
+	border:         1px solid rgba(0, 0, 0, 0.10);
+	border-radius:  3px;
+	color:          var(--myrk-text-primary);
+	font-family:    var(--myrk-code-font);
+	font-size:      12px;
+	font-weight:    500;
+	letter-spacing: -0.01em;
+	padding:        2px 6px;
+	white-space:    nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   Status badges
+------------------------------------------------------------------------- */
+
+.myrk-badge {
+	border-radius:  10px;
+	display:        inline-block;
+	font-size:      11px;
+	font-weight:    600;
+	letter-spacing: 0.04em;
+	line-height:    1.7;
+	padding:        1px 7px;
+	text-transform: uppercase;
+}
+
+.myrk-badge--enabled  { background: var(--myrk-teal-bg); color: var(--myrk-teal); }
+.myrk-badge--disabled { background: #f1f5f9; color: #475569; }
+.myrk-badge--stale    { background: #fef9c3; color: #713f12; }
+.myrk-badge--orphaned { background: #fee2e2; color: #7f1d1d; }
+.myrk-badge--unknown  { background: #f1f5f9; color: var(--myrk-text-muted); }
+.myrk-badge--group    { background: #ede9fe; color: #5b21b6; font-weight: 500; letter-spacing: 0; text-transform: none; }
+
+/* -------------------------------------------------------------------------
+   Tag pills
+------------------------------------------------------------------------- */
+
+.myrk-tags {
+	display:   flex;
+	flex-wrap: wrap;
+	gap:       4px;
+}
+
+.myrk-tag {
+	background:    #f0f9ff;
+	border:        1px solid #bae6fd;
+	border-radius: 4px;
+	color:         #0369a1;
+	display:       inline-block;
+	font-size:     11px;
+	line-height:   1.6;
+	padding:       1px 6px;
+}
+
+/* Inline group create row in EditScreen */
+.myrk-inline-create {
+	align-items: flex-end;
+	display:     flex;
+	gap:         8px;
+	margin-top:  8px;
+}
+
+/* -------------------------------------------------------------------------
+   Rollout bar (track + fill; fill color signals deployment state)
+------------------------------------------------------------------------- */
+
+.myrk-rollout {
+	align-items: center;
+	display:     flex;
+	gap:         8px;
+	min-width:   100px;
+}
+
+.myrk-rollout__track {
+	background:    var(--myrk-rollout-track);
+	border-radius: 3px;
+	flex:          1;
+	height:        6px;
+	max-width:     64px;
+	overflow:      hidden;
+	position:      relative;
+}
+
+.myrk-rollout__bar,
+.myrk-rollout__bar--full {
+	border-radius: 3px;
+	height:        100%;
+	left:          0;
+	position:      absolute;
+	top:           0;
+	transition:    width 0.15s ease, background 0.2s ease;
+}
+
+/* Blue = partial rollout in progress */
+.myrk-rollout__bar { background: var(--myrk-rollout-partial); }
+
+/* Green = fully deployed */
+.myrk-rollout__bar--full { background: var(--myrk-rollout-full); }
+
+.myrk-rollout__label {
+	color:                var(--myrk-text-secondary);
+	font-size:            12px;
+	font-variant-numeric: tabular-nums;
+	min-width:            32px;
+	white-space:          nowrap;
+}
+
+/* -------------------------------------------------------------------------
+   Cursor fix — popovers and dropdowns render outside .myrk-screen (portaled
+   to <body>) so these rules must live at the global level, not scoped to
+   .myrk-screen. Covers: actions menu, Fields, Filters, Sort, View toggles.
+------------------------------------------------------------------------- */
+
+.components-dropdown-menu__menu .components-button:not( :disabled ),
+.components-dropdown-menu__menu button:not( :disabled ),
+.components-popover .components-button:not( :disabled ),
+.components-popover button:not( :disabled ),
+.dataviews-item-actions .components-button:not( :disabled ),
+.dataviews-all-actions-button:not( :disabled ),
+[role="menuitem"]:not( [aria-disabled="true"] ) {
+	cursor: pointer !important;
+}
+
+/* -------------------------------------------------------------------------
+   Muted text
+------------------------------------------------------------------------- */
+
+.myrk-muted { color: var(--myrk-text-muted); }
+
+/* -------------------------------------------------------------------------
+   Form field errors
+------------------------------------------------------------------------- */
+
+.myrk-field--error input,
+.myrk-field--error textarea {
+	border-color: #ef4444 !important;
+}
+
+.myrk-field__error {
+	color:     #dc2626;
+	font-size: 12px;
+	margin:    4px 0 0;
+}
+
+/* -------------------------------------------------------------------------
+   Edit screen
+------------------------------------------------------------------------- */
+
+/* Push form below the absolutely-positioned brand mark (32px rune ≈ 49px tall). */
+.myrk-edit-screen form {
+	margin-top: 16px;
+}
+
+/* Two-column layout: main content left, sidebar right (mirrors WP post edit). */
+.myrk-edit-screen__layout {
+	align-items:           start;
+	display:               grid;
+	gap:                   24px;
+	grid-template-columns: 1fr 280px;
+}
+
+.myrk-edit-screen__main {
+	min-width: 0; /* prevent grid blowout on narrow viewports */
+}
+
+/* Sidebar sticks so it stays visible while scrolling long flag definitions. */
+.myrk-edit-screen__sidebar {
+	position: sticky;
+	top:      32px;
+}
+
+/* Gap between stacked cards via adjacent sibling — no inline styles needed */
+.myrk-edit-screen .components-card + .components-card {
+	margin-top: 16px;
+}
+
+.myrk-edit-screen__actions {
+	margin-top: 16px;
+}
+
+/* Gap-based stacking for Flag Definition fields — immune to component margin overrides. */
+.myrk-field-stack {
+	display:        flex;
+	flex-direction: column;
+	gap:            24px;
+}
+
+.myrk-edit-screen .components-select-control,
+.myrk-edit-screen .components-toggle-control {
+	margin-bottom: 16px;
+}
+
+/* -------------------------------------------------------------------------
+   Code snippet — used in the empty state and the edit screen sidebar card
+------------------------------------------------------------------------- */
+
+.myrk-code-label {
+	color:          var(--myrk-text-muted);
+	font-size:      10px;
+	font-weight:    700;
+	letter-spacing: 0.08em;
+	margin:         0 0 4px;
+	text-transform: uppercase;
+}
+
+.myrk-code-snippet,
+.myrk-empty-state__snippet {
+	background:    rgba(0, 0, 0, 0.04);
+	border:        1px solid var(--myrk-border);
+	border-radius: 4px;
+	color:         var(--myrk-text-primary);
+	font-family:   var(--myrk-code-font);
+	font-size:     12px;
+	line-height:   1.7;
+	margin:        0;
+	overflow-x:    auto;
+	padding:       10px 12px;
+	white-space:   pre;
+}
+
+/* -------------------------------------------------------------------------
+   Empty state — shown when no flags exist yet
+------------------------------------------------------------------------- */
+
+.myrk-empty-state {
+	align-items:    center;
+	display:        flex;
+	flex-direction: column;
+	gap:            16px;
+	padding:        48px 24px;
+	text-align:     center;
+}
+
+.myrk-empty-state__rune {
+	color:       var(--myrk-teal);
+	font-size:   48px;
+	line-height: 1;
+}
+
+.myrk-empty-state__heading {
+	color:       var(--myrk-text-primary);
+	font-size:   20px;
+	font-weight: 600;
+	margin:      0;
+}
+
+.myrk-empty-state__description {
+	color:       var(--myrk-text-secondary);
+	line-height: 1.6;
+	margin:      0;
+	max-width:   460px;
+}
+
+.myrk-empty-state__snippet {
+	max-width:  460px;
+	text-align: left;
+	width:      100%;
+}

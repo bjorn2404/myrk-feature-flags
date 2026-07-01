@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+vendor/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Claude Code
+.claude/
+
+# Internal docs
+myrk-brand.md
+myrk-spec.md
