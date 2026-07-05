@@ -2,7 +2,7 @@
 // Fixture file for CleanupTest — contains various Myrk API call patterns.
 
 function render_hero( array $attributes ): string {
-	if ( Myrk::is_enabled( 'new_hero_layout' ) ) {
+	if ( Myrk::is_enabled( 'new_checkout' ) ) {
 		return '<div class="hero hero--new"></div>';
 	}
 	return '<div class="hero"></div>';

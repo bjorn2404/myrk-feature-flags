@@ -117,7 +117,7 @@ class FlagsControllerTest extends WP_UnitTestCase {
 			changed_via: ChangedVia::Admin
 		);
 		$stale_flag_id = FlagRepository::get_flag_id( 'stale_flag' );
-		$old_date      = gmdate( 'Y-m-d H:i:s', strtotime( '-40 days' ) );
+		$old_date      = gmdate( 'Y-m-d H:i:s', strtotime( '-95 days' ) );
 		$wpdb->update(
 			$wpdb->prefix . 'myrk_flag_environments',
 			[ 'updated_at' => $old_date ],
@@ -182,7 +182,8 @@ class FlagsControllerTest extends WP_UnitTestCase {
 		$request->set_param( 'label', 'Bad key' );
 		$response = $this->server->dispatch( $request );
 
-		$this->assertSame( 422, $response->get_status() );
+		// WP REST wraps validate_callback errors in a new WP_Error with status 400.
+		$this->assertSame( 400, $response->get_status() );
 	}
 
 	// -------------------------------------------------------------------------

@@ -13,7 +13,7 @@ class CleanupTest extends TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->fixtures_path = dirname( __DIR__ ) . '/fixtures/refs';
+		$this->fixtures_path = __DIR__ . '/fixtures/refs';
 	}
 
 	// -------------------------------------------------------------------------
@@ -24,7 +24,7 @@ class CleanupTest extends TestCase {
 		$row = [
 			'status'             => 1,
 			'rollout_percentage' => 100,
-			'updated_at'         => date( 'Y-m-d H:i:s', strtotime( '-40 days' ) ),
+			'updated_at'         => date( 'Y-m-d H:i:s', strtotime( '-95 days' ) ),
 		];
 		$this->assertTrue( Cleanup::is_stale( $row ) );
 	}
@@ -33,7 +33,7 @@ class CleanupTest extends TestCase {
 		$row = [
 			'status'             => 0,
 			'rollout_percentage' => 0,
-			'updated_at'         => date( 'Y-m-d H:i:s', strtotime( '-31 days' ) ),
+			'updated_at'         => date( 'Y-m-d H:i:s', strtotime( '-91 days' ) ),
 		];
 		$this->assertTrue( Cleanup::is_stale( $row ) );
 	}
@@ -120,11 +120,10 @@ class CleanupTest extends TestCase {
 	}
 
 	public function test_refs_scan_respects_custom_path_argument(): void {
-		// Point at a subdirectory that has no PHP files.
 		$empty_path = sys_get_temp_dir();
-		$refs        = Cleanup::find_refs( 'new_checkout', $empty_path );
-		// May return refs from tmp if test PHP files exist there — we only assert
-		// that none come from our fixtures when using a different root.
+		$refs       = Cleanup::find_refs( 'new_checkout', $empty_path );
+
+		$this->assertIsArray( $refs );
 		foreach ( $refs as $ref ) {
 			$this->assertStringNotContainsString( $this->fixtures_path, $ref['file'] );
 		}

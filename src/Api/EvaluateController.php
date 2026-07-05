@@ -82,7 +82,7 @@ class EvaluateController extends AbstractController {
 
 		$user    = null;
 		$current = wp_get_current_user();
-		if ( $current && $current->ID > 0 ) {
+		if ( $current->ID > 0 ) {
 			$user = $current;
 		}
 
@@ -112,7 +112,7 @@ class EvaluateController extends AbstractController {
 	 * Note: transient-backed rate limiting has race conditions under high concurrency.
 	 * For production high-traffic sites, replace with a Redis-backed counter.
 	 */
-	private function check_rate_limit(): true|WP_Error {
+	private function check_rate_limit(): bool|WP_Error {
 		$ip  = $this->client_ip();
 		$key = 'myrk_rl_' . md5( $ip );
 

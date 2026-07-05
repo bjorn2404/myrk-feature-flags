@@ -79,7 +79,9 @@ class Cleanup {
 
 		$refs     = [];
 		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator( $search_path, FilesystemIterator::SKIP_DOTS )
+			new RecursiveDirectoryIterator( $search_path, FilesystemIterator::SKIP_DOTS ),
+			RecursiveIteratorIterator::LEAVES_ONLY,
+			RecursiveIteratorIterator::CATCH_GET_CHILD
 		);
 
 		/**

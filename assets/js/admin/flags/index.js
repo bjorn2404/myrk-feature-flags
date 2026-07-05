@@ -9,6 +9,6 @@ import { EditScreen } from './EditScreen';
 const rootEl = document.getElementById( 'myrk-flags-root' );
 if ( rootEl ) {
 	const editMode = window.myrkAdminFlags?.editMode ?? false;
-	const App      = editMode ? EditScreen : FlagsScreen;
+	const App = editMode ? EditScreen : FlagsScreen;
 	createRoot( rootEl ).render( <App /> );
 }

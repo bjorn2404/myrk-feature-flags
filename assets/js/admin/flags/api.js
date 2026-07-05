@@ -25,18 +25,20 @@ const REST_BASE = ( restUrl ?? '' ).replace( /\/$/, '' );
 
 /**
  * @param {{ env?: string, status?: string, per_page?: number, page?: number }} params
- * @returns {Promise<Array>}
+ * @return {Promise<Array>} Array of flag objects.
  */
 export async function fetchFlags( params = {} ) {
 	const query = new URLSearchParams();
-	Object.entries( params ).forEach( ( [ k, v ] ) => v !== undefined && query.set( k, v ) );
+	Object.entries( params ).forEach(
+		( [ k, v ] ) => v !== undefined && query.set( k, v )
+	);
 	const qs = query.toString();
 	return apiFetch( { url: REST_BASE + '/flags' + ( qs ? '?' + qs : '' ) } );
 }
 
 /**
  * @param {string} flagKey
- * @returns {Promise<object>}
+ * @return {Promise<object>} The flag data.
  */
 export async function fetchFlag( flagKey ) {
 	return apiFetch( { url: `${ REST_BASE }/flags/${ flagKey }` } );
@@ -44,36 +46,36 @@ export async function fetchFlag( flagKey ) {
 
 /**
  * @param {{ flag_key: string, label: string, description?: string, default_state?: boolean, rewind_strategy?: string }} data
- * @returns {Promise<object>}
+ * @return {Promise<object>} The created flag.
  */
 export async function createFlag( data ) {
 	return apiFetch( {
-		url:    REST_BASE + '/flags',
+		url: REST_BASE + '/flags',
 		method: 'POST',
 		data,
 	} );
 }
 
 /**
- * @param {string} flagKey
+ * @param {string}                                                                                      flagKey
  * @param {{ label?: string, description?: string, rewind_strategy?: string, default_state?: boolean }} changes
- * @returns {Promise<object>}
+ * @return {Promise<object>} The updated flag.
  */
 export async function updateFlag( flagKey, changes ) {
 	return apiFetch( {
-		url:    `${ REST_BASE }/flags/${ flagKey }`,
+		url: `${ REST_BASE }/flags/${ flagKey }`,
 		method: 'PATCH',
-		data:   changes,
+		data: changes,
 	} );
 }
 
 /**
  * @param {string} flagKey
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 export async function deleteFlag( flagKey ) {
 	return apiFetch( {
-		url:    `${ REST_BASE }/flags/${ flagKey }?confirm=true`,
+		url: `${ REST_BASE }/flags/${ flagKey }?confirm=true`,
 		method: 'DELETE',
 	} );
 }
@@ -83,16 +85,16 @@ export async function deleteFlag( flagKey ) {
 // -------------------------------------------------------------------------
 
 /**
- * @param {string} flagKey
- * @param {string} env
+ * @param {string}                                                                                                 flagKey
+ * @param {string}                                                                                                 env
  * @param {{ status?: string, percentage?: number, anonymous_strategy?: string, note?: string, git_sha?: string }} changes
- * @returns {Promise<object>}
+ * @return {Promise<object>} The updated environment state.
  */
 export async function updateEnvState( flagKey, env, changes ) {
 	return apiFetch( {
-		url:    `${ REST_BASE }/flags/${ flagKey }/environments/${ env }`,
+		url: `${ REST_BASE }/flags/${ flagKey }/environments/${ env }`,
 		method: 'PATCH',
-		data:   changes,
+		data: changes,
 	} );
 }
 
@@ -105,7 +107,10 @@ export async function enableFlag( flagKey, env, percentage = 100 ) {
 }
 
 export async function disableFlag( flagKey, env ) {
-	return updateEnvState( flagKey, env, { status: 'disabled', percentage: 0 } );
+	return updateEnvState( flagKey, env, {
+		status: 'disabled',
+		percentage: 0,
+	} );
 }
 
 export async function setPercentage( flagKey, env, percentage ) {
@@ -116,32 +121,39 @@ export async function setPercentage( flagKey, env, percentage ) {
 // Groups
 // -------------------------------------------------------------------------
 
-/** @returns {Promise<Array>} */
+/** @return {Promise<Array>} Array of group objects. */
 export async function fetchGroups() {
 	return apiFetch( { url: REST_BASE + '/groups' } );
 }
 
 /**
  * @param {{ name: string, description?: string, external_ref?: string, external_ref_url?: string }} data
- * @returns {Promise<object>}
+ * @return {Promise<object>} The created group.
  */
 export async function createGroup( data ) {
 	return apiFetch( { url: REST_BASE + '/groups', method: 'POST', data } );
 }
 
 /**
- * @param {number} id
+ * @param {number}                                                                                    id
  * @param {{ name?: string, description?: string, external_ref?: string, external_ref_url?: string }} changes
- * @returns {Promise<object>}
+ * @return {Promise<object>} The updated group.
  */
 export async function updateGroup( id, changes ) {
-	return apiFetch( { url: `${ REST_BASE }/groups/${ id }`, method: 'PATCH', data: changes } );
+	return apiFetch( {
+		url: `${ REST_BASE }/groups/${ id }`,
+		method: 'PATCH',
+		data: changes,
+	} );
 }
 
 /**
  * @param {number} id
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 export async function deleteGroup( id ) {
-	return apiFetch( { url: `${ REST_BASE }/groups/${ id }`, method: 'DELETE' } );
+	return apiFetch( {
+		url: `${ REST_BASE }/groups/${ id }`,
+		method: 'DELETE',
+	} );
 }
