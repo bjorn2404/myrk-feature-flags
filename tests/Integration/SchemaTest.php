@@ -36,6 +36,8 @@ class SchemaTest extends WP_UnitTestCase {
 
 	public function tear_down(): void {
 		delete_option( 'myrk_db_version' );
+		// Recreate tables so subsequent integration tests don't find a missing schema.
+		Schema::install();
 		parent::tear_down();
 	}
 

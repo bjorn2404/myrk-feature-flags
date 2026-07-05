@@ -20,8 +20,10 @@ class CircuitBreakerTest extends TestCase {
 		$called = false;
 
 		// Use a test double that bypasses the DB check.
-		$result = $this->invoke_attempt_with_no_trip(
-			fn() => $called = true,
+		$this->invoke_attempt_with_no_trip(
+			function () use ( &$called ): void {
+				$called = true;
+			},
 			fn() => null
 		);
 

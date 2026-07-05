@@ -25,7 +25,7 @@ Register flags in your plugin or theme — version controlled, peer reviewable. 
 * **Percentage rollout** — deterministic IP-based hashing, no cookies
 * **Targeting rules** — role, capability, user ID, email domain
 * **Circuit breaker** — `Myrk::attempt()` wraps risky code with automatic fallback
-* **Stale flag detection** — visual badge for flags inactive 30+ days
+* **Stale flag detection** — visual badge for flags inactive 90+ days
 * **REST API** — full CRUD, powers admin UI and pipeline automation
 * **WP-CLI** — complete flag management from the command line
 * **No external dependencies** — no Redis, no Node, no third-party service

@@ -6,6 +6,7 @@
  *
  * Usage:
  *   if ( myrkIsEnabled( 'my_flag' ) ) { ... }
+ * @param {Object} flags Flag map pre-populated by PHP via FrontendBridge.
  */
 ( function ( flags ) {
 	window.myrkFlags = flags;
@@ -15,7 +16,7 @@
 	 *
 	 * @param {string}  key      Flag key registered with Myrk::register().
 	 * @param {boolean} fallback Returned when the key is not in myrkFlags.
-	 * @returns {boolean}
+	 * @return {boolean} Whether the flag is enabled for the current user.
 	 */
 	window.myrkIsEnabled = function ( key, fallback ) {
 		if ( Object.prototype.hasOwnProperty.call( window.myrkFlags, key ) ) {

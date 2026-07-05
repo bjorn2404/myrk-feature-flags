@@ -18,9 +18,20 @@ import {
 	CardHeader,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { fetchFlag, createFlag, updateFlag, updateEnvState, fetchGroups, createGroup } from './api';
+import {
+	fetchFlag,
+	createFlag,
+	updateFlag,
+	updateEnvState,
+	fetchGroups,
+	createGroup,
+} from './api';
 
-const { flagKey: initialFlagKey, listUrl, currentEnv } = window.myrkAdminFlags ?? {};
+const {
+	flagKey: initialFlagKey,
+	listUrl,
+	currentEnv,
+} = window.myrkAdminFlags ?? {};
 const env = currentEnv ?? 'production';
 
 const REWIND_STRATEGIES = [
@@ -36,64 +47,75 @@ const ANON_STRATEGIES = [
 
 const LIFECYCLE_OPTIONS = [
 	{ label: __( 'Temporary — stale-eligible', 'myrk' ), value: 'temporary' },
-	{ label: __( 'Permanent — excluded from stale detection', 'myrk' ), value: 'permanent' },
+	{
+		label: __( 'Permanent — excluded from stale detection', 'myrk' ),
+		value: 'permanent',
+	},
 ];
 
 const defaultForm = {
-	flag_key:           '',
-	label:              '',
-	description:        '',
-	default_state:      false,
-	rewind_strategy:    'stepwise',
+	flag_key: '',
+	label: '',
+	description: '',
+	default_state: false,
+	rewind_strategy: 'stepwise',
 	anonymous_strategy: 'ip',
-	lifecycle:          'temporary',
-	group_id:           null,
-	tags:               '',
-	env_enabled:        false,
-	env_percentage:     0,
+	lifecycle: 'temporary',
+	group_id: null,
+	tags: '',
+	env_enabled: false,
+	env_percentage: 0,
 };
 
 export function EditScreen() {
-	const flagKey   = initialFlagKey ?? '';
+	const flagKey = initialFlagKey ?? '';
 	const isEditing = Boolean( flagKey );
 
-	const [ form, setForm ]                 = useState( defaultForm );
-	const [ loading, setLoading ]           = useState( isEditing );
-	const [ saving, setSaving ]             = useState( false );
-	const [ notice, setNotice ]             = useState( null );
-	const [ errors, setErrors ]             = useState( {} );
-	const [ groups, setGroups ]             = useState( [] );
+	const [ form, setForm ] = useState( defaultForm );
+	const [ loading, setLoading ] = useState( isEditing );
+	const [ saving, setSaving ] = useState( false );
+	const [ notice, setNotice ] = useState( null );
+	const [ errors, setErrors ] = useState( {} );
+	const [ groups, setGroups ] = useState( [] );
 	const [ showNewGroup, setShowNewGroup ] = useState( false );
 	const [ newGroupName, setNewGroupName ] = useState( '' );
 	const [ creatingGroup, setCreatingGroup ] = useState( false );
 
 	useEffect( () => {
-		fetchGroups().then( setGroups ).catch( () => {} );
+		fetchGroups()
+			.then( setGroups )
+			.catch( () => {} );
 	}, [] );
 
 	useEffect( () => {
-		if ( ! isEditing ) return;
+		if ( ! isEditing ) {
+			return;
+		}
 
 		fetchFlag( flagKey )
 			.then( ( data ) => {
 				const envState = data.environments?.[ env ];
 				setForm( {
-					flag_key:           data.flag_key,
-					label:              data.label,
-					description:        data.description ?? '',
-					default_state:      data.default ?? false,
-					rewind_strategy:    data.rewind_strategy ?? 'stepwise',
+					flag_key: data.flag_key,
+					label: data.label,
+					description: data.description ?? '',
+					default_state: data.default ?? false,
+					rewind_strategy: data.rewind_strategy ?? 'stepwise',
 					anonymous_strategy: 'ip',
-					lifecycle:          data.lifecycle ?? 'temporary',
-					group_id:           data.group_id ? Number( data.group_id ) : null,
-					tags:               data.tags ?? '',
-					env_enabled:        envState?.status === 'enabled',
-					env_percentage:     envState?.percentage ?? 0,
+					lifecycle: data.lifecycle ?? 'temporary',
+					group_id: data.group_id ? Number( data.group_id ) : null,
+					tags: data.tags ?? '',
+					env_enabled: envState?.status === 'enabled',
+					env_percentage: envState?.percentage ?? 0,
 				} );
 				setLoading( false );
 			} )
 			.catch( ( err ) => {
-				setNotice( { type: 'error', message: err?.message ?? __( 'Could not load flag.', 'myrk' ) } );
+				setNotice( {
+					type: 'error',
+					message:
+						err?.message ?? __( 'Could not load flag.', 'myrk' ),
+				} );
 				setLoading( false );
 			} );
 	}, [ flagKey, isEditing ] );
@@ -104,7 +126,10 @@ export function EditScreen() {
 	const validate = () => {
 		const errs = {};
 		if ( ! form.flag_key.match( /^[a-z][a-z0-9_]*$/ ) ) {
-			errs.flag_key = __( 'Must start with a lowercase letter and contain only lowercase letters, digits, and underscores.', 'myrk' );
+			errs.flag_key = __(
+				'Must start with a lowercase letter and contain only lowercase letters, digits, and underscores.',
+				'myrk'
+			);
 		}
 		if ( ! form.label.trim() ) {
 			errs.label = __( 'Label is required.', 'myrk' );
@@ -114,7 +139,9 @@ export function EditScreen() {
 	};
 
 	const handleCreateGroup = async () => {
-		if ( ! newGroupName.trim() ) return;
+		if ( ! newGroupName.trim() ) {
+			return;
+		}
 		setCreatingGroup( true );
 		try {
 			const created = await createGroup( { name: newGroupName.trim() } );
@@ -123,7 +150,11 @@ export function EditScreen() {
 			setNewGroupName( '' );
 			setShowNewGroup( false );
 		} catch ( err ) {
-			setNotice( { type: 'error', message: err?.message ?? __( 'Failed to create group.', 'myrk' ) } );
+			setNotice( {
+				type: 'error',
+				message:
+					err?.message ?? __( 'Failed to create group.', 'myrk' ),
+			} );
 		} finally {
 			setCreatingGroup( false );
 		}
@@ -131,7 +162,9 @@ export function EditScreen() {
 
 	const handleSubmit = async ( e ) => {
 		e.preventDefault();
-		if ( ! validate() ) return;
+		if ( ! validate() ) {
+			return;
+		}
 
 		setSaving( true );
 
@@ -139,13 +172,13 @@ export function EditScreen() {
 			let resolvedFlagKey = flagKey;
 
 			const definitionFields = {
-				label:           form.label,
-				description:     form.description,
-				default_state:   form.default_state,
+				label: form.label,
+				description: form.description,
+				default_state: form.default_state,
 				rewind_strategy: form.rewind_strategy,
-				lifecycle:       form.lifecycle,
-				group_id:        form.group_id,      // null = explicitly remove group
-				tags:            form.tags || undefined,
+				lifecycle: form.lifecycle,
+				group_id: form.group_id, // null = explicitly remove group
+				tags: form.tags || undefined,
 			};
 
 			if ( isEditing ) {
@@ -159,7 +192,7 @@ export function EditScreen() {
 			}
 
 			await updateEnvState( resolvedFlagKey, env, {
-				status:     form.env_enabled ? 'enabled' : 'disabled',
+				status: form.env_enabled ? 'enabled' : 'disabled',
 				percentage: form.env_percentage,
 			} );
 
@@ -176,11 +209,18 @@ export function EditScreen() {
 	// -------------------------------------------------------------------------
 
 	if ( loading ) {
-		return <div className="myrk-screen"><Spinner /></div>;
+		return (
+			<div className="myrk-screen">
+				<Spinner />
+			</div>
+		);
 	}
 
 	const title = isEditing
-		? /* translators: %s: flag key */ sprintf( __( 'Edit Flag: %s', 'myrk' ), flagKey )
+		? /* translators: %s: flag key */ sprintf(
+				__( 'Edit Flag: %s', 'myrk' ),
+				flagKey
+		  )
 		: __( 'Add New Flag', 'myrk' );
 
 	const groupOptions = [
@@ -199,26 +239,24 @@ export function EditScreen() {
 					{ notice.message }
 				</Notice>
 			) }
-
 			<div className="myrk-brand-mark">
 				<span className="myrk-brand-mark__rune">ᛗ</span>
 				<span className="myrk-brand-mark__wordmark">myrk</span>
 			</div>
-			<h1 className="wp-heading-inline">{ title }</h1>
-			{ ' ' }
+			<h1 className="wp-heading-inline">{ title }</h1>{ ' ' }
 			<a href={ listUrl } className="page-title-action">
 				{ __( '← All flags', 'myrk' ) }
 			</a>
 			<hr className="wp-header-end" />
-
 			<form onSubmit={ handleSubmit }>
 				<div className="myrk-edit-screen__layout">
 					<div className="myrk-edit-screen__main">
-
 						{ /* Flag Definition */ }
 						<Card>
 							<CardHeader>
-								<strong>{ __( 'Flag Definition', 'myrk' ) }</strong>
+								<strong>
+									{ __( 'Flag Definition', 'myrk' ) }
+								</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
@@ -230,14 +268,26 @@ export function EditScreen() {
 											readOnly={ isEditing }
 											help={
 												isEditing
-													? __( 'Flag key cannot be changed after creation.', 'myrk' )
-													: __( 'Lowercase letters, digits, and underscores. E.g. new_checkout', 'myrk' )
+													? __(
+															'Flag key cannot be changed after creation.',
+															'myrk'
+													  )
+													: __(
+															'Lowercase letters, digits, and underscores. E.g. new_checkout',
+															'myrk'
+													  )
 											}
-											className={ errors.flag_key ? 'myrk-field--error' : '' }
+											className={
+												errors.flag_key
+													? 'myrk-field--error'
+													: ''
+											}
 											__nextHasNoMarginBottom
 										/>
 										{ errors.flag_key && (
-											<p className="myrk-field__error">{ errors.flag_key }</p>
+											<p className="myrk-field__error">
+												{ errors.flag_key }
+											</p>
 										) }
 									</div>
 
@@ -246,12 +296,21 @@ export function EditScreen() {
 											label={ __( 'Label', 'myrk' ) }
 											value={ form.label }
 											onChange={ update( 'label' ) }
-											help={ __( 'A short, human-readable name shown in this admin screen.', 'myrk' ) }
-											className={ errors.label ? 'myrk-field--error' : '' }
+											help={ __(
+												'A short, human-readable name shown in this admin screen.',
+												'myrk'
+											) }
+											className={
+												errors.label
+													? 'myrk-field--error'
+													: ''
+											}
 											__nextHasNoMarginBottom
 										/>
 										{ errors.label && (
-											<p className="myrk-field__error">{ errors.label }</p>
+											<p className="myrk-field__error">
+												{ errors.label }
+											</p>
 										) }
 									</div>
 
@@ -259,7 +318,10 @@ export function EditScreen() {
 										label={ __( 'Description', 'myrk' ) }
 										value={ form.description }
 										onChange={ update( 'description' ) }
-										help={ __( "Helps your team remember what this flag controls and when it's safe to remove.", 'myrk' ) }
+										help={ __(
+											"Helps your team remember what this flag controls and when it's safe to remove.",
+											'myrk'
+										) }
 										rows={ 3 }
 										__nextHasNoMarginBottom
 									/>
@@ -270,47 +332,81 @@ export function EditScreen() {
 						{ /* Organisation */ }
 						<Card>
 							<CardHeader>
-								<strong>{ __( 'Organisation', 'myrk' ) }</strong>
+								<strong>
+									{ __( 'Organisation', 'myrk' ) }
+								</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
 									<div>
 										<SelectControl
 											label={ __( 'Group', 'myrk' ) }
-											value={ form.group_id ? String( form.group_id ) : '' }
+											value={
+												form.group_id
+													? String( form.group_id )
+													: ''
+											}
 											options={ groupOptions }
-											onChange={ ( val ) => update( 'group_id' )( val ? Number( val ) : null ) }
-											help={ __( 'Organise related flags by sprint, release, or initiative.', 'myrk' ) }
+											onChange={ ( val ) =>
+												update( 'group_id' )(
+													val ? Number( val ) : null
+												)
+											}
+											help={ __(
+												'Organise related flags by sprint, release, or initiative.',
+												'myrk'
+											) }
 											__nextHasNoMarginBottom
 										/>
 										{ ! showNewGroup ? (
 											<Button
 												variant="link"
-												onClick={ () => setShowNewGroup( true ) }
-												style={ { marginTop: '6px', fontSize: '12px' } }
+												onClick={ () =>
+													setShowNewGroup( true )
+												}
+												style={ {
+													marginTop: '6px',
+													fontSize: '12px',
+												} }
 											>
 												{ __( '+ New group', 'myrk' ) }
 											</Button>
 										) : (
 											<div className="myrk-inline-create">
 												<TextControl
-													label={ __( 'Group name', 'myrk' ) }
+													label={ __(
+														'Group name',
+														'myrk'
+													) }
 													value={ newGroupName }
 													onChange={ setNewGroupName }
-													placeholder={ __( 'e.g. Sprint 42', 'myrk' ) }
+													placeholder={ __(
+														'e.g. Sprint 42',
+														'myrk'
+													) }
 													__nextHasNoMarginBottom
 												/>
 												<Button
 													variant="secondary"
-													onClick={ handleCreateGroup }
+													onClick={
+														handleCreateGroup
+													}
 													isBusy={ creatingGroup }
-													disabled={ creatingGroup || ! newGroupName.trim() }
+													disabled={
+														creatingGroup ||
+														! newGroupName.trim()
+													}
 												>
 													{ __( 'Create', 'myrk' ) }
 												</Button>
 												<Button
 													variant="tertiary"
-													onClick={ () => { setShowNewGroup( false ); setNewGroupName( '' ); } }
+													onClick={ () => {
+														setShowNewGroup(
+															false
+														);
+														setNewGroupName( '' );
+													} }
 													disabled={ creatingGroup }
 												>
 													{ __( 'Cancel', 'myrk' ) }
@@ -323,8 +419,14 @@ export function EditScreen() {
 										label={ __( 'Tags', 'myrk' ) }
 										value={ form.tags }
 										onChange={ update( 'tags' ) }
-										placeholder={ __( 'payments, checkout, v2-redesign', 'myrk' ) }
-										help={ __( 'Comma-separated. Used for filtering in the flags list.', 'myrk' ) }
+										placeholder={ __(
+											'payments, checkout, v2-redesign',
+											'myrk'
+										) }
+										help={ __(
+											'Comma-separated. Used for filtering in the flags list.',
+											'myrk'
+										) }
 										__nextHasNoMarginBottom
 									/>
 								</div>
@@ -343,39 +445,58 @@ export function EditScreen() {
 										value={ form.lifecycle }
 										options={ LIFECYCLE_OPTIONS }
 										onChange={ update( 'lifecycle' ) }
-										help={ __( 'Permanent flags are excluded from stale detection.', 'myrk' ) }
+										help={ __(
+											'Permanent flags are excluded from stale detection.',
+											'myrk'
+										) }
 										__nextHasNoMarginBottom
 									/>
 
 									<ToggleControl
 										label={ __( 'Default state', 'myrk' ) }
-										help={ __( 'Returned when the flag has no environment state or the circuit breaker is tripped.', 'myrk' ) }
+										help={ __(
+											'Returned when the flag has no environment state or the circuit breaker is tripped.',
+											'myrk'
+										) }
 										checked={ form.default_state }
 										onChange={ update( 'default_state' ) }
 										__nextHasNoMarginBottom
 									/>
 
 									<SelectControl
-										label={ __( 'Rewind strategy', 'myrk' ) }
+										label={ __(
+											'Rewind strategy',
+											'myrk'
+										) }
 										value={ form.rewind_strategy }
 										options={ REWIND_STRATEGIES }
 										onChange={ update( 'rewind_strategy' ) }
-										help={ __( 'How the circuit breaker rolls the flag back.', 'myrk' ) }
+										help={ __(
+											'How the circuit breaker rolls the flag back.',
+											'myrk'
+										) }
 										__nextHasNoMarginBottom
 									/>
 
 									<SelectControl
-										label={ __( 'Anonymous identifier strategy', 'myrk' ) }
+										label={ __(
+											'Anonymous identifier strategy',
+											'myrk'
+										) }
 										value={ form.anonymous_strategy }
 										options={ ANON_STRATEGIES }
-										onChange={ update( 'anonymous_strategy' ) }
-										help={ __( 'Used for percentage rollout when no logged-in user is available.', 'myrk' ) }
+										onChange={ update(
+											'anonymous_strategy'
+										) }
+										help={ __(
+											'Used for percentage rollout when no logged-in user is available.',
+											'myrk'
+										) }
 										__nextHasNoMarginBottom
 									/>
 								</div>
 							</CardBody>
 						</Card>
-
 					</div>
 
 					<div className="myrk-edit-screen__sidebar">
@@ -388,7 +509,10 @@ export function EditScreen() {
 									label={ __( 'Enabled', 'myrk' ) }
 									help={ sprintf(
 										/* translators: %s: environment name */
-										__( 'Status in the %s environment.', 'myrk' ),
+										__(
+											'Status in the %s environment.',
+											'myrk'
+										),
 										env
 									) }
 									checked={ form.env_enabled }
@@ -402,7 +526,10 @@ export function EditScreen() {
 									min={ 0 }
 									max={ 100 }
 									step={ 1 }
-									help={ __( 'Percentage of users who see this flag as enabled.', 'myrk' ) }
+									help={ __(
+										'Percentage of users who see this flag as enabled.',
+										'myrk'
+									) }
 									__nextHasNoMarginBottom
 								/>
 							</CardBody>
@@ -410,20 +537,33 @@ export function EditScreen() {
 
 						<CodeCard flagKey={ form.flag_key } />
 
-						<Flex className="myrk-edit-screen__actions" direction="column" gap={ 2 }>
+						<Flex
+							className="myrk-edit-screen__actions"
+							direction="column"
+							gap={ 2 }
+						>
 							<FlexItem>
 								<Button
 									variant="primary"
 									type="submit"
 									isBusy={ saving }
 									disabled={ saving }
-									style={ { width: '100%', justifyContent: 'center' } }
+									style={ {
+										width: '100%',
+										justifyContent: 'center',
+									} }
 								>
-									{ isEditing ? __( 'Update Flag', 'myrk' ) : __( 'Create Flag', 'myrk' ) }
+									{ isEditing
+										? __( 'Update Flag', 'myrk' )
+										: __( 'Create Flag', 'myrk' ) }
 								</Button>
 							</FlexItem>
 							<FlexItem>
-								<Button variant="tertiary" href={ listUrl } disabled={ saving }>
+								<Button
+									variant="tertiary"
+									href={ listUrl }
+									disabled={ saving }
+								>
 									{ __( 'Cancel', 'myrk' ) }
 								</Button>
 							</FlexItem>

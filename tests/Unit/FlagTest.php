@@ -15,14 +15,14 @@ class FlagTest extends TestCase {
 			flag_key:        'new_checkout',
 			label:           'New Checkout Experience',
 			description:     'Rolls out redesigned checkout.',
-			default:         false,
+			fallback:        false,
 			rewind_strategy: RewindStrategy::Immediate,
 		);
 
 		$this->assertSame( 'new_checkout', $flag->flag_key );
 		$this->assertSame( 'New Checkout Experience', $flag->label );
 		$this->assertSame( 'Rolls out redesigned checkout.', $flag->description );
-		$this->assertFalse( $flag->default );
+		$this->assertFalse( $flag->fallback );
 		$this->assertSame( RewindStrategy::Immediate, $flag->rewind_strategy );
 	}
 
@@ -33,7 +33,7 @@ class FlagTest extends TestCase {
 
 	public function test_flag_defaults_to_disabled(): void {
 		$flag = new Flag( flag_key: 'test', label: 'Test' );
-		$this->assertFalse( $flag->default );
+		$this->assertFalse( $flag->fallback );
 	}
 
 	public function test_flag_properties_are_readonly(): void {

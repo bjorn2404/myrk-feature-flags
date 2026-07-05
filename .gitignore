@@ -24,3 +24,6 @@ vendor/
 # Internal docs
 myrk-brand.md
 myrk-spec.md
+
+# PHPUnit cache
+.phpunit.result.cache

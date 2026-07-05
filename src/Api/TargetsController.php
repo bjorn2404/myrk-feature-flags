@@ -268,7 +268,7 @@ class TargetsController extends AbstractController {
 	 * @param int    $target_id DB row ID of the targeting rule.
 	 * @return true|\WP_Error
 	 */
-	private function verify_target_ownership( string $flag_key, int $target_id ): true|WP_Error {
+	private function verify_target_ownership( string $flag_key, int $target_id ): bool|WP_Error {
 		$flag_id = FlagRepository::get_flag_id( $flag_key );
 		if ( null === $flag_id ) {
 			return $this->error_flag_not_found( $flag_key );

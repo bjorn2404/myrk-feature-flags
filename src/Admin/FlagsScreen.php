@@ -64,10 +64,10 @@ class FlagsScreen {
 	 * icon grey so WordPress opacity transitions work correctly.
 	 */
 	private static function menu_icon(): string {
-		// Two vertical bars at x=4 and x=16; X diagonals crossing at (10,10).
+		// Two vertical staves; diagonals crossing at (10,7) — upper third, matching the Mannaz rune shape.
 		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
 			. '<path stroke="#a7aaad" stroke-width="1.5" stroke-linecap="round" fill="none"'
-			. ' d="M4 2v16M16 2v16M4 5l12 10M16 5L4 15"/>'
+			. ' d="M4 2v16M16 2v16M4 4l12 6M16 4L4 10"/>'
 			. '</svg>';
 
 		return 'data:image/svg+xml,' . rawurlencode( $svg );

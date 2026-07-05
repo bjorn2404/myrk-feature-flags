@@ -6,7 +6,7 @@ parameters:
     paths:
         - src
     phpVersion: 80100
-    checkMissingIterableValueType: false
     scanFiles:
         - vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
         - stubs/wp-cli.php
+        - stubs/myrk-constants.php
