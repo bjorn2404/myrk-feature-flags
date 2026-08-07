@@ -120,7 +120,7 @@ class StateWriter {
 	 * Used by the circuit breaker and rewind mechanism.
 	 *
 	 * @param int         $flag_id        DB row ID of the flag.
-	 * @param string      $flag_key       Flag key (denormalised for readability).
+	 * @param string      $flag_key       Flag key (denormalized for readability).
 	 * @param string      $environment    Environment the change applies to.
 	 * @param int|null    $changed_by     User ID, or null for system changes.
 	 * @param ChangedVia  $changed_via    Actor that triggered the change.

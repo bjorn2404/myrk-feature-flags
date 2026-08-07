@@ -5,8 +5,8 @@ import { useState, useEffect, useCallback, useMemo } from '@wordpress/element';
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import { Notice, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { check, closeSmall, pencil } from '@wordpress/icons';
-import { fetchFlags, fetchGroups, enableFlag, disableFlag } from './api';
+import { check, closeSmall, pencil, trash } from '@wordpress/icons';
+import { fetchFlags, fetchGroups, enableFlag, disableFlag, deleteFlag } from './api';
 
 const { currentEnv, editUrl } = window.myrkAdminFlags ?? {};
 const env = currentEnv ?? 'production';
@@ -344,6 +344,48 @@ export function FlagsScreen() {
 					window.location.href = `${ editUrl }&flag_key=${ item.flag_key }`;
 				},
 			},
+			{
+				id: 'delete',
+				label: __( 'Delete', 'myrk' ),
+				icon: trash,
+				isDestructive: true,
+				callback: async ( items ) => {
+					const item = items[ 0 ];
+					if (
+						! window.confirm(
+							/* translators: %s: flag key */
+							sprintf(
+								__(
+									'Permanently delete "%s" and all its state? This cannot be undone.',
+									'myrk'
+								),
+								item.flag_key
+							)
+						)
+					) {
+						return;
+					}
+					try {
+						await deleteFlag( item.flag_key );
+						setNotice( {
+							type: 'success',
+							message: sprintf(
+								/* translators: %s: flag key */
+								__( '"%s" deleted.', 'myrk' ),
+								item.flag_key
+							),
+						} );
+						loadFlags();
+					} catch ( err ) {
+						setNotice( {
+							type: 'error',
+							message:
+								err?.message ??
+								__( 'Failed to delete flag.', 'myrk' ),
+						} );
+					}
+				},
+			},
 		],
 		[ loadFlags ]
 	);
@@ -491,6 +533,10 @@ function EnvIndicator( { env: envName } ) {
 // -------------------------------------------------------------------------
 // Helpers
 // -------------------------------------------------------------------------
+
+function sprintf( fmt, ...args ) {
+	return fmt.replace( /%s/g, () => args.shift() );
+}
 
 function formatRelativeDate( isoString ) {
 	if ( ! isoString ) {

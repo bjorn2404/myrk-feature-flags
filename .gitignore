@@ -27,3 +27,7 @@ myrk-spec.md
 
 # PHPUnit cache
 .phpunit.result.cache
+
+# Package output
+myrk.zip
+.release

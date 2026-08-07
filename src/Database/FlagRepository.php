@@ -103,7 +103,7 @@ class FlagRepository {
 
 		$per_page = max( 1, (int) ( $args['per_page'] ?? 100 ) );
 		$offset   = max( 0, (int) ( $args['offset'] ?? 0 ) );
-		$env_join = isset( $args['status'] ) ? 'INNER JOIN' : 'LEFT JOIN';
+		$env_join = isset( $args['status'] ) ? 'INNER JOIN' : 'LEFT JOIN'; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- value is a hardcoded SQL keyword, never user input.
 
 		[ $where, $where_args ] = self::build_where( $args );
 

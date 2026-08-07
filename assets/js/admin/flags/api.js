@@ -81,6 +81,60 @@ export async function deleteFlag( flagKey ) {
 }
 
 // -------------------------------------------------------------------------
+// Targets
+// -------------------------------------------------------------------------
+
+/**
+ * @param {string} flagKey
+ * @param {string} env
+ * @return {Promise<Array>}
+ */
+export async function fetchTargets( flagKey, env ) {
+	return apiFetch( {
+		url: `${ REST_BASE }/flags/${ flagKey }/targets?env=${ encodeURIComponent( env ) }`,
+	} );
+}
+
+/**
+ * @param {string} flagKey
+ * @param {{ env: string, type: string, operator: string, value: string, enabled?: boolean }} data
+ * @return {Promise<object>}
+ */
+export async function createTarget( flagKey, data ) {
+	return apiFetch( {
+		url: `${ REST_BASE }/flags/${ flagKey }/targets`,
+		method: 'POST',
+		data,
+	} );
+}
+
+/**
+ * @param {string} flagKey
+ * @param {number} id
+ * @param {{ enabled?: boolean }} changes
+ * @return {Promise<object>}
+ */
+export async function updateTarget( flagKey, id, changes ) {
+	return apiFetch( {
+		url: `${ REST_BASE }/flags/${ flagKey }/targets/${ id }`,
+		method: 'PATCH',
+		data: changes,
+	} );
+}
+
+/**
+ * @param {string} flagKey
+ * @param {number} id
+ * @return {Promise<void>}
+ */
+export async function deleteTarget( flagKey, id ) {
+	return apiFetch( {
+		url: `${ REST_BASE }/flags/${ flagKey }/targets/${ id }`,
+		method: 'DELETE',
+	} );
+}
+
+// -------------------------------------------------------------------------
 // Environment state
 // -------------------------------------------------------------------------
 

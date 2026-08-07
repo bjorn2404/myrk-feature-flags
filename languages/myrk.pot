@@ -528,7 +528,7 @@ msgid "Helps your team remember what this flag controls and when it's safe to re
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:273
-msgid "Organisation"
+msgid "Organization"
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:279
@@ -537,7 +537,7 @@ msgid "Group"
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:283
-msgid "Organise related flags by sprint, release, or initiative."
+msgid "Organize related flags by sprint, release, or initiative."
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:292
@@ -577,7 +577,7 @@ msgid "Comma-separated. Used for filtering in the flags list."
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:337
-msgid "Behaviour"
+msgid "Behavior"
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:342
@@ -830,7 +830,7 @@ msgid "No groups yet"
 msgstr ""
 
 #: assets/js/admin/groups/GroupsScreen.jsx:389
-msgid "Groups let you organise flags by sprint, release, or initiative — and link them to your project management tool."
+msgid "Groups let you organize flags by sprint, release, or initiative — and link them to your project management tool."
 msgstr ""
 
 #: assets/js/admin/groups/GroupsScreen.jsx:392

@@ -24,7 +24,6 @@ class Plugin {
 	public function boot(): void {
 		register_activation_hook( MYRK_FILE, [ $this, 'activate' ] );
 
-		add_action( 'init', [ $this, 'load_textdomain' ] );
 		add_action( 'init', [ $this, 'sync_registered_flags' ], 20 );
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 		add_action( 'admin_menu', [ $this, 'register_admin_pages' ] );
@@ -41,13 +40,6 @@ class Plugin {
 	 */
 	public function activate(): void {
 		Schema::install();
-	}
-
-	/**
-	 * Load the plugin text domain for translations.
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain( 'myrk', false, dirname( plugin_basename( MYRK_FILE ) ) . '/languages' );
 	}
 
 	/**

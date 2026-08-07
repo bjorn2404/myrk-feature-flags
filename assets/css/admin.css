@@ -395,3 +395,100 @@ body.admin_page_myrk-edit-flag {
 	text-align: left;
 	width:      100%;
 }
+
+/* -------------------------------------------------------------------------
+   Targeting card
+------------------------------------------------------------------------- */
+
+.myrk-targeting-help {
+	color:     var(--myrk-text-muted);
+	font-size: 12px;
+	margin:    0 0 12px;
+}
+
+.myrk-target-list {
+	border:        1px solid var(--myrk-border);
+	border-radius: 4px;
+	margin-bottom: 12px;
+	overflow:      hidden;
+}
+
+.myrk-target-row {
+	align-items:     center;
+	border-bottom:   1px solid var(--myrk-border-soft);
+	display:         flex;
+	gap:             12px;
+	justify-content: space-between;
+	padding:         8px 12px;
+}
+
+.myrk-target-row:last-child {
+	border-bottom: none;
+}
+
+.myrk-target-row--disabled {
+	opacity: 0.5;
+}
+
+.myrk-target-row__rule {
+	align-items: baseline;
+	display:     flex;
+	flex:        1;
+	flex-wrap:   wrap;
+	gap:         5px;
+	min-width:   0;
+}
+
+.myrk-target-row__type {
+	color:       var(--myrk-text-primary);
+	font-weight: 500;
+}
+
+.myrk-target-row__op {
+	color:       var(--myrk-text-muted);
+	font-size:   12px;
+	font-style:  italic;
+}
+
+.myrk-target-row__value {
+	background:    rgba(0, 0, 0, 0.04);
+	border:        1px solid var(--myrk-border);
+	border-radius: 3px;
+	font-family:   var(--myrk-code-font);
+	font-size:     12px;
+	padding:       1px 5px;
+}
+
+.myrk-target-row__actions {
+	align-items:  center;
+	display:      flex;
+	flex-shrink:  0;
+	gap:          4px;
+}
+
+/* Suppress the toggle's bottom margin inside a row */
+.myrk-target-row__actions .components-toggle-control {
+	margin-bottom: 0;
+}
+
+.myrk-target-form {
+	background:    rgba(0, 0, 0, 0.02);
+	border:        1px solid var(--myrk-border);
+	border-radius: 4px;
+	display:       flex;
+	flex-direction: column;
+	gap:           12px;
+	margin-bottom: 8px;
+	padding:       12px;
+}
+
+.myrk-targeting-autosave-hint {
+	color:     var(--myrk-text-muted);
+	font-size: 11px;
+	margin:    0;
+}
+
+.myrk-add-target-btn {
+	font-size:  12px !important;
+	margin-top: 4px !important;
+}

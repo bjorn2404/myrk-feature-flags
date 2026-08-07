@@ -254,6 +254,72 @@ class FlagsControllerTest extends WP_UnitTestCase {
 		$this->assertNotNull( FlagRepository::get_flag_id( 'to_delete' ) );
 	}
 
+	public function test_list_filters_by_group(): void {
+		wp_set_current_user( $this->admin_id );
+
+		global $wpdb;
+		$group_id = $wpdb->insert(
+			$wpdb->prefix . 'myrk_flag_groups',
+			[ 'name' => 'Sprint 1', 'description' => '', 'created_at' => current_time( 'mysql', true ), 'updated_at' => current_time( 'mysql', true ) ]
+		) ? (int) $wpdb->insert_id : 0;
+
+		FlagWriter::create( [ 'flag_key' => 'in_group', 'label' => 'In Group', 'group_id' => $group_id ] );
+		FlagWriter::create( [ 'flag_key' => 'no_group',  'label' => 'No Group' ] );
+
+		$request = new WP_REST_Request( 'GET', '/myrk/v1/flags' );
+		$request->set_param( 'group', 'Sprint 1' );
+		$response = $this->server->dispatch( $request );
+
+		$this->assertSame( 200, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertCount( 1, $data );
+		$this->assertSame( 'in_group', $data[0]['flag_key'] );
+
+		$wpdb->delete( $wpdb->prefix . 'myrk_flag_groups', [ 'id' => $group_id ] );
+	}
+
+	public function test_list_filters_by_tag(): void {
+		wp_set_current_user( $this->admin_id );
+
+		FlagWriter::create( [ 'flag_key' => 'tagged_flag',   'label' => 'Tagged',   'tags' => 'billing,checkout' ] );
+		FlagWriter::create( [ 'flag_key' => 'untagged_flag', 'label' => 'Untagged' ] );
+
+		$request = new WP_REST_Request( 'GET', '/myrk/v1/flags' );
+		$request->set_param( 'tag', 'billing' );
+		$response = $this->server->dispatch( $request );
+
+		$this->assertSame( 200, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertCount( 1, $data );
+		$this->assertSame( 'tagged_flag', $data[0]['flag_key'] );
+	}
+
+	public function test_patch_updates_lifecycle_tags_and_group_id(): void {
+		wp_set_current_user( $this->admin_id );
+
+		global $wpdb;
+		$group_id = $wpdb->insert(
+			$wpdb->prefix . 'myrk_flag_groups',
+			[ 'name' => 'Patch Group', 'description' => '', 'created_at' => current_time( 'mysql', true ), 'updated_at' => current_time( 'mysql', true ) ]
+		) ? (int) $wpdb->insert_id : 0;
+
+		FlagWriter::create( [ 'flag_key' => 'patch_meta', 'label' => 'Patch Meta', 'lifecycle' => 'temporary' ] );
+
+		$request = new WP_REST_Request( 'PATCH', '/myrk/v1/flags/patch_meta' );
+		$request->set_param( 'lifecycle', 'permanent' );
+		$request->set_param( 'tags', 'alpha,beta' );
+		$request->set_param( 'group_id', $group_id );
+		$response = $this->server->dispatch( $request );
+
+		$this->assertSame( 200, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertSame( 'permanent', $data['lifecycle'] );
+		$this->assertSame( 'alpha,beta', $data['tags'] );
+		$this->assertSame( $group_id, $data['group_id'] );
+
+		$wpdb->delete( $wpdb->prefix . 'myrk_flag_groups', [ 'id' => $group_id ] );
+	}
+
 	public function test_delete_removes_all_related_rows(): void {
 		wp_set_current_user( $this->admin_id );
 

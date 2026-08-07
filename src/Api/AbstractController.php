@@ -84,7 +84,7 @@ abstract class AbstractController extends WP_REST_Controller {
 	}
 
 	/**
-	 * Return a 422 WP_Error for an unrecognised environment name.
+	 * Return a 422 WP_Error for an unrecognized environment name.
 	 *
 	 * @param string $env The invalid environment name.
 	 * @return \WP_Error

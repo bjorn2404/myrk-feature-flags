@@ -11,7 +11,7 @@ namespace Myrk\Database;
 
 /**
  * Handles all persistence for wp_myrk_flag_groups.
- * Groups organise related flags by sprint, release, or initiative and carry an
+ * Groups organize related flags by sprint, release, or initiative and carry an
  * optional outbound link to the authoritative PM system.
  */
 class GroupRepository {

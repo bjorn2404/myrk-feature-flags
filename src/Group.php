@@ -11,7 +11,7 @@ namespace Myrk;
 
 /**
  * Immutable value object for a flag group as held in memory.
- * Groups organise related flags by sprint, release, or initiative and carry
+ * Groups organize related flags by sprint, release, or initiative and carry
  * an optional outbound link to the authoritative PM system (Jira, Linear, etc.).
  */
 class Group {

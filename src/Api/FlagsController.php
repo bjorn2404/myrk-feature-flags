@@ -117,7 +117,7 @@ class FlagsController extends AbstractController {
 							'default' => 'temporary',
 						],
 						'group_id'        => [
-							'type'    => 'integer',
+							'type'    => [ 'integer', 'null' ],
 							'minimum' => 1,
 						],
 						'tags'            => [
