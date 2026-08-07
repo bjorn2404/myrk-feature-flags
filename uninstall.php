@@ -17,7 +17,7 @@ global $wpdb;
 // Tables — free tier + Pro (dropped if present; safe to call on free installs)
 // -------------------------------------------------------------------------
 
-$tables = [
+$myrk_tables = [
 	'myrk_scheduled_changes', // Pro — drop first; references myrk_flags.
 	'myrk_fatal_log',
 	'myrk_state_log',
@@ -27,15 +27,15 @@ $tables = [
 	'myrk_flag_groups',
 ];
 
-foreach ( $tables as $table ) {
-	$wpdb->query( "DROP TABLE IF EXISTS `{$wpdb->prefix}{$table}`" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+foreach ( $myrk_tables as $myrk_table ) {
+	$wpdb->query( "DROP TABLE IF EXISTS `{$wpdb->prefix}{$myrk_table}`" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 // -------------------------------------------------------------------------
 // Options
 // -------------------------------------------------------------------------
 
-$options = [
+$myrk_options = [
 	'myrk_db_version',
 	'myrk_license_key',
 	'myrk_license_status',
@@ -43,8 +43,8 @@ $options = [
 	'myrk_license_checked_at',
 ];
 
-foreach ( $options as $option ) {
-	delete_option( $option );
+foreach ( $myrk_options as $myrk_option ) {
+	delete_option( $myrk_option );
 }
 
 // -------------------------------------------------------------------------

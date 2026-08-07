@@ -14,4 +14,8 @@
             <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <!-- Local WP test environment. Override via WP_TESTS_DIR env var in CI. -->
+        <env name="WP_TESTS_DIR" value="/tmp/wordpress-tests-lib" force="false"/>
+    </php>
 </phpunit>

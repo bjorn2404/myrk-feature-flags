@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Myrk
+ * Plugin Name:       Myrk — Enterprise Feature Flags
  * Plugin URI:        https://myrk.build
  * Description:       Enterprise feature flags for WordPress. Per-environment control, percentage rollout, user targeting, and stale flag detection.
  * Version:           1.0.0

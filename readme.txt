@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress-native feature flags for enterprise teams. Per-environment control, percentage rollout, user targeting, and circuit breaker protection — no external dependencies.
+WordPress-native feature flags for enterprise teams — per-environment control, percentage rollout, user targeting, and circuit breaker protection.
 
 == Description ==
 
@@ -50,6 +50,15 @@ PHP 8.1 or higher. Myrk targets enterprise WordPress teams on modern hosting sta
 = How does percentage rollout work? =
 
 Myrk uses a deterministic CRC32 hash of the flag key and user identifier. The same user always gets the same flag state for a given percentage — no cookies required.
+
+= Can I use Myrk for A/B testing? =
+
+Yes. The percentage rollout uses deterministic hashing — the same user always sees the same variant without cookies. Pair it with your existing analytics to track outcomes. Myrk controls the split; you measure the results.
+
+== Screenshots ==
+
+1. Flags list — environment switcher, status, rollout percentage, and stale badges.
+2. Flag edit screen — create or update a flag with label, lifecycle, tags, and group.
 
 == Changelog ==
 

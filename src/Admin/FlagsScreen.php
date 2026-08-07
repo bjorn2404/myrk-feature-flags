@@ -57,20 +57,24 @@ class FlagsScreen {
 	}
 
 	/**
-	 * Base64 SVG data URI for the admin sidebar icon.
+	 * Admin sidebar icon as a base64 SVG data URI.
 	 *
-	 * Renders the Mannaz rune (ᛗ) as path outlines: two vertical staves with an
-	 * X crossing between them. Fill colour #a7aaad matches the WP default menu
-	 * icon grey so WordPress opacity transitions work correctly.
+	 * WordPress renders data-URI icons as a CSS background-image, which prevents
+	 * external CSS from reaching fill attributes. All shapes use fill so the icon
+	 * is visible across admin colour schemes. #a7aaad is the WP default icon grey.
 	 */
 	private static function menu_icon(): string {
-		// Two vertical staves; diagonals crossing at (10,7) — upper third, matching the Mannaz rune shape.
 		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
-			. '<path stroke="#a7aaad" stroke-width="1.5" stroke-linecap="round" fill="none"'
-			. ' d="M4 2v16M16 2v16M4 4l12 6M16 4L4 10"/>'
+			. '<path fill="#a7aaad" d="'
+			. 'M3.25 2h1.5v16h-1.5z'
+			. 'M15.25 2h1.5v16h-1.5z'
+			. 'M4.34 3.33L16.34 9.33 15.66 10.67 3.66 4.67z'
+			. 'M15.66 3.33L16.34 4.67 4.34 10.67 3.66 9.33z'
+			. '"/>'
 			. '</svg>';
 
-		return 'data:image/svg+xml,' . rawurlencode( $svg );
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- base64 SVG data URI is the standard WP pattern for menu icons.
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
 	/**

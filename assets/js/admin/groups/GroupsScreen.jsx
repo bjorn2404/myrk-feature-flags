@@ -485,7 +485,7 @@ function EmptyState( { onAdd } ) {
 			</h2>
 			<p className="myrk-empty-state__description">
 				{ __(
-					'Groups let you organise flags by sprint, release, or initiative — and link them to your project management tool.',
+					'Groups let you organize flags by sprint, release, or initiative — and link them to your project management tool.',
 					'myrk'
 				) }
 			</p>

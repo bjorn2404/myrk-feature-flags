@@ -45,7 +45,7 @@ class Migration100 {
 	/**
 	 * Return the CREATE TABLE SQL for the flag groups table.
 	 *
-	 * Groups organise related flags by sprint, release, or initiative. Each group
+	 * Groups organize related flags by sprint, release, or initiative. Each group
 	 * can carry an optional external_ref (e.g. a Jira key) and clickable URL
 	 * linking out to the authoritative PM system — Myrk deliberately does not
 	 * replicate project management, only links to it.

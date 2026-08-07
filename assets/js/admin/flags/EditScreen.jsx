@@ -1,7 +1,7 @@
 /**
  * DataForm create/edit flag screen.
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from '@wordpress/element';
 import {
 	Button,
 	TextControl,
@@ -25,6 +25,10 @@ import {
 	updateEnvState,
 	fetchGroups,
 	createGroup,
+	fetchTargets,
+	createTarget,
+	updateTarget,
+	deleteTarget,
 } from './api';
 
 const {
@@ -72,11 +76,14 @@ export function EditScreen() {
 	const isEditing = Boolean( flagKey );
 
 	const [ form, setForm ] = useState( defaultForm );
+	const [ keyWasEdited, setKeyWasEdited ] = useState( false );
 	const [ loading, setLoading ] = useState( isEditing );
 	const [ saving, setSaving ] = useState( false );
 	const [ notice, setNotice ] = useState( null );
 	const [ errors, setErrors ] = useState( {} );
 	const [ groups, setGroups ] = useState( [] );
+	const [ targets, setTargets ] = useState( [] );
+	const targetingRef = useRef( null );
 	const [ showNewGroup, setShowNewGroup ] = useState( false );
 	const [ newGroupName, setNewGroupName ] = useState( '' );
 	const [ creatingGroup, setCreatingGroup ] = useState( false );
@@ -108,6 +115,7 @@ export function EditScreen() {
 					env_enabled: envState?.status === 'enabled',
 					env_percentage: envState?.percentage ?? 0,
 				} );
+				setTargets( data.targets?.[ env ] ?? [] );
 				setLoading( false );
 			} )
 			.catch( ( err ) => {
@@ -122,6 +130,21 @@ export function EditScreen() {
 
 	const update = ( key ) => ( value ) =>
 		setForm( ( prev ) => ( { ...prev, [ key ]: value } ) );
+
+	const handleLabelChange = ( value ) => {
+		setForm( ( prev ) => {
+			const next = { ...prev, label: value };
+			if ( ! isEditing && ! keyWasEdited ) {
+				next.flag_key = labelToKey( value );
+			}
+			return next;
+		} );
+	};
+
+	const handleKeyChange = ( value ) => {
+		setKeyWasEdited( true );
+		setForm( ( prev ) => ( { ...prev, flag_key: value } ) );
+	};
 
 	const validate = () => {
 		const errs = {};
@@ -169,6 +192,10 @@ export function EditScreen() {
 		setSaving( true );
 
 		try {
+			if ( targetingRef.current ) {
+				await targetingRef.current.saveIfPending();
+			}
+
 			let resolvedFlagKey = flagKey;
 
 			const definitionFields = {
@@ -262,40 +289,9 @@ export function EditScreen() {
 								<div className="myrk-field-stack">
 									<div className="myrk-field-group">
 										<TextControl
-											label={ __( 'Flag Key', 'myrk' ) }
-											value={ form.flag_key }
-											onChange={ update( 'flag_key' ) }
-											readOnly={ isEditing }
-											help={
-												isEditing
-													? __(
-															'Flag key cannot be changed after creation.',
-															'myrk'
-													  )
-													: __(
-															'Lowercase letters, digits, and underscores. E.g. new_checkout',
-															'myrk'
-													  )
-											}
-											className={
-												errors.flag_key
-													? 'myrk-field--error'
-													: ''
-											}
-											__nextHasNoMarginBottom
-										/>
-										{ errors.flag_key && (
-											<p className="myrk-field__error">
-												{ errors.flag_key }
-											</p>
-										) }
-									</div>
-
-									<div className="myrk-field-group">
-										<TextControl
 											label={ __( 'Label', 'myrk' ) }
 											value={ form.label }
-											onChange={ update( 'label' ) }
+											onChange={ handleLabelChange }
 											help={ __(
 												'A short, human-readable name shown in this admin screen.',
 												'myrk'
@@ -310,6 +306,37 @@ export function EditScreen() {
 										{ errors.label && (
 											<p className="myrk-field__error">
 												{ errors.label }
+											</p>
+										) }
+									</div>
+
+									<div className="myrk-field-group">
+										<TextControl
+											label={ __( 'Flag Key', 'myrk' ) }
+											value={ form.flag_key }
+											onChange={ handleKeyChange }
+											readOnly={ isEditing }
+											help={
+												isEditing
+													? __(
+															'Flag key cannot be changed after creation.',
+															'myrk'
+													  )
+													: __(
+															'Auto-generated from label — edit to override. Lowercase letters, digits, and underscores only.',
+															'myrk'
+													  )
+											}
+											className={
+												errors.flag_key
+													? 'myrk-field--error'
+													: ''
+											}
+											__nextHasNoMarginBottom
+										/>
+										{ errors.flag_key && (
+											<p className="myrk-field__error">
+												{ errors.flag_key }
 											</p>
 										) }
 									</div>
@@ -329,11 +356,11 @@ export function EditScreen() {
 							</CardBody>
 						</Card>
 
-						{ /* Organisation */ }
+						{ /* Organization */ }
 						<Card>
 							<CardHeader>
 								<strong>
-									{ __( 'Organisation', 'myrk' ) }
+									{ __( 'Organization', 'myrk' ) }
 								</strong>
 							</CardHeader>
 							<CardBody>
@@ -353,7 +380,7 @@ export function EditScreen() {
 												)
 											}
 											help={ __(
-												'Organise related flags by sprint, release, or initiative.',
+												'Organize related flags by sprint, release, or initiative.',
 												'myrk'
 											) }
 											__nextHasNoMarginBottom
@@ -433,10 +460,10 @@ export function EditScreen() {
 							</CardBody>
 						</Card>
 
-						{ /* Behaviour */ }
+						{ /* Behavior */ }
 						<Card>
 							<CardHeader>
-								<strong>{ __( 'Behaviour', 'myrk' ) }</strong>
+								<strong>{ __( 'Behavior', 'myrk' ) }</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
@@ -497,6 +524,16 @@ export function EditScreen() {
 								</div>
 							</CardBody>
 						</Card>
+
+						{ isEditing && (
+							<TargetingCard
+								ref={ targetingRef }
+								flagKey={ flagKey }
+								env={ env }
+								targets={ targets }
+								onTargetsChange={ setTargets }
+							/>
+						) }
 					</div>
 
 					<div className="myrk-edit-screen__sidebar">
@@ -579,6 +616,284 @@ export function EditScreen() {
 // Sub-components
 // -------------------------------------------------------------------------
 
+const TARGET_TYPES = [
+	{ label: __( 'Role', 'myrk' ), value: 'role' },
+	{ label: __( 'Capability', 'myrk' ), value: 'capability' },
+	{ label: __( 'User ID', 'myrk' ), value: 'user_id' },
+	{ label: __( 'Email domain', 'myrk' ), value: 'email_domain' },
+];
+
+const TARGET_OPERATORS = [
+	{ label: __( 'is', 'myrk' ), value: 'equals' },
+	{ label: __( 'is not', 'myrk' ), value: 'not_equals' },
+	{ label: __( 'contains', 'myrk' ), value: 'contains' },
+	{ label: __( 'is in list', 'myrk' ), value: 'in_list' },
+];
+
+const ROLE_OPTIONS = [
+	{ label: __( '— Select role —', 'myrk' ), value: '' },
+	{ label: __( 'Administrator', 'myrk' ), value: 'administrator' },
+	{ label: __( 'Editor', 'myrk' ), value: 'editor' },
+	{ label: __( 'Author', 'myrk' ), value: 'author' },
+	{ label: __( 'Contributor', 'myrk' ), value: 'contributor' },
+	{ label: __( 'Subscriber', 'myrk' ), value: 'subscriber' },
+];
+
+const CAPABILITY_OPTIONS = [
+	{ label: __( '— Select capability —', 'myrk' ), value: '' },
+	{ label: 'manage_options', value: 'manage_options' },
+	{ label: 'edit_posts', value: 'edit_posts' },
+	{ label: 'edit_pages', value: 'edit_pages' },
+	{ label: 'publish_posts', value: 'publish_posts' },
+	{ label: 'publish_pages', value: 'publish_pages' },
+	{ label: 'edit_others_posts', value: 'edit_others_posts' },
+	{ label: 'delete_posts', value: 'delete_posts' },
+	{ label: 'upload_files', value: 'upload_files' },
+	{ label: 'moderate_comments', value: 'moderate_comments' },
+	{ label: 'manage_categories', value: 'manage_categories' },
+	{ label: 'edit_users', value: 'edit_users' },
+	{ label: 'create_users', value: 'create_users' },
+	{ label: 'delete_users', value: 'delete_users' },
+	{ label: 'activate_plugins', value: 'activate_plugins' },
+	{ label: 'install_plugins', value: 'install_plugins' },
+	{ label: 'update_plugins', value: 'update_plugins' },
+	{ label: 'switch_themes', value: 'switch_themes' },
+	{ label: 'export', value: 'export' },
+	{ label: 'import', value: 'import' },
+	{ label: 'unfiltered_html', value: 'unfiltered_html' },
+];
+
+const TARGET_TYPE_LABELS = {
+	role: __( 'Role', 'myrk' ),
+	capability: __( 'Capability', 'myrk' ),
+	user_id: __( 'User ID', 'myrk' ),
+	email_domain: __( 'Email domain', 'myrk' ),
+};
+
+const TARGET_OP_LABELS = {
+	equals: __( 'is', 'myrk' ),
+	not_equals: __( 'is not', 'myrk' ),
+	contains: __( 'contains', 'myrk' ),
+	in_list: __( 'is in list', 'myrk' ),
+};
+
+const defaultNewTarget = { type: 'role', operator: 'equals', value: '' };
+
+const TargetingCard = forwardRef( function TargetingCard(
+	{ flagKey, env, targets, onTargetsChange },
+	ref
+) {
+	const [ showForm, setShowForm ] = useState( false );
+	const [ newTarget, setNewTarget ] = useState( defaultNewTarget );
+	const [ saving, setSaving ] = useState( false );
+	const [ error, setError ] = useState( null );
+
+	useImperativeHandle( ref, () => ( {
+		async saveIfPending() {
+			if ( showForm && newTarget.value.trim() ) {
+				await handleAdd();
+			}
+		},
+	} ) );
+
+	const updateNew = ( key ) => ( value ) =>
+		setNewTarget( ( prev ) => ( {
+			...prev,
+			[ key ]: value,
+			...( key === 'type' ? { value: '' } : {} ),
+		} ) );
+
+	const handleAdd = async () => {
+		if ( ! newTarget.value.trim() ) {
+			setError( __( 'Please select or enter a value.', 'myrk' ) );
+			return;
+		}
+		setSaving( true );
+		setError( null );
+		try {
+			const created = await createTarget( flagKey, {
+				env,
+				...newTarget,
+				value: newTarget.value.trim(),
+			} );
+			onTargetsChange( ( prev ) => [ ...prev, created ] );
+			setNewTarget( defaultNewTarget );
+			setShowForm( false );
+		} catch ( err ) {
+			setError( err?.message ?? __( 'Failed to add rule.', 'myrk' ) );
+		} finally {
+			setSaving( false );
+		}
+	};
+
+	const handleToggle = async ( target ) => {
+		try {
+			const updated = await updateTarget( flagKey, target.id, {
+				enabled: ! target.enabled,
+			} );
+			onTargetsChange( ( prev ) =>
+				prev.map( ( t ) => ( t.id === target.id ? updated : t ) )
+			);
+		} catch ( err ) {
+			setError( err?.message ?? __( 'Failed to update rule.', 'myrk' ) );
+		}
+	};
+
+	const handleDelete = async ( target ) => {
+		try {
+			await deleteTarget( flagKey, target.id );
+			onTargetsChange( ( prev ) => prev.filter( ( t ) => t.id !== target.id ) );
+		} catch ( err ) {
+			setError( err?.message ?? __( 'Failed to delete rule.', 'myrk' ) );
+		}
+	};
+
+	return (
+		<Card>
+			<CardHeader>
+				<strong>{ __( 'Targeting', 'myrk' ) }</strong>
+			</CardHeader>
+			<CardBody>
+				{ error && (
+					<Notice
+						status="error"
+						onRemove={ () => setError( null ) }
+						isDismissible
+					>
+						{ error }
+					</Notice>
+				) }
+				<p className="myrk-targeting-help">
+					{ __(
+						'Rules force the flag on or off for specific users regardless of the rollout percentage.',
+						'myrk'
+					) }
+				</p>
+				{ targets.length > 0 && (
+					<div className="myrk-target-list">
+						{ targets.map( ( t ) => (
+							<div
+								key={ t.id }
+								className={ `myrk-target-row${ t.enabled ? '' : ' myrk-target-row--disabled' }` }
+							>
+								<span className="myrk-target-row__rule">
+									<span className="myrk-target-row__type">
+										{ TARGET_TYPE_LABELS[ t.type ] ?? t.type }
+									</span>
+									<span className="myrk-target-row__op">
+										{ TARGET_OP_LABELS[ t.operator ] ?? t.operator }
+									</span>
+									<span className="myrk-target-row__value">
+										{ t.value }
+									</span>
+								</span>
+								<span className="myrk-target-row__actions">
+									<ToggleControl
+										checked={ t.enabled }
+										onChange={ () => handleToggle( t ) }
+										__nextHasNoMarginBottom
+									/>
+									<Button
+										variant="tertiary"
+										isDestructive
+										onClick={ () => handleDelete( t ) }
+										size="small"
+									>
+										{ __( 'Remove', 'myrk' ) }
+									</Button>
+								</span>
+							</div>
+						) ) }
+					</div>
+				) }
+				{ showForm && (
+					<div className="myrk-target-form">
+						<SelectControl
+							label={ __( 'Type', 'myrk' ) }
+							value={ newTarget.type }
+							options={ TARGET_TYPES }
+							onChange={ updateNew( 'type' ) }
+							__nextHasNoMarginBottom
+						/>
+						<SelectControl
+							label={ __( 'Operator', 'myrk' ) }
+							value={ newTarget.operator }
+							options={ TARGET_OPERATORS }
+							onChange={ updateNew( 'operator' ) }
+							__nextHasNoMarginBottom
+						/>
+						{ newTarget.type === 'role' && newTarget.operator !== 'in_list' ? (
+							<SelectControl
+								label={ __( 'Value', 'myrk' ) }
+								value={ newTarget.value }
+								options={ ROLE_OPTIONS }
+								onChange={ updateNew( 'value' ) }
+								__nextHasNoMarginBottom
+							/>
+						) : newTarget.type === 'capability' && newTarget.operator !== 'in_list' ? (
+							<SelectControl
+								label={ __( 'Value', 'myrk' ) }
+								value={ newTarget.value }
+								options={ CAPABILITY_OPTIONS }
+								onChange={ updateNew( 'value' ) }
+								__nextHasNoMarginBottom
+							/>
+						) : (
+							<TextControl
+								label={ __( 'Value', 'myrk' ) }
+								value={ newTarget.value }
+								onChange={ updateNew( 'value' ) }
+								placeholder={
+									newTarget.type === 'user_id'
+										? __( 'e.g. 123 or 123,456 for in list', 'myrk' )
+										: newTarget.type === 'email_domain'
+										? __( 'e.g. acme.com', 'myrk' )
+										: newTarget.type === 'role'
+										? __( 'e.g. administrator,editor', 'myrk' )
+										: __( 'e.g. edit_posts,publish_posts', 'myrk' )
+								}
+								help={
+									newTarget.operator === 'in_list'
+										? __( 'Comma-separated list of values.', 'myrk' )
+										: undefined
+								}
+								__nextHasNoMarginBottom
+							/>
+						) }
+						<p className="myrk-targeting-autosave-hint">
+							{ __(
+								'Rule will be saved when you click Update Flag.',
+								'myrk'
+							) }
+						</p>
+						<Button
+							variant="link"
+							onClick={ () => {
+								setShowForm( false );
+								setNewTarget( defaultNewTarget );
+								setError( null );
+							} }
+							style={ { fontSize: '12px' } }
+						>
+							{ __( 'Discard', 'myrk' ) }
+						</Button>
+					</div>
+				) }
+				<Button
+					variant="link"
+					onClick={ () => {
+						setShowForm( true );
+						setNewTarget( defaultNewTarget );
+					} }
+					className="myrk-add-target-btn"
+				>
+					{ __( '+ Add targeting rule', 'myrk' ) }
+				</Button>
+			</CardBody>
+		</Card>
+	);
+} );
+
 function CodeCard( { flagKey } ) {
 	const key = flagKey || 'my_flag';
 
@@ -621,4 +936,12 @@ function CodeCard( { flagKey } ) {
 
 function sprintf( fmt, ...args ) {
 	return fmt.replace( /%s/g, () => args.shift() );
+}
+
+function labelToKey( label ) {
+	return label
+		.toLowerCase()
+		.replace( /[^a-z0-9]+/g, '_' )
+		.replace( /^[^a-z]+/, '' )
+		.replace( /_+$/, '' );
 }
