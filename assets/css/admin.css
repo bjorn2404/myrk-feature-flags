@@ -492,3 +492,32 @@ body.admin_page_myrk-edit-flag {
 	font-size:  12px !important;
 	margin-top: 4px !important;
 }
+
+.myrk-register-hint {
+	background:    #f6f7f7;
+	border:        1px solid var(--myrk-border);
+	border-left:   3px solid var(--myrk-teal);
+	border-radius: 4px;
+	padding:       12px 14px;
+}
+
+.myrk-register-hint__label {
+	color:       var(--myrk-text-secondary);
+	font-size:   12px;
+	font-weight: 500;
+	margin:      0 0 8px;
+}
+
+.myrk-register-hint__code {
+	background:  #fff;
+	border:      1px solid var(--myrk-border);
+	border-radius: 3px;
+	color:       var(--myrk-text-primary);
+	font-family: var(--myrk-code-font);
+	font-size:   12px;
+	line-height: 1.6;
+	margin:      0;
+	overflow-x:  auto;
+	padding:     10px 12px;
+	white-space: pre;
+}
