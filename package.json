@@ -7,7 +7,7 @@
         "lint:js": "wp-scripts lint-js",
         "lint:css": "wp-scripts lint-style",
         "test": "wp-scripts test-unit-js",
-        "package": "pnpm build && rm -rf .release && mkdir -p .release/myrk && rsync -a --exclude-from=.distignore . .release/myrk/ && (cd .release && zip -r ../myrk.zip myrk) && rm -rf .release && echo 'Built: myrk.zip'"
+        "package": "pnpm build && rm -rf .release myrk.zip && mkdir -p .release/myrk && rsync -a --exclude-from=.distignore . .release/myrk/ && (cd .release && zip -r ../myrk.zip myrk) && rm -rf .release && echo 'Built: myrk.zip'"
     },
     "devDependencies": {
         "@wordpress/icons": "^14.0.0",
