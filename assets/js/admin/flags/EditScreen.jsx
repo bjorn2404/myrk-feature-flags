@@ -236,6 +236,12 @@ export function EditScreen() {
 		}
 	};
 
+	const registerSnippet =
+		`use Myrk\\Myrk; // add once to the top of your file\n\n` +
+		`Myrk::register( '${ form.flag_key || 'my_flag' }', [\n` +
+		`\t'label' => '${ form.label || 'My Flag' }',\n` +
+		`] );`;
+
 	// -------------------------------------------------------------------------
 	// Render
 	// -------------------------------------------------------------------------
@@ -345,6 +351,20 @@ export function EditScreen() {
 											</p>
 										) }
 									</div>
+
+									{ ! isEditing && (
+										<div className="myrk-register-hint">
+											<p className="myrk-register-hint__label">
+												{ __(
+													'Register this flag in code before saving:',
+													'myrk'
+												) }
+											</p>
+											<pre className="myrk-register-hint__code">
+												{ registerSnippet }
+											</pre>
+										</div>
+									) }
 
 									<TextareaControl
 										label={ __( 'Description', 'myrk' ) }

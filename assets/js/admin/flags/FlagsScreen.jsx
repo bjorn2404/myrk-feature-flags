@@ -355,6 +355,7 @@ export function FlagsScreen() {
 				label: __( 'Delete', 'myrk' ),
 				icon: trash,
 				isDestructive: true,
+				isEligible: ( item ) => ! item.is_registered,
 				callback: async ( items ) => {
 					const item = items[ 0 ];
 					if (
@@ -374,6 +375,9 @@ export function FlagsScreen() {
 					}
 					try {
 						await deleteFlag( item.flag_key );
+						setFlags( ( prev ) =>
+							prev.filter( ( f ) => f.flag_key !== item.flag_key )
+						);
 						setNotice( {
 							type: 'success',
 							message: sprintf(
@@ -446,10 +450,7 @@ export function FlagsScreen() {
 			</div>
 			<h1 className="wp-heading-inline">
 				{ __( 'Feature Flags', 'myrk' ) }
-			</h1>{ ' ' }
-			<a href={ editUrl } className="page-title-action">
-				{ __( 'Add New Flag', 'myrk' ) }
-			</a>
+			</h1>
 			<hr className="wp-header-end" />
 			{ notice && (
 				<Notice
@@ -463,7 +464,7 @@ export function FlagsScreen() {
 			<EnvIndicator env={ env } />
 			{ flags.length === 0 && ! loading ? (
 				<div className="myrk-table-card">
-					<EmptyState editUrl={ editUrl } />
+					<EmptyState />
 				</div>
 			) : (
 				<div className="myrk-table-card">
@@ -488,29 +489,24 @@ export function FlagsScreen() {
 // Sub-components
 // -------------------------------------------------------------------------
 
-function EmptyState( { editUrl: url } ) {
+function EmptyState() {
 	return (
 		<div className="myrk-empty-state">
 			<span className="myrk-empty-state__rune">ᛗ</span>
 			<h2 className="myrk-empty-state__heading">
-				{ __( 'No feature flags yet', 'myrk' ) }
+				{ __( 'Flags are defined in code', 'myrk' ) }
 			</h2>
 			<p className="myrk-empty-state__description">
 				{ __(
-					"Feature flags let you ship code that's switched off by default, then enable it per environment or roll it out to a percentage of users — no redeploy needed.",
-					'myrk'
-				) }
-			</p>
-			<p className="myrk-empty-state__description">
-				{ __(
-					'Register a flag in your theme or plugin, then manage it here:',
+					'Unlike SaaS feature flag tools, Myrk treats your codebase as the source of truth. Register flags in your plugin or theme — they appear here automatically.',
 					'myrk'
 				) }
 			</p>
 			<pre className="myrk-empty-state__snippet">
 				{ [
-					'// Register in your theme or plugin (PHP)',
-					"\\Myrk\\Myrk::register( 'my_flag', [ 'label' => 'My Flag' ] );",
+					'use Myrk\\Myrk; // add once to the top of your file',
+					'',
+					"Myrk::register( 'my_flag', [ 'label' => 'My Flag' ] );",
 					'',
 					'// Evaluate in PHP',
 					"if ( myrk_is_enabled( 'my_flag' ) ) { ... }",
@@ -519,9 +515,6 @@ function EmptyState( { editUrl: url } ) {
 					"if ( myrkIsEnabled( 'my_flag' ) ) { ... }",
 				].join( '\n' ) }
 			</pre>
-			<a href={ url } className="button button-primary button-large">
-				{ __( 'Add your first flag', 'myrk' ) }
-			</a>
 		</div>
 	);
 }

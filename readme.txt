@@ -20,6 +20,10 @@ Register feature flags in your plugin or theme — version controlled and peer r
 
 Designed for teams practicing trunk-based development and continuous delivery — merge to main confidently and control what users see from the database.
 
+= Coming from a SaaS feature flag service? =
+
+Myrk works differently: your codebase is the source of truth. Flags are declared with `Myrk::register()` in PHP and committed to your repo — they appear in the admin automatically. The admin controls state only; it does not create flags. This keeps your flag inventory version controlled and peer reviewed, the same as everything else in your codebase.
+
 = Key features =
 
 * **Code-registered flags** — `Myrk::register()` in PHP, reviewed in Git
