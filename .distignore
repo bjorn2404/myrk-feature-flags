@@ -1,5 +1,7 @@
 .git
+.gitignore
 .github
+.distignore
 wp-org-assets
 .claude
 node_modules
