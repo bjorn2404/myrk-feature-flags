@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress feature flags and feature toggles with progressive rollout, per-environment control, user targeting, and circuit breaker protection. No external services required.
+WordPress feature flags and feature toggles with progressive rollout, per-environment control, user targeting, and circuit breaker protection.
 
 == Description ==
 
