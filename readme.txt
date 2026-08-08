@@ -1,6 +1,6 @@
 === Myrk Feature Flags ===
 Contributors: bjorn2404
-Tags: feature flags, trunk-based development, progressive rollout, devops
+Tags: feature flags, feature toggles, progressive rollout, developer tools, a/b testing
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.1
@@ -8,26 +8,28 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress-native feature flags for enterprise teams — per-environment control, percentage rollout, user targeting, and circuit breaker protection.
+WordPress feature flags and feature toggles with progressive rollout, per-environment control, user targeting, and circuit breaker protection. No external services required.
 
 == Description ==
 
-Myrk gives enterprise WordPress development teams the feature flag infrastructure they need to ship safely on complex sites.
+WordPress feature flags and feature toggles built for development teams shipping on complex sites. No external feature flag service, no Redis, no third-party account — all state lives in your WordPress database.
 
-**Define flags in code. Control state from the database.**
+**Define flags in code. Control state from the admin.**
 
-Register flags in your plugin or theme — version controlled, peer reviewable. Enable, disable, and roll out per environment without code changes or redeploys.
+Register feature flags in your plugin or theme — version controlled and peer reviewable. Enable, disable, and roll out per environment without code changes or redeploys.
+
+Designed for teams practicing trunk-based development and continuous delivery — merge to main confidently and control what users see from the database.
 
 = Key features =
 
 * **Code-registered flags** — `Myrk::register()` in PHP, reviewed in Git
 * **Per-environment state** — uses `wp_get_environment_type()` automatically
-* **Percentage rollout** — deterministic IP-based hashing, no cookies
+* **Progressive rollout** — deterministic percentage rollout, no cookies required
 * **Targeting rules** — role, capability, user ID, email domain
 * **Circuit breaker** — `Myrk::attempt()` wraps risky code with automatic fallback
-* **Stale flag detection** — visual badge for flags inactive 90+ days
-* **REST API** — full CRUD, powers admin UI and pipeline automation
-* **WP-CLI** — complete flag management from the command line
+* **Stale flag detection** — visual badge for feature toggles inactive 90+ days
+* **REST API** — full CRUD, powers admin UI and CI/CD pipeline automation
+* **WP-CLI** — complete feature flag management from the command line
 * **No external dependencies** — no Redis, no Node, no third-party service
 
 == Installation ==
