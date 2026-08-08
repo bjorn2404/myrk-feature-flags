@@ -29,7 +29,7 @@ msgstr ""
 
 #. Description of the plugin
 #: myrk.php
-msgid "Enterprise feature flags for WordPress. Trunk-based development, progressive rollout, automatic rewind."
+msgid "Enterprise feature flags for WordPress. Per-environment control, percentage rollout, user targeting, and stale flag detection."
 msgstr ""
 
 #: src/Admin/EditScreen.php:40
@@ -479,7 +479,6 @@ msgid "Edit Flag: %s"
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:184
-#: assets/js/admin/flags/FlagsScreen.jsx:306
 msgid "Add New Flag"
 msgstr ""
 
@@ -506,6 +505,10 @@ msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:234
 msgid "Lowercase letters, digits, and underscores. E.g. new_checkout"
+msgstr ""
+
+#: assets/js/admin/flags/EditScreen.jsx:359
+msgid "Register this flag in code before saving:"
 msgstr ""
 
 #: assets/js/admin/flags/EditScreen.jsx:246
@@ -712,20 +715,18 @@ msgstr ""
 msgid "All groups"
 msgstr ""
 
-#: assets/js/admin/flags/FlagsScreen.jsx:354
-msgid "No feature flags yet"
+#: assets/js/admin/flags/FlagsScreen.jsx:497
+msgid "Flags are defined in code"
 msgstr ""
 
-#: assets/js/admin/flags/FlagsScreen.jsx:357
-msgid "Feature flags let you ship code that's switched off by default, then enable it per environment or roll it out to a percentage of users — no redeploy needed."
+#: assets/js/admin/flags/FlagsScreen.jsx:501
+msgid "Unlike SaaS feature flag tools, Myrk treats your codebase as the source of truth. Register flags in your plugin or theme — they appear here automatically."
 msgstr ""
 
-#: assets/js/admin/flags/FlagsScreen.jsx:360
-msgid "Register a flag in your theme or plugin, then manage it here:"
-msgstr ""
-
-#: assets/js/admin/flags/FlagsScreen.jsx:373
-msgid "Add your first flag"
+#. translators: %s: flag key
+#: assets/js/admin/flags/FlagsScreen.jsx:367
+#, js-format
+msgid "Permanently delete \"%s\" and all its state? This cannot be undone."
 msgstr ""
 
 #: assets/js/admin/flags/FlagsScreen.jsx:383
