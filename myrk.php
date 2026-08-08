@@ -6,7 +6,7 @@
  * Version:           1.0.0
  * Requires at least: 7.0
  * Requires PHP:      8.1
- * Author:            Myrk
+ * Author:            Bjorn Holine
  * Author URI:        https://myrk.build
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
