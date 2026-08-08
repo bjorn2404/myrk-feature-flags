@@ -1,5 +1,6 @@
 .git
 .github
+wp-org-assets
 .claude
 node_modules
 vendor
