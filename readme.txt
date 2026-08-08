@@ -57,8 +57,11 @@ Yes. The percentage rollout uses deterministic hashing — the same user always 
 
 == Screenshots ==
 
-1. Flags list — environment switcher, status, rollout percentage, and stale badges.
-2. Flag edit screen — create or update a flag with label, lifecycle, tags, and group.
+1. Flags list — group badges, enabled/disabled status pills, rollout percentage bars, target counts, and stale badges across a realistic set of flags.
+2. Groups screen — feature-area groups and sprint groups each showing flag counts and optional external reference links.
+3. Edit flag (top) — flag definition card alongside the rollout panel (enabled toggle and percentage slider) and auto-generated PHP/JS code snippets.
+4. Edit flag (bottom) — behavior settings (lifecycle, default state, rewind strategy) and a targeting rule locking the flag on for administrators.
+5. Stale flag detection — three flags backdated past the 90-day threshold each displaying a STALE badge, demonstrating the built-in hygiene signal.
 
 == Changelog ==
 
