@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk;
 
 /**
  * Static registry holding all flags registered in code via Myrk::register().

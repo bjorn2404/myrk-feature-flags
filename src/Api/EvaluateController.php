@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Api;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Api;
 
 use Myrk\Evaluator;
 use Myrk\Registry;
