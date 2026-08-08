@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Admin;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Admin;
 
 /**
  * Admin menu page for the DataViews flags list.

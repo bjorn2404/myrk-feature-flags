@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk;
 
 use Myrk\Database\FlagRepository;
 use Myrk\Database\StateWriter;

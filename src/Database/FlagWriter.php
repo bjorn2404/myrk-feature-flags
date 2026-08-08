@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Database;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Database;
 
 /**
  * Handles insert, update, and delete operations for flag definitions and targeting rules.

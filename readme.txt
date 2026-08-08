@@ -1,4 +1,4 @@
-=== Myrk — Enterprise Feature Flags ===
+=== Myrk Feature Flags ===
 Contributors: bjorn2404
 Tags: feature flags, trunk-based development, progressive rollout, devops
 Requires at least: 7.0

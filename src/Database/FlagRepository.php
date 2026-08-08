@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Database;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Database;
 
 /**
  * Central read repository for flag definitions, environment state, and targeting rules.

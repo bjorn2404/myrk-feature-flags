@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk;
 
 /**
  * Registers the myrk-flags script and populates window.myrkFlags on every page

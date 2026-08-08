@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Database;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Database;
 
 use Myrk\Database\Migrations\Migration100;
 

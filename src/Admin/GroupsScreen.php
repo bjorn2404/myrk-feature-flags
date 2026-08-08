@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Admin;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Admin;
 
 /**
  * Visible submenu page under the Myrk top-level menu.

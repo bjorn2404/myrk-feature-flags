@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk;
 
 /**
  * Immutable value object holding a flag's configuration as registered in code.

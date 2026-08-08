@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Cli;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Cli;
 
 use Myrk\Database\GroupRepository;
 use WP_CLI;

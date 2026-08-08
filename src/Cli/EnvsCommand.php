@@ -7,11 +7,11 @@
 
 declare( strict_types=1 );
 
+namespace Myrk\Cli;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Myrk\Cli;
 
 use WP_CLI;
 use WP_CLI_Command;
