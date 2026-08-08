@@ -6,7 +6,13 @@ import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import { Notice, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check, closeSmall, pencil, trash } from '@wordpress/icons';
-import { fetchFlags, fetchGroups, enableFlag, disableFlag, deleteFlag } from './api';
+import {
+	fetchFlags,
+	fetchGroups,
+	enableFlag,
+	disableFlag,
+	deleteFlag,
+} from './api';
 
 const { currentEnv, editUrl } = window.myrkAdminFlags ?? {};
 const env = currentEnv ?? 'production';
@@ -352,9 +358,10 @@ export function FlagsScreen() {
 				callback: async ( items ) => {
 					const item = items[ 0 ];
 					if (
+						// eslint-disable-next-line no-alert
 						! window.confirm(
-							/* translators: %s: flag key */
 							sprintf(
+								/* translators: %s: flag key */
 								__(
 									'Permanently delete "%s" and all its state? This cannot be undone.',
 									'myrk'
