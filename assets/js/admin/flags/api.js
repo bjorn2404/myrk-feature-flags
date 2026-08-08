@@ -87,18 +87,20 @@ export async function deleteFlag( flagKey ) {
 /**
  * @param {string} flagKey
  * @param {string} env
- * @return {Promise<Array>}
+ * @return {Promise<Array>} Resolves with the list of targeting rules.
  */
 export async function fetchTargets( flagKey, env ) {
 	return apiFetch( {
-		url: `${ REST_BASE }/flags/${ flagKey }/targets?env=${ encodeURIComponent( env ) }`,
+		url:
+			`${ REST_BASE }/flags/${ flagKey }/targets?env=` +
+			encodeURIComponent( env ),
 	} );
 }
 
 /**
  * @param {string} flagKey
- * @param {{ env: string, type: string, operator: string, value: string, enabled?: boolean }} data
- * @return {Promise<object>}
+ * @param {Object} data    Target data: env, type, operator, value, enabled.
+ * @return {Promise<object>} Resolves with the created target.
  */
 export async function createTarget( flagKey, data ) {
 	return apiFetch( {
@@ -111,8 +113,8 @@ export async function createTarget( flagKey, data ) {
 /**
  * @param {string} flagKey
  * @param {number} id
- * @param {{ enabled?: boolean }} changes
- * @return {Promise<object>}
+ * @param {Object} changes Fields to patch (e.g. enabled).
+ * @return {Promise<object>} Resolves with the updated target.
  */
 export async function updateTarget( flagKey, id, changes ) {
 	return apiFetch( {
@@ -125,7 +127,7 @@ export async function updateTarget( flagKey, id, changes ) {
 /**
  * @param {string} flagKey
  * @param {number} id
- * @return {Promise<void>}
+ * @return {Promise<void>} Resolves when the target is deleted.
  */
 export async function deleteTarget( flagKey, id ) {
 	return apiFetch( {

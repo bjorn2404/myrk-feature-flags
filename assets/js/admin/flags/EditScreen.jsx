@@ -1,7 +1,13 @@
 /**
  * DataForm create/edit flag screen.
  */
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from '@wordpress/element';
+import {
+	useState,
+	useEffect,
+	useRef,
+	forwardRef,
+	useImperativeHandle,
+} from '@wordpress/element';
 import {
 	Button,
 	TextControl,
@@ -25,7 +31,6 @@ import {
 	updateEnvState,
 	fetchGroups,
 	createGroup,
-	fetchTargets,
 	createTarget,
 	updateTarget,
 	deleteTarget,
@@ -529,7 +534,6 @@ export function EditScreen() {
 							<TargetingCard
 								ref={ targetingRef }
 								flagKey={ flagKey }
-								env={ env }
 								targets={ targets }
 								onTargetsChange={ setTargets }
 							/>
@@ -680,12 +684,11 @@ const TARGET_OP_LABELS = {
 const defaultNewTarget = { type: 'role', operator: 'equals', value: '' };
 
 const TargetingCard = forwardRef( function TargetingCard(
-	{ flagKey, env, targets, onTargetsChange },
+	{ flagKey, targets, onTargetsChange },
 	ref
 ) {
 	const [ showForm, setShowForm ] = useState( false );
 	const [ newTarget, setNewTarget ] = useState( defaultNewTarget );
-	const [ saving, setSaving ] = useState( false );
 	const [ error, setError ] = useState( null );
 
 	useImperativeHandle( ref, () => ( {
@@ -703,12 +706,59 @@ const TargetingCard = forwardRef( function TargetingCard(
 			...( key === 'type' ? { value: '' } : {} ),
 		} ) );
 
+	const renderValueControl = () => {
+		if ( newTarget.type === 'role' && newTarget.operator !== 'in_list' ) {
+			return (
+				<SelectControl
+					label={ __( 'Value', 'myrk' ) }
+					value={ newTarget.value }
+					options={ ROLE_OPTIONS }
+					onChange={ updateNew( 'value' ) }
+					__nextHasNoMarginBottom
+				/>
+			);
+		}
+		if (
+			newTarget.type === 'capability' &&
+			newTarget.operator !== 'in_list'
+		) {
+			return (
+				<SelectControl
+					label={ __( 'Value', 'myrk' ) }
+					value={ newTarget.value }
+					options={ CAPABILITY_OPTIONS }
+					onChange={ updateNew( 'value' ) }
+					__nextHasNoMarginBottom
+				/>
+			);
+		}
+		const placeholders = {
+			user_id: __( 'e.g. 123 or 123,456 for in list', 'myrk' ),
+			email_domain: __( 'e.g. acme.com', 'myrk' ),
+			role: __( 'e.g. administrator,editor', 'myrk' ),
+			capability: __( 'e.g. edit_posts,publish_posts', 'myrk' ),
+		};
+		return (
+			<TextControl
+				label={ __( 'Value', 'myrk' ) }
+				value={ newTarget.value }
+				onChange={ updateNew( 'value' ) }
+				placeholder={ placeholders[ newTarget.type ] ?? '' }
+				help={
+					newTarget.operator === 'in_list'
+						? __( 'Comma-separated list of values.', 'myrk' )
+						: undefined
+				}
+				__nextHasNoMarginBottom
+			/>
+		);
+	};
+
 	const handleAdd = async () => {
 		if ( ! newTarget.value.trim() ) {
 			setError( __( 'Please select or enter a value.', 'myrk' ) );
 			return;
 		}
-		setSaving( true );
 		setError( null );
 		try {
 			const created = await createTarget( flagKey, {
@@ -721,8 +771,6 @@ const TargetingCard = forwardRef( function TargetingCard(
 			setShowForm( false );
 		} catch ( err ) {
 			setError( err?.message ?? __( 'Failed to add rule.', 'myrk' ) );
-		} finally {
-			setSaving( false );
 		}
 	};
 
@@ -742,7 +790,9 @@ const TargetingCard = forwardRef( function TargetingCard(
 	const handleDelete = async ( target ) => {
 		try {
 			await deleteTarget( flagKey, target.id );
-			onTargetsChange( ( prev ) => prev.filter( ( t ) => t.id !== target.id ) );
+			onTargetsChange( ( prev ) =>
+				prev.filter( ( t ) => t.id !== target.id )
+			);
 		} catch ( err ) {
 			setError( err?.message ?? __( 'Failed to delete rule.', 'myrk' ) );
 		}
@@ -774,14 +824,20 @@ const TargetingCard = forwardRef( function TargetingCard(
 						{ targets.map( ( t ) => (
 							<div
 								key={ t.id }
-								className={ `myrk-target-row${ t.enabled ? '' : ' myrk-target-row--disabled' }` }
+								className={ `myrk-target-row${
+									t.enabled
+										? ''
+										: ' myrk-target-row--disabled'
+								}` }
 							>
 								<span className="myrk-target-row__rule">
 									<span className="myrk-target-row__type">
-										{ TARGET_TYPE_LABELS[ t.type ] ?? t.type }
+										{ TARGET_TYPE_LABELS[ t.type ] ??
+											t.type }
 									</span>
 									<span className="myrk-target-row__op">
-										{ TARGET_OP_LABELS[ t.operator ] ?? t.operator }
+										{ TARGET_OP_LABELS[ t.operator ] ??
+											t.operator }
 									</span>
 									<span className="myrk-target-row__value">
 										{ t.value }
@@ -822,44 +878,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 							onChange={ updateNew( 'operator' ) }
 							__nextHasNoMarginBottom
 						/>
-						{ newTarget.type === 'role' && newTarget.operator !== 'in_list' ? (
-							<SelectControl
-								label={ __( 'Value', 'myrk' ) }
-								value={ newTarget.value }
-								options={ ROLE_OPTIONS }
-								onChange={ updateNew( 'value' ) }
-								__nextHasNoMarginBottom
-							/>
-						) : newTarget.type === 'capability' && newTarget.operator !== 'in_list' ? (
-							<SelectControl
-								label={ __( 'Value', 'myrk' ) }
-								value={ newTarget.value }
-								options={ CAPABILITY_OPTIONS }
-								onChange={ updateNew( 'value' ) }
-								__nextHasNoMarginBottom
-							/>
-						) : (
-							<TextControl
-								label={ __( 'Value', 'myrk' ) }
-								value={ newTarget.value }
-								onChange={ updateNew( 'value' ) }
-								placeholder={
-									newTarget.type === 'user_id'
-										? __( 'e.g. 123 or 123,456 for in list', 'myrk' )
-										: newTarget.type === 'email_domain'
-										? __( 'e.g. acme.com', 'myrk' )
-										: newTarget.type === 'role'
-										? __( 'e.g. administrator,editor', 'myrk' )
-										: __( 'e.g. edit_posts,publish_posts', 'myrk' )
-								}
-								help={
-									newTarget.operator === 'in_list'
-										? __( 'Comma-separated list of values.', 'myrk' )
-										: undefined
-								}
-								__nextHasNoMarginBottom
-							/>
-						) }
+						{ renderValueControl() }
 						<p className="myrk-targeting-autosave-hint">
 							{ __(
 								'Rule will be saved when you click Update Flag.',
