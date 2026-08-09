@@ -28,6 +28,6 @@ myrk-brand.md
 myrk-spec.md
 .phpunit.result.cache
 .release
-myrk.zip
+myrk-feature-flags.zip
 *.log
 .DS_Store
