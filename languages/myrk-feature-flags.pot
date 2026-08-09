@@ -16,19 +16,19 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Author of the plugin
-#: myrk.php
+#: myrk-feature-flags.php
 #: src/Admin/FlagsScreen.php:38
 msgid "Myrk"
 msgstr ""
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
-#: myrk.php
+#: myrk-feature-flags.php
 msgid "https://myrk.build"
 msgstr ""
 
 #. Description of the plugin
-#: myrk.php
+#: myrk-feature-flags.php
 msgid "Enterprise feature flags for WordPress. Per-environment control, percentage rollout, user targeting, and stale flag detection."
 msgstr ""
 

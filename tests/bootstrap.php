@@ -21,7 +21,7 @@ if ( ! defined( 'WP_ENVIRONMENT_TYPE' ) ) {
 require_once $_tests_dir . '/includes/functions.php';
 
 tests_add_filter( 'muplugins_loaded', function () {
-	require dirname( __DIR__ ) . '/myrk.php';
+	require dirname( __DIR__ ) . '/myrk-feature-flags.php';
 } );
 
 // Create plugin tables once, before any test class runs.

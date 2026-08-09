@@ -2,7 +2,7 @@
 <ruleset name="Myrk">
 	<description>Myrk plugin — WordPress coding standards with project-specific exclusions.</description>
 
-	<file>myrk.php</file>
+	<file>myrk-feature-flags.php</file>
 	<file>uninstall.php</file>
 	<file>src/</file>
 
