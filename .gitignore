@@ -29,5 +29,5 @@ myrk-spec.md
 .phpunit.result.cache
 
 # Package output
-myrk.zip
+myrk-feature-flags.zip
 .release
