@@ -58,11 +58,7 @@ class Plugin {
 		global $wpdb;
 
 		$flags = Registry::all();
-		if ( empty( $flags ) ) {
-			return;
-		}
-
-		$now = current_time( 'mysql', true );
+		$now   = current_time( 'mysql', true );
 
 		foreach ( $flags as $flag_key => $flag ) {
 			$group_id    = null !== $flag->group ? GroupRepository::get_or_create_by_name( $flag->group ) : null;
@@ -118,6 +114,20 @@ class Plugin {
 					]
 				);
 			}
+		}
+
+		// Mark any DB flags no longer in code as orphaned.
+		$registered_keys = array_keys( $flags );
+		if ( empty( $registered_keys ) ) {
+			$wpdb->query( "UPDATE {$wpdb->prefix}myrk_flags SET is_registered = 0 WHERE is_registered = 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		} else {
+			$placeholders = implode( ', ', array_fill( 0, count( $registered_keys ), '%s' ) );
+			$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->prepare(
+					"UPDATE {$wpdb->prefix}myrk_flags SET is_registered = 0 WHERE is_registered = 1 AND flag_key NOT IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					...$registered_keys
+				)
+			);
 		}
 	}
 
