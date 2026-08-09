@@ -153,7 +153,7 @@ class GroupsController extends AbstractController {
 			return new WP_Error(
 				'myrk_group_exists',
 				/* translators: %s: group name */
-				sprintf( __( 'Group "%s" already exists.', 'myrk' ), $name ),
+				sprintf( __( 'Group "%s" already exists.', 'myrk-feature-flags' ), $name ),
 				[ 'status' => 409 ]
 			);
 		}
@@ -170,7 +170,7 @@ class GroupsController extends AbstractController {
 		if ( null === $id ) {
 			return new WP_Error(
 				'myrk_create_failed',
-				__( 'Failed to create group.', 'myrk' ),
+				__( 'Failed to create group.', 'myrk-feature-flags' ),
 				[ 'status' => 500 ]
 			);
 		}
@@ -271,7 +271,7 @@ class GroupsController extends AbstractController {
 		if ( ! GroupRepository::delete( $id ) ) {
 			return new WP_Error(
 				'myrk_delete_failed',
-				__( 'Failed to delete group.', 'myrk' ),
+				__( 'Failed to delete group.', 'myrk-feature-flags' ),
 				[ 'status' => 500 ]
 			);
 		}
@@ -312,7 +312,7 @@ class GroupsController extends AbstractController {
 		return new WP_Error(
 			'myrk_group_not_found',
 			/* translators: %d: group ID */
-			sprintf( __( 'Group %d not found.', 'myrk' ), $id ),
+			sprintf( __( 'Group %d not found.', 'myrk-feature-flags' ), $id ),
 			[ 'status' => 404 ]
 		);
 	}

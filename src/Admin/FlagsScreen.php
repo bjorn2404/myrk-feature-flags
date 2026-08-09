@@ -38,8 +38,8 @@ class FlagsScreen {
 	 */
 	public function register(): void {
 		$this->hook_suffix = (string) add_menu_page(
-			__( 'Myrk — Feature Flags', 'myrk' ),
-			__( 'Myrk', 'myrk' ),
+			__( 'Myrk — Feature Flags', 'myrk-feature-flags' ),
+			__( 'Myrk', 'myrk-feature-flags' ),
 			'manage_options',
 			self::MENU_SLUG,
 			[ $this, 'render' ],
@@ -50,8 +50,8 @@ class FlagsScreen {
 		// Rename the auto-created first submenu entry.
 		add_submenu_page(
 			self::MENU_SLUG,
-			__( 'Feature Flags', 'myrk' ),
-			__( 'Feature Flags', 'myrk' ),
+			__( 'Feature Flags', 'myrk-feature-flags' ),
+			__( 'Feature Flags', 'myrk-feature-flags' ),
 			'manage_options',
 			self::MENU_SLUG,
 			[ $this, 'render' ]

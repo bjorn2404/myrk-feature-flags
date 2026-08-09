@@ -44,20 +44,20 @@ const {
 const env = currentEnv ?? 'production';
 
 const REWIND_STRATEGIES = [
-	{ label: __( 'Stepwise (safe default)', 'myrk' ), value: 'stepwise' },
-	{ label: __( 'Immediate (instant rollback)', 'myrk' ), value: 'immediate' },
+	{ label: __( 'Stepwise (safe default)', 'myrk-feature-flags' ), value: 'stepwise' },
+	{ label: __( 'Immediate (instant rollback)', 'myrk-feature-flags' ), value: 'immediate' },
 ];
 
 const ANON_STRATEGIES = [
-	{ label: __( 'IP address', 'myrk' ), value: 'ip' },
-	{ label: __( 'Session ID', 'myrk' ), value: 'session' },
-	{ label: __( 'Device fingerprint', 'myrk' ), value: 'device' },
+	{ label: __( 'IP address', 'myrk-feature-flags' ), value: 'ip' },
+	{ label: __( 'Session ID', 'myrk-feature-flags' ), value: 'session' },
+	{ label: __( 'Device fingerprint', 'myrk-feature-flags' ), value: 'device' },
 ];
 
 const LIFECYCLE_OPTIONS = [
-	{ label: __( 'Temporary — stale-eligible', 'myrk' ), value: 'temporary' },
+	{ label: __( 'Temporary — stale-eligible', 'myrk-feature-flags' ), value: 'temporary' },
 	{
-		label: __( 'Permanent — excluded from stale detection', 'myrk' ),
+		label: __( 'Permanent — excluded from stale detection', 'myrk-feature-flags' ),
 		value: 'permanent',
 	},
 ];
@@ -127,7 +127,7 @@ export function EditScreen() {
 				setNotice( {
 					type: 'error',
 					message:
-						err?.message ?? __( 'Could not load flag.', 'myrk' ),
+						err?.message ?? __( 'Could not load flag.', 'myrk-feature-flags' ),
 				} );
 				setLoading( false );
 			} );
@@ -160,7 +160,7 @@ export function EditScreen() {
 			);
 		}
 		if ( ! form.label.trim() ) {
-			errs.label = __( 'Label is required.', 'myrk' );
+			errs.label = __( 'Label is required.', 'myrk-feature-flags' );
 		}
 		setErrors( errs );
 		return Object.keys( errs ).length === 0;
@@ -181,7 +181,7 @@ export function EditScreen() {
 			setNotice( {
 				type: 'error',
 				message:
-					err?.message ?? __( 'Failed to create group.', 'myrk' ),
+					err?.message ?? __( 'Failed to create group.', 'myrk-feature-flags' ),
 			} );
 		} finally {
 			setCreatingGroup( false );
@@ -230,7 +230,7 @@ export function EditScreen() {
 
 			window.location.href = listUrl ?? 'admin.php?page=myrk';
 		} catch ( err ) {
-			const message = err?.message ?? __( 'Save failed.', 'myrk' );
+			const message = err?.message ?? __( 'Save failed.', 'myrk-feature-flags' );
 			setNotice( { type: 'error', message } );
 			setSaving( false );
 		}
@@ -256,13 +256,13 @@ export function EditScreen() {
 
 	const title = isEditing
 		? /* translators: %s: flag key */ sprintf(
-				__( 'Edit Flag: %s', 'myrk' ),
+				__( 'Edit Flag: %s', 'myrk-feature-flags' ),
 				flagKey
 		  )
-		: __( 'Add New Flag', 'myrk' );
+		: __( 'Add New Flag', 'myrk-feature-flags' );
 
 	const groupOptions = [
-		{ label: __( '— No group —', 'myrk' ), value: '' },
+		{ label: __( '— No group —', 'myrk-feature-flags' ), value: '' },
 		...groups.map( ( g ) => ( { label: g.name, value: String( g.id ) } ) ),
 	];
 
@@ -283,7 +283,7 @@ export function EditScreen() {
 			</div>
 			<h1 className="wp-heading-inline">{ title }</h1>{ ' ' }
 			<a href={ listUrl } className="page-title-action">
-				{ __( '← All flags', 'myrk' ) }
+				{ __( '← All flags', 'myrk-feature-flags' ) }
 			</a>
 			<hr className="wp-header-end" />
 			<form onSubmit={ handleSubmit }>
@@ -293,14 +293,14 @@ export function EditScreen() {
 						<Card>
 							<CardHeader>
 								<strong>
-									{ __( 'Flag Definition', 'myrk' ) }
+									{ __( 'Flag Definition', 'myrk-feature-flags' ) }
 								</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
 									<div className="myrk-field-group">
 										<TextControl
-											label={ __( 'Label', 'myrk' ) }
+											label={ __( 'Label', 'myrk-feature-flags' ) }
 											value={ form.label }
 											onChange={ handleLabelChange }
 											help={ __(
@@ -323,7 +323,7 @@ export function EditScreen() {
 
 									<div className="myrk-field-group">
 										<TextControl
-											label={ __( 'Flag Key', 'myrk' ) }
+											label={ __( 'Flag Key', 'myrk-feature-flags' ) }
 											value={ form.flag_key }
 											onChange={ handleKeyChange }
 											readOnly={ isEditing }
@@ -367,7 +367,7 @@ export function EditScreen() {
 									) }
 
 									<TextareaControl
-										label={ __( 'Description', 'myrk' ) }
+										label={ __( 'Description', 'myrk-feature-flags' ) }
 										value={ form.description }
 										onChange={ update( 'description' ) }
 										help={ __(
@@ -385,14 +385,14 @@ export function EditScreen() {
 						<Card>
 							<CardHeader>
 								<strong>
-									{ __( 'Organization', 'myrk' ) }
+									{ __( 'Organization', 'myrk-feature-flags' ) }
 								</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
 									<div>
 										<SelectControl
-											label={ __( 'Group', 'myrk' ) }
+											label={ __( 'Group', 'myrk-feature-flags' ) }
 											value={
 												form.group_id
 													? String( form.group_id )
@@ -421,7 +421,7 @@ export function EditScreen() {
 													fontSize: '12px',
 												} }
 											>
-												{ __( '+ New group', 'myrk' ) }
+												{ __( '+ New group', 'myrk-feature-flags' ) }
 											</Button>
 										) : (
 											<div className="myrk-inline-create">
@@ -449,7 +449,7 @@ export function EditScreen() {
 														! newGroupName.trim()
 													}
 												>
-													{ __( 'Create', 'myrk' ) }
+													{ __( 'Create', 'myrk-feature-flags' ) }
 												</Button>
 												<Button
 													variant="tertiary"
@@ -461,14 +461,14 @@ export function EditScreen() {
 													} }
 													disabled={ creatingGroup }
 												>
-													{ __( 'Cancel', 'myrk' ) }
+													{ __( 'Cancel', 'myrk-feature-flags' ) }
 												</Button>
 											</div>
 										) }
 									</div>
 
 									<TextControl
-										label={ __( 'Tags', 'myrk' ) }
+										label={ __( 'Tags', 'myrk-feature-flags' ) }
 										value={ form.tags }
 										onChange={ update( 'tags' ) }
 										placeholder={ __(
@@ -488,12 +488,12 @@ export function EditScreen() {
 						{ /* Behavior */ }
 						<Card>
 							<CardHeader>
-								<strong>{ __( 'Behavior', 'myrk' ) }</strong>
+								<strong>{ __( 'Behavior', 'myrk-feature-flags' ) }</strong>
 							</CardHeader>
 							<CardBody>
 								<div className="myrk-field-stack">
 									<SelectControl
-										label={ __( 'Lifecycle', 'myrk' ) }
+										label={ __( 'Lifecycle', 'myrk-feature-flags' ) }
 										value={ form.lifecycle }
 										options={ LIFECYCLE_OPTIONS }
 										onChange={ update( 'lifecycle' ) }
@@ -505,7 +505,7 @@ export function EditScreen() {
 									/>
 
 									<ToggleControl
-										label={ __( 'Default state', 'myrk' ) }
+										label={ __( 'Default state', 'myrk-feature-flags' ) }
 										help={ __(
 											'Returned when the flag has no environment state or the circuit breaker is tripped.',
 											'myrk'
@@ -563,11 +563,11 @@ export function EditScreen() {
 					<div className="myrk-edit-screen__sidebar">
 						<Card>
 							<CardHeader>
-								<strong>{ __( 'Rollout', 'myrk' ) }</strong>
+								<strong>{ __( 'Rollout', 'myrk-feature-flags' ) }</strong>
 							</CardHeader>
 							<CardBody>
 								<ToggleControl
-									label={ __( 'Enabled', 'myrk' ) }
+									label={ __( 'Enabled', 'myrk-feature-flags' ) }
 									help={ sprintf(
 										/* translators: %s: environment name */
 										__(
@@ -581,7 +581,7 @@ export function EditScreen() {
 									__nextHasNoMarginBottom
 								/>
 								<RangeControl
-									label={ __( 'Rollout percentage', 'myrk' ) }
+									label={ __( 'Rollout percentage', 'myrk-feature-flags' ) }
 									value={ form.env_percentage }
 									onChange={ update( 'env_percentage' ) }
 									min={ 0 }
@@ -615,8 +615,8 @@ export function EditScreen() {
 									} }
 								>
 									{ isEditing
-										? __( 'Update Flag', 'myrk' )
-										: __( 'Create Flag', 'myrk' ) }
+										? __( 'Update Flag', 'myrk-feature-flags' )
+										: __( 'Create Flag', 'myrk-feature-flags' ) }
 								</Button>
 							</FlexItem>
 							<FlexItem>
@@ -625,7 +625,7 @@ export function EditScreen() {
 									href={ listUrl }
 									disabled={ saving }
 								>
-									{ __( 'Cancel', 'myrk' ) }
+									{ __( 'Cancel', 'myrk-feature-flags' ) }
 								</Button>
 							</FlexItem>
 						</Flex>
@@ -641,30 +641,30 @@ export function EditScreen() {
 // -------------------------------------------------------------------------
 
 const TARGET_TYPES = [
-	{ label: __( 'Role', 'myrk' ), value: 'role' },
-	{ label: __( 'Capability', 'myrk' ), value: 'capability' },
-	{ label: __( 'User ID', 'myrk' ), value: 'user_id' },
-	{ label: __( 'Email domain', 'myrk' ), value: 'email_domain' },
+	{ label: __( 'Role', 'myrk-feature-flags' ), value: 'role' },
+	{ label: __( 'Capability', 'myrk-feature-flags' ), value: 'capability' },
+	{ label: __( 'User ID', 'myrk-feature-flags' ), value: 'user_id' },
+	{ label: __( 'Email domain', 'myrk-feature-flags' ), value: 'email_domain' },
 ];
 
 const TARGET_OPERATORS = [
-	{ label: __( 'is', 'myrk' ), value: 'equals' },
-	{ label: __( 'is not', 'myrk' ), value: 'not_equals' },
-	{ label: __( 'contains', 'myrk' ), value: 'contains' },
-	{ label: __( 'is in list', 'myrk' ), value: 'in_list' },
+	{ label: __( 'is', 'myrk-feature-flags' ), value: 'equals' },
+	{ label: __( 'is not', 'myrk-feature-flags' ), value: 'not_equals' },
+	{ label: __( 'contains', 'myrk-feature-flags' ), value: 'contains' },
+	{ label: __( 'is in list', 'myrk-feature-flags' ), value: 'in_list' },
 ];
 
 const ROLE_OPTIONS = [
-	{ label: __( '— Select role —', 'myrk' ), value: '' },
-	{ label: __( 'Administrator', 'myrk' ), value: 'administrator' },
-	{ label: __( 'Editor', 'myrk' ), value: 'editor' },
-	{ label: __( 'Author', 'myrk' ), value: 'author' },
-	{ label: __( 'Contributor', 'myrk' ), value: 'contributor' },
-	{ label: __( 'Subscriber', 'myrk' ), value: 'subscriber' },
+	{ label: __( '— Select role —', 'myrk-feature-flags' ), value: '' },
+	{ label: __( 'Administrator', 'myrk-feature-flags' ), value: 'administrator' },
+	{ label: __( 'Editor', 'myrk-feature-flags' ), value: 'editor' },
+	{ label: __( 'Author', 'myrk-feature-flags' ), value: 'author' },
+	{ label: __( 'Contributor', 'myrk-feature-flags' ), value: 'contributor' },
+	{ label: __( 'Subscriber', 'myrk-feature-flags' ), value: 'subscriber' },
 ];
 
 const CAPABILITY_OPTIONS = [
-	{ label: __( '— Select capability —', 'myrk' ), value: '' },
+	{ label: __( '— Select capability —', 'myrk-feature-flags' ), value: '' },
 	{ label: 'manage_options', value: 'manage_options' },
 	{ label: 'edit_posts', value: 'edit_posts' },
 	{ label: 'edit_pages', value: 'edit_pages' },
@@ -688,17 +688,17 @@ const CAPABILITY_OPTIONS = [
 ];
 
 const TARGET_TYPE_LABELS = {
-	role: __( 'Role', 'myrk' ),
-	capability: __( 'Capability', 'myrk' ),
-	user_id: __( 'User ID', 'myrk' ),
-	email_domain: __( 'Email domain', 'myrk' ),
+	role: __( 'Role', 'myrk-feature-flags' ),
+	capability: __( 'Capability', 'myrk-feature-flags' ),
+	user_id: __( 'User ID', 'myrk-feature-flags' ),
+	email_domain: __( 'Email domain', 'myrk-feature-flags' ),
 };
 
 const TARGET_OP_LABELS = {
-	equals: __( 'is', 'myrk' ),
-	not_equals: __( 'is not', 'myrk' ),
-	contains: __( 'contains', 'myrk' ),
-	in_list: __( 'is in list', 'myrk' ),
+	equals: __( 'is', 'myrk-feature-flags' ),
+	not_equals: __( 'is not', 'myrk-feature-flags' ),
+	contains: __( 'contains', 'myrk-feature-flags' ),
+	in_list: __( 'is in list', 'myrk-feature-flags' ),
 };
 
 const defaultNewTarget = { type: 'role', operator: 'equals', value: '' };
@@ -730,7 +730,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 		if ( newTarget.type === 'role' && newTarget.operator !== 'in_list' ) {
 			return (
 				<SelectControl
-					label={ __( 'Value', 'myrk' ) }
+					label={ __( 'Value', 'myrk-feature-flags' ) }
 					value={ newTarget.value }
 					options={ ROLE_OPTIONS }
 					onChange={ updateNew( 'value' ) }
@@ -744,7 +744,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 		) {
 			return (
 				<SelectControl
-					label={ __( 'Value', 'myrk' ) }
+					label={ __( 'Value', 'myrk-feature-flags' ) }
 					value={ newTarget.value }
 					options={ CAPABILITY_OPTIONS }
 					onChange={ updateNew( 'value' ) }
@@ -753,20 +753,20 @@ const TargetingCard = forwardRef( function TargetingCard(
 			);
 		}
 		const placeholders = {
-			user_id: __( 'e.g. 123 or 123,456 for in list', 'myrk' ),
-			email_domain: __( 'e.g. acme.com', 'myrk' ),
-			role: __( 'e.g. administrator,editor', 'myrk' ),
-			capability: __( 'e.g. edit_posts,publish_posts', 'myrk' ),
+			user_id: __( 'e.g. 123 or 123,456 for in list', 'myrk-feature-flags' ),
+			email_domain: __( 'e.g. acme.com', 'myrk-feature-flags' ),
+			role: __( 'e.g. administrator,editor', 'myrk-feature-flags' ),
+			capability: __( 'e.g. edit_posts,publish_posts', 'myrk-feature-flags' ),
 		};
 		return (
 			<TextControl
-				label={ __( 'Value', 'myrk' ) }
+				label={ __( 'Value', 'myrk-feature-flags' ) }
 				value={ newTarget.value }
 				onChange={ updateNew( 'value' ) }
 				placeholder={ placeholders[ newTarget.type ] ?? '' }
 				help={
 					newTarget.operator === 'in_list'
-						? __( 'Comma-separated list of values.', 'myrk' )
+						? __( 'Comma-separated list of values.', 'myrk-feature-flags' )
 						: undefined
 				}
 				__nextHasNoMarginBottom
@@ -776,7 +776,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 
 	const handleAdd = async () => {
 		if ( ! newTarget.value.trim() ) {
-			setError( __( 'Please select or enter a value.', 'myrk' ) );
+			setError( __( 'Please select or enter a value.', 'myrk-feature-flags' ) );
 			return;
 		}
 		setError( null );
@@ -790,7 +790,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 			setNewTarget( defaultNewTarget );
 			setShowForm( false );
 		} catch ( err ) {
-			setError( err?.message ?? __( 'Failed to add rule.', 'myrk' ) );
+			setError( err?.message ?? __( 'Failed to add rule.', 'myrk-feature-flags' ) );
 		}
 	};
 
@@ -803,7 +803,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 				prev.map( ( t ) => ( t.id === target.id ? updated : t ) )
 			);
 		} catch ( err ) {
-			setError( err?.message ?? __( 'Failed to update rule.', 'myrk' ) );
+			setError( err?.message ?? __( 'Failed to update rule.', 'myrk-feature-flags' ) );
 		}
 	};
 
@@ -814,14 +814,14 @@ const TargetingCard = forwardRef( function TargetingCard(
 				prev.filter( ( t ) => t.id !== target.id )
 			);
 		} catch ( err ) {
-			setError( err?.message ?? __( 'Failed to delete rule.', 'myrk' ) );
+			setError( err?.message ?? __( 'Failed to delete rule.', 'myrk-feature-flags' ) );
 		}
 	};
 
 	return (
 		<Card>
 			<CardHeader>
-				<strong>{ __( 'Targeting', 'myrk' ) }</strong>
+				<strong>{ __( 'Targeting', 'myrk-feature-flags' ) }</strong>
 			</CardHeader>
 			<CardBody>
 				{ error && (
@@ -875,7 +875,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 										onClick={ () => handleDelete( t ) }
 										size="small"
 									>
-										{ __( 'Remove', 'myrk' ) }
+										{ __( 'Remove', 'myrk-feature-flags' ) }
 									</Button>
 								</span>
 							</div>
@@ -885,14 +885,14 @@ const TargetingCard = forwardRef( function TargetingCard(
 				{ showForm && (
 					<div className="myrk-target-form">
 						<SelectControl
-							label={ __( 'Type', 'myrk' ) }
+							label={ __( 'Type', 'myrk-feature-flags' ) }
 							value={ newTarget.type }
 							options={ TARGET_TYPES }
 							onChange={ updateNew( 'type' ) }
 							__nextHasNoMarginBottom
 						/>
 						<SelectControl
-							label={ __( 'Operator', 'myrk' ) }
+							label={ __( 'Operator', 'myrk-feature-flags' ) }
 							value={ newTarget.operator }
 							options={ TARGET_OPERATORS }
 							onChange={ updateNew( 'operator' ) }
@@ -914,7 +914,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 							} }
 							style={ { fontSize: '12px' } }
 						>
-							{ __( 'Discard', 'myrk' ) }
+							{ __( 'Discard', 'myrk-feature-flags' ) }
 						</Button>
 					</div>
 				) }
@@ -926,7 +926,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 					} }
 					className="myrk-add-target-btn"
 				>
-					{ __( '+ Add targeting rule', 'myrk' ) }
+					{ __( '+ Add targeting rule', 'myrk-feature-flags' ) }
 				</Button>
 			</CardBody>
 		</Card>
@@ -951,7 +951,7 @@ function CodeCard( { flagKey } ) {
 	return (
 		<Card>
 			<CardHeader>
-				<strong>{ __( 'Use in code', 'myrk' ) }</strong>
+				<strong>{ __( 'Use in code', 'myrk-feature-flags' ) }</strong>
 			</CardHeader>
 			<CardBody>
 				<div className="myrk-field-stack" style={ { gap: '12px' } }>
