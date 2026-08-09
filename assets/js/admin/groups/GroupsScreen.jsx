@@ -147,7 +147,7 @@ export function GroupsScreen() {
 				/* translators: %s: group name */
 				__(
 					'Delete group "%s"? Flags in this group will be ungrouped.',
-					'myrk'
+					'myrk-feature-flags'
 				),
 				group.name
 			)
@@ -361,11 +361,11 @@ export function GroupsScreen() {
 									onChange={ updatePanel( 'name' ) }
 									placeholder={ __(
 										'e.g. Sprint 42',
-										'myrk'
+										'myrk-feature-flags'
 									) }
 									help={ __(
 										'Used to group flags in the flags list and in code via the group: argument.',
-										'myrk'
+										'myrk-feature-flags'
 									) }
 									className={
 										panelErrors.name
@@ -387,7 +387,7 @@ export function GroupsScreen() {
 								onChange={ updatePanel( 'description' ) }
 								placeholder={ __(
 									'What does this group represent?',
-									'myrk'
+									'myrk-feature-flags'
 								) }
 								rows={ 2 }
 								__nextHasNoMarginBottom
@@ -399,11 +399,11 @@ export function GroupsScreen() {
 								onChange={ updatePanel( 'external_ref' ) }
 								placeholder={ __(
 									'e.g. JIRA-123 or #sprint-42',
-									'myrk'
+									'myrk-feature-flags'
 								) }
 								help={ __(
 									'Short identifier — shown as a link in the table if a URL is provided.',
-									'myrk'
+									'myrk-feature-flags'
 								) }
 								__nextHasNoMarginBottom
 							/>
@@ -412,7 +412,7 @@ export function GroupsScreen() {
 								<TextControl
 									label={ __(
 										'External reference URL',
-										'myrk'
+										'myrk-feature-flags'
 									) }
 									value={ panel.external_ref_url }
 									onChange={ updatePanel(
@@ -486,7 +486,7 @@ function EmptyState( { onAdd } ) {
 			<p className="myrk-empty-state__description">
 				{ __(
 					'Groups let you organize flags by sprint, release, or initiative — and link them to your project management tool.',
-					'myrk'
+					'myrk-feature-flags'
 				) }
 			</p>
 			<p className="myrk-empty-state__description">
