@@ -63,21 +63,21 @@ class EnvsCommand extends WP_CLI_Command {
 		$format  = $assoc_args['format'] ?? 'table';
 
 		if ( '' === $from || '' === $to ) {
-			WP_CLI::error( __( '--from and --to are required.', 'myrk' ) );
+			WP_CLI::error( __( '--from and --to are required.', 'myrk-feature-flags' ) );
 		}
 
 		if ( $from === $to ) {
-			WP_CLI::error( __( '--from and --to must differ.', 'myrk' ) );
+			WP_CLI::error( __( '--from and --to must differ.', 'myrk-feature-flags' ) );
 		}
 
 		$valid_envs = [ 'production', 'staging', 'development', 'local' ];
 		if ( ! in_array( $from, $valid_envs, true ) ) {
 			/* translators: %s: environment name */
-			WP_CLI::error( sprintf( __( 'Invalid environment: %s', 'myrk' ), $from ) );
+			WP_CLI::error( sprintf( __( 'Invalid environment: %s', 'myrk-feature-flags' ), $from ) );
 		}
 		if ( ! in_array( $to, $valid_envs, true ) ) {
 			/* translators: %s: environment name */
-			WP_CLI::error( sprintf( __( 'Invalid environment: %s', 'myrk' ), $to ) );
+			WP_CLI::error( sprintf( __( 'Invalid environment: %s', 'myrk-feature-flags' ), $to ) );
 		}
 
 		$flag_filter = isset( $assoc_args['flags'] )
@@ -97,7 +97,7 @@ class EnvsCommand extends WP_CLI_Command {
 
 		if ( ! is_array( $source_rows ) || empty( $source_rows ) ) {
 			/* translators: %s: environment name */
-			WP_CLI::warning( sprintf( __( 'No flag states found in %s environment.', 'myrk' ), $from ) );
+			WP_CLI::warning( sprintf( __( 'No flag states found in %s environment.', 'myrk-feature-flags' ), $from ) );
 			return;
 		}
 
@@ -143,13 +143,13 @@ class EnvsCommand extends WP_CLI_Command {
 
 		$count    = count( $applied );
 		/* translators: %s: git commit SHA */
-		$sha_note = ( $git_sha && ! $dry_run ) ? sprintf( __( ' [commit %s]', 'myrk' ), $git_sha ) : '';
+		$sha_note = ( $git_sha && ! $dry_run ) ? sprintf( __( ' [commit %s]', 'myrk-feature-flags' ), $git_sha ) : '';
 
 		if ( $dry_run ) {
 			WP_CLI::line(
 				sprintf(
 					/* translators: 1: count of flags, 2: source environment, 3: target environment */
-					__( 'Would copy %1$d flag state(s) from %2$s to %3$s (dry run — no changes made).', 'myrk' ),
+					__( 'Would copy %1$d flag state(s) from %2$s to %3$s (dry run — no changes made).', 'myrk-feature-flags' ),
 					$count,
 					$from,
 					$to
@@ -159,7 +159,7 @@ class EnvsCommand extends WP_CLI_Command {
 			WP_CLI::success(
 				sprintf(
 					/* translators: 1: count of flags, 2: source environment, 3: target environment */
-					__( 'Copied %1$d flag state(s) from %2$s to %3$s', 'myrk' ),
+					__( 'Copied %1$d flag state(s) from %2$s to %3$s', 'myrk-feature-flags' ),
 					$count,
 					$from,
 					$to
@@ -169,7 +169,7 @@ class EnvsCommand extends WP_CLI_Command {
 
 		if ( ! empty( $skipped ) ) {
 			/* translators: %s: comma-separated list of skipped flag keys */
-			WP_CLI::line( sprintf( __( 'Skipped: %s', 'myrk' ), implode( ', ', array_column( $skipped, 'flag_key' ) ) ) );
+			WP_CLI::line( sprintf( __( 'Skipped: %s', 'myrk-feature-flags' ), implode( ', ', array_column( $skipped, 'flag_key' ) ) ) );
 		}
 	}
 

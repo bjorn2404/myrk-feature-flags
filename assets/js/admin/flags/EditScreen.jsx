@@ -156,7 +156,7 @@ export function EditScreen() {
 		if ( ! form.flag_key.match( /^[a-z][a-z0-9_]*$/ ) ) {
 			errs.flag_key = __(
 				'Must start with a lowercase letter and contain only lowercase letters, digits, and underscores.',
-				'myrk'
+				'myrk-feature-flags'
 			);
 		}
 		if ( ! form.label.trim() ) {
@@ -305,7 +305,7 @@ export function EditScreen() {
 											onChange={ handleLabelChange }
 											help={ __(
 												'A short, human-readable name shown in this admin screen.',
-												'myrk'
+												'myrk-feature-flags'
 											) }
 											className={
 												errors.label
@@ -331,11 +331,11 @@ export function EditScreen() {
 												isEditing
 													? __(
 															'Flag key cannot be changed after creation.',
-															'myrk'
+															'myrk-feature-flags'
 													  )
 													: __(
 															'Auto-generated from label — edit to override. Lowercase letters, digits, and underscores only.',
-															'myrk'
+															'myrk-feature-flags'
 													  )
 											}
 											className={
@@ -357,7 +357,7 @@ export function EditScreen() {
 											<p className="myrk-register-hint__label">
 												{ __(
 													'Register this flag in code before saving:',
-													'myrk'
+													'myrk-feature-flags'
 												) }
 											</p>
 											<pre className="myrk-register-hint__code">
@@ -372,7 +372,7 @@ export function EditScreen() {
 										onChange={ update( 'description' ) }
 										help={ __(
 											"Helps your team remember what this flag controls and when it's safe to remove.",
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										rows={ 3 }
 										__nextHasNoMarginBottom
@@ -406,7 +406,7 @@ export function EditScreen() {
 											}
 											help={ __(
 												'Organize related flags by sprint, release, or initiative.',
-												'myrk'
+												'myrk-feature-flags'
 											) }
 											__nextHasNoMarginBottom
 										/>
@@ -428,13 +428,13 @@ export function EditScreen() {
 												<TextControl
 													label={ __(
 														'Group name',
-														'myrk'
+														'myrk-feature-flags'
 													) }
 													value={ newGroupName }
 													onChange={ setNewGroupName }
 													placeholder={ __(
 														'e.g. Sprint 42',
-														'myrk'
+														'myrk-feature-flags'
 													) }
 													__nextHasNoMarginBottom
 												/>
@@ -473,11 +473,11 @@ export function EditScreen() {
 										onChange={ update( 'tags' ) }
 										placeholder={ __(
 											'payments, checkout, v2-redesign',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										help={ __(
 											'Comma-separated. Used for filtering in the flags list.',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										__nextHasNoMarginBottom
 									/>
@@ -499,7 +499,7 @@ export function EditScreen() {
 										onChange={ update( 'lifecycle' ) }
 										help={ __(
 											'Permanent flags are excluded from stale detection.',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										__nextHasNoMarginBottom
 									/>
@@ -508,7 +508,7 @@ export function EditScreen() {
 										label={ __( 'Default state', 'myrk-feature-flags' ) }
 										help={ __(
 											'Returned when the flag has no environment state or the circuit breaker is tripped.',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										checked={ form.default_state }
 										onChange={ update( 'default_state' ) }
@@ -518,14 +518,14 @@ export function EditScreen() {
 									<SelectControl
 										label={ __(
 											'Rewind strategy',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										value={ form.rewind_strategy }
 										options={ REWIND_STRATEGIES }
 										onChange={ update( 'rewind_strategy' ) }
 										help={ __(
 											'How the circuit breaker rolls the flag back.',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										__nextHasNoMarginBottom
 									/>
@@ -533,7 +533,7 @@ export function EditScreen() {
 									<SelectControl
 										label={ __(
 											'Anonymous identifier strategy',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										value={ form.anonymous_strategy }
 										options={ ANON_STRATEGIES }
@@ -542,7 +542,7 @@ export function EditScreen() {
 										) }
 										help={ __(
 											'Used for percentage rollout when no logged-in user is available.',
-											'myrk'
+											'myrk-feature-flags'
 										) }
 										__nextHasNoMarginBottom
 									/>
@@ -572,7 +572,7 @@ export function EditScreen() {
 										/* translators: %s: environment name */
 										__(
 											'Status in the %s environment.',
-											'myrk'
+											'myrk-feature-flags'
 										),
 										env
 									) }
@@ -589,7 +589,7 @@ export function EditScreen() {
 									step={ 1 }
 									help={ __(
 										'Percentage of users who see this flag as enabled.',
-										'myrk'
+										'myrk-feature-flags'
 									) }
 									__nextHasNoMarginBottom
 								/>
@@ -836,7 +836,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 				<p className="myrk-targeting-help">
 					{ __(
 						'Rules force the flag on or off for specific users regardless of the rollout percentage.',
-						'myrk'
+						'myrk-feature-flags'
 					) }
 				</p>
 				{ targets.length > 0 && (
@@ -902,7 +902,7 @@ const TargetingCard = forwardRef( function TargetingCard(
 						<p className="myrk-targeting-autosave-hint">
 							{ __(
 								'Rule will be saved when you click Update Flag.',
-								'myrk'
+								'myrk-feature-flags'
 							) }
 						</p>
 						<Button

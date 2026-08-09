@@ -365,7 +365,7 @@ export function FlagsScreen() {
 								/* translators: %s: flag key */
 								__(
 									'Permanently delete "%s" and all its state? This cannot be undone.',
-									'myrk'
+									'myrk-feature-flags'
 								),
 								item.flag_key
 							)
@@ -499,7 +499,7 @@ function EmptyState() {
 			<p className="myrk-empty-state__description">
 				{ __(
 					'Unlike SaaS feature flag tools, Myrk treats your codebase as the source of truth. Register flags in your plugin or theme — they appear here automatically.',
-					'myrk'
+					'myrk-feature-flags'
 				) }
 			</p>
 			<pre className="myrk-empty-state__snippet">
