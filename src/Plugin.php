@@ -124,7 +124,7 @@ class Plugin {
 			$placeholders = implode( ', ', array_fill( 0, count( $registered_keys ), '%s' ) );
 			$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
-					"UPDATE {$wpdb->prefix}myrk_flags SET is_registered = 0 WHERE is_registered = 1 AND flag_key NOT IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					"UPDATE {$wpdb->prefix}myrk_flags SET is_registered = 0 WHERE is_registered = 1 AND flag_key NOT IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 					...$registered_keys
 				)
 			);
