@@ -192,7 +192,7 @@ class TargetsController extends AbstractController {
 		if ( null === $target_id ) {
 			return new WP_Error(
 				'myrk_target_create_failed',
-				__( 'Failed to create targeting rule.', 'myrk' ),
+				__( 'Failed to create targeting rule.', 'myrk-feature-flags' ),
 				[ 'status' => 500 ]
 			);
 		}
@@ -283,7 +283,7 @@ class TargetsController extends AbstractController {
 			return new WP_Error(
 				'myrk_target_not_found',
 				/* translators: %d: target ID */
-				sprintf( __( 'Targeting rule %d not found.', 'myrk' ), $target_id ),
+				sprintf( __( 'Targeting rule %d not found.', 'myrk-feature-flags' ), $target_id ),
 				[ 'status' => 404 ]
 			);
 		}

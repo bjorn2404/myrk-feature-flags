@@ -158,7 +158,7 @@ class FlagsCommand extends WP_CLI_Command {
 		$result = FlagRepository::get_with_all_environments( $flag_key );
 		if ( null === $result ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "Flag '%s' not found.", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "Flag '%s' not found.", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		$flag   = $result['flag'];
@@ -187,13 +187,13 @@ class FlagsCommand extends WP_CLI_Command {
 		}
 
 		/* translators: %s: flag key */
-		WP_CLI::line( sprintf( __( 'Flag key:    %s', 'myrk' ), $flag->flag_key ) );
+		WP_CLI::line( sprintf( __( 'Flag key:    %s', 'myrk-feature-flags' ), $flag->flag_key ) );
 		/* translators: %s: flag label */
-		WP_CLI::line( sprintf( __( 'Label:       %s', 'myrk' ), $flag->label ) );
+		WP_CLI::line( sprintf( __( 'Label:       %s', 'myrk-feature-flags' ), $flag->label ) );
 		/* translators: %s: flag description */
-		WP_CLI::line( sprintf( __( 'Description: %s', 'myrk' ), $flag->description ) );
+		WP_CLI::line( sprintf( __( 'Description: %s', 'myrk-feature-flags' ), $flag->description ) );
 		/* translators: %s: registration status (yes or orphaned) */
-		WP_CLI::line( sprintf( __( 'Registered:  %s', 'myrk' ), (bool) $flag->is_registered ? 'yes' : 'orphaned' ) );
+		WP_CLI::line( sprintf( __( 'Registered:  %s', 'myrk-feature-flags' ), (bool) $flag->is_registered ? 'yes' : 'orphaned' ) );
 		WP_CLI::line( '' );
 
 		$env_rows = [];
@@ -207,7 +207,7 @@ class FlagsCommand extends WP_CLI_Command {
 		}
 
 		if ( empty( $env_rows ) ) {
-			WP_CLI::line( __( '(no environment state — use `wp myrk flags init` or enable/disable commands)', 'myrk' ) );
+			WP_CLI::line( __( '(no environment state — use `wp myrk flags init` or enable/disable commands)', 'myrk-feature-flags' ) );
 		} else {
 			format_items( 'table', $env_rows, [ 'environment', 'status', 'percentage', 'updated_at' ] );
 		}
@@ -261,15 +261,15 @@ class FlagsCommand extends WP_CLI_Command {
 
 		if ( ! $ok ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "Failed to enable '%s'. Is the flag registered in code?", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "Failed to enable '%s'. Is the flag registered in code?", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		/* translators: %s: git commit SHA */
-		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk' ), $git_sha ) : '';
+		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk-feature-flags' ), $git_sha ) : '';
 		WP_CLI::success(
 			sprintf(
 			/* translators: 1: flag key, 2: rollout percentage, 3: environment name */
-				__( 'Enabled %1$s at %2$d%% in %3$s', 'myrk' ),
+				__( 'Enabled %1$s at %2$d%% in %3$s', 'myrk-feature-flags' ),
 				$flag_key,
 				$percentage,
 				$env
@@ -320,15 +320,15 @@ class FlagsCommand extends WP_CLI_Command {
 
 		if ( ! $ok ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "Failed to disable '%s'. Is the flag registered in code?", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "Failed to disable '%s'. Is the flag registered in code?", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		/* translators: %s: git commit SHA */
-		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk' ), $git_sha ) : '';
+		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk-feature-flags' ), $git_sha ) : '';
 		WP_CLI::success(
 			sprintf(
 			/* translators: 1: flag key, 2: environment name */
-				__( 'Disabled %1$s in %2$s', 'myrk' ),
+				__( 'Disabled %1$s in %2$s', 'myrk-feature-flags' ),
 				$flag_key,
 				$env
 			) . $sha_note
@@ -379,11 +379,11 @@ class FlagsCommand extends WP_CLI_Command {
 		);
 
 		/* translators: %s: git commit SHA */
-		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk' ), $git_sha ) : '';
+		$sha_note = $git_sha ? sprintf( __( ' [commit %s]', 'myrk-feature-flags' ), $git_sha ) : '';
 		WP_CLI::success(
 			sprintf(
 			/* translators: 1: flag key, 2: rollout percentage, 3: environment name */
-				__( 'Set %1$s to %2$d%% in %3$s', 'myrk' ),
+				__( 'Set %1$s to %2$d%% in %3$s', 'myrk-feature-flags' ),
 				$flag_key,
 				$percentage,
 				$env
@@ -420,7 +420,7 @@ class FlagsCommand extends WP_CLI_Command {
 
 		if ( ! Registry::has( $flag_key ) ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "'%s' is not registered in code. Register it with Myrk::register() first.", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "'%s' is not registered in code. Register it with Myrk::register() first.", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		$env = $assoc_args['env'] ?? wp_get_environment_type();
@@ -429,13 +429,13 @@ class FlagsCommand extends WP_CLI_Command {
 		$flag_id = FlagRepository::get_or_create_flag_id( $flag_key );
 		if ( null === $flag_id ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "Failed to initialize flag row for '%s'.", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "Failed to initialize flag row for '%s'.", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		$existing = FlagRepository::get_environment_state( $flag_key, $env );
 		if ( null !== $existing ) {
 			/* translators: 1: flag key, 2: environment name */
-			WP_CLI::warning( sprintf( __( "Flag '%1\$s' is already initialized in %2\$s. No changes made.", 'myrk' ), $flag_key, $env ) );
+			WP_CLI::warning( sprintf( __( "Flag '%1\$s' is already initialized in %2\$s. No changes made.", 'myrk-feature-flags' ), $flag_key, $env ) );
 			return;
 		}
 
@@ -451,7 +451,7 @@ class FlagsCommand extends WP_CLI_Command {
 		);
 
 		/* translators: 1: flag key, 2: environment name */
-		WP_CLI::success( sprintf( __( "Initialized '%1\$s' in %2\$s at 0%% (disabled).", 'myrk' ), $flag_key, $env ) );
+		WP_CLI::success( sprintf( __( "Initialized '%1\$s' in %2\$s at 0%% (disabled).", 'myrk-feature-flags' ), $flag_key, $env ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -489,7 +489,7 @@ class FlagsCommand extends WP_CLI_Command {
 		$orphaned        = array_diff( $all_db_keys, $registered_keys );
 
 		if ( empty( $orphaned ) ) {
-			WP_CLI::success( __( 'No orphaned flags found.', 'myrk' ) );
+			WP_CLI::success( __( 'No orphaned flags found.', 'myrk-feature-flags' ) );
 			return;
 		}
 
@@ -507,10 +507,10 @@ class FlagsCommand extends WP_CLI_Command {
 				FlagWriter::delete( $key );
 			}
 			/* translators: %d: number of orphaned flags removed */
-			WP_CLI::success( sprintf( __( 'Pruned %d orphaned flag(s).', 'myrk' ), count( $orphaned ) ) );
+			WP_CLI::success( sprintf( __( 'Pruned %d orphaned flag(s).', 'myrk-feature-flags' ), count( $orphaned ) ) );
 		} else {
 			/* translators: %d: number of orphaned flags that would be removed */
-			WP_CLI::line( sprintf( __( '%d orphaned flag(s) would be removed (re-run without --dry-run to apply).', 'myrk' ), count( $orphaned ) ) );
+			WP_CLI::line( sprintf( __( '%d orphaned flag(s) would be removed (re-run without --dry-run to apply).', 'myrk-feature-flags' ), count( $orphaned ) ) );
 		}
 	}
 
@@ -550,14 +550,14 @@ class FlagsCommand extends WP_CLI_Command {
 
 		if ( ! is_dir( $search_path ) ) {
 			/* translators: %s: directory path */
-			WP_CLI::error( sprintf( __( "Path '%s' does not exist.", 'myrk' ), $search_path ) );
+			WP_CLI::error( sprintf( __( "Path '%s' does not exist.", 'myrk-feature-flags' ), $search_path ) );
 		}
 
 		$refs = \Myrk\Cleanup::find_refs( $flag_key, $search_path );
 
 		if ( empty( $refs ) ) {
 			/* translators: 1: flag key, 2: directory path */
-			WP_CLI::warning( sprintf( __( "No references to '%1\$s' found in %2\$s.", 'myrk' ), $flag_key, $search_path ) );
+			WP_CLI::warning( sprintf( __( "No references to '%1\$s' found in %2\$s.", 'myrk-feature-flags' ), $flag_key, $search_path ) );
 			return;
 		}
 
@@ -572,7 +572,7 @@ class FlagsCommand extends WP_CLI_Command {
 
 		format_items( $format, $rows, [ 'file', 'line', 'context' ] );
 		/* translators: 1: number of references found, 2: flag key */
-		WP_CLI::line( sprintf( __( 'Found %1$d reference(s) to "%2$s".', 'myrk' ), count( $refs ), $flag_key ) );
+		WP_CLI::line( sprintf( __( 'Found %1$d reference(s) to "%2$s".', 'myrk-feature-flags' ), count( $refs ), $flag_key ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -610,7 +610,7 @@ class FlagsCommand extends WP_CLI_Command {
 		$flag = FlagRepository::get_by_key( $flag_key );
 		if ( null === $flag ) {
 			/* translators: %s: flag key */
-			WP_CLI::error( sprintf( __( "Flag '%s' not found.", 'myrk' ), $flag_key ) );
+			WP_CLI::error( sprintf( __( "Flag '%s' not found.", 'myrk-feature-flags' ), $flag_key ) );
 		}
 
 		$removing = get_flag_value( $assoc_args, 'remove', false );
@@ -618,25 +618,25 @@ class FlagsCommand extends WP_CLI_Command {
 		if ( $removing ) {
 			FlagWriter::update_definition( $flag_key, [ 'group_id' => null ] );
 			/* translators: %s: flag key */
-			WP_CLI::success( sprintf( __( "Removed group from '%s'.", 'myrk' ), $flag_key ) );
+			WP_CLI::success( sprintf( __( "Removed group from '%s'.", 'myrk-feature-flags' ), $flag_key ) );
 			return;
 		}
 
 		$group_name = trim( $args[1] ?? '' );
 		if ( '' === $group_name ) {
-			WP_CLI::error( __( 'Provide a group_name or use --remove to unassign.', 'myrk' ) );
+			WP_CLI::error( __( 'Provide a group_name or use --remove to unassign.', 'myrk-feature-flags' ) );
 		}
 
 		$group = GroupRepository::get_by_name( $group_name );
 		if ( null === $group ) {
 			/* translators: %s: group name */
-			WP_CLI::error( sprintf( __( "Group '%s' not found. Create it first with `wp myrk groups create`.", 'myrk' ), $group_name ) );
+			WP_CLI::error( sprintf( __( "Group '%s' not found. Create it first with `wp myrk groups create`.", 'myrk-feature-flags' ), $group_name ) );
 		}
 
 		FlagWriter::update_definition( $flag_key, [ 'group_id' => (int) $group->id ] );
 
 		/* translators: 1: flag key, 2: group name */
-		WP_CLI::success( sprintf( __( "Assigned '%1\$s' to group '%2\$s'.", 'myrk' ), $flag_key, $group_name ) );
+		WP_CLI::success( sprintf( __( "Assigned '%1\$s' to group '%2\$s'.", 'myrk-feature-flags' ), $flag_key, $group_name ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -650,7 +650,7 @@ class FlagsCommand extends WP_CLI_Command {
 	 */
 	private function require_flag_key( string $flag_key ): void {
 		if ( '' === $flag_key ) {
-			WP_CLI::error( __( 'flag_key is required.', 'myrk' ) );
+			WP_CLI::error( __( 'flag_key is required.', 'myrk-feature-flags' ) );
 		}
 	}
 

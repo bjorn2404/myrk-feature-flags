@@ -41,8 +41,8 @@ class EditScreen {
 	public function register(): void {
 		$this->hook_suffix = (string) add_submenu_page(
 			self::PARENT_SLUG,
-			__( 'Edit Flag — Myrk', 'myrk' ),
-			__( 'Edit Flag', 'myrk' ),
+			__( 'Edit Flag — Myrk', 'myrk-feature-flags' ),
+			__( 'Edit Flag', 'myrk-feature-flags' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			[ $this, 'render' ]

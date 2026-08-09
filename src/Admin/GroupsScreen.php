@@ -37,8 +37,8 @@ class GroupsScreen {
 	public function register(): void {
 		$this->hook_suffix = (string) add_submenu_page(
 			self::PARENT_SLUG,
-			__( 'Groups — Myrk', 'myrk' ),
-			__( 'Groups', 'myrk' ),
+			__( 'Groups — Myrk', 'myrk-feature-flags' ),
+			__( 'Groups', 'myrk-feature-flags' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			[ $this, 'render' ]

@@ -57,7 +57,7 @@ class GroupsCommand extends WP_CLI_Command {
 		$groups = GroupRepository::get_all_with_flag_counts();
 
 		if ( empty( $groups ) ) {
-			WP_CLI::line( __( 'No groups found.', 'myrk' ) );
+			WP_CLI::line( __( 'No groups found.', 'myrk-feature-flags' ) );
 			return;
 		}
 
@@ -132,21 +132,21 @@ class GroupsCommand extends WP_CLI_Command {
 		}
 
 		/* translators: %s: group name */
-		WP_CLI::line( sprintf( __( 'Name:         %s', 'myrk' ), $group->name ) );
+		WP_CLI::line( sprintf( __( 'Name:         %s', 'myrk-feature-flags' ), $group->name ) );
 		/* translators: %s: group description */
-		WP_CLI::line( sprintf( __( 'Description:  %s', 'myrk' ), $group->description ?? '' ) );
+		WP_CLI::line( sprintf( __( 'Description:  %s', 'myrk-feature-flags' ), $group->description ?? '' ) );
 		if ( $group->external_ref ) {
 			/* translators: %s: external reference identifier */
-			WP_CLI::line( sprintf( __( 'External ref: %s', 'myrk' ), $group->external_ref ) );
+			WP_CLI::line( sprintf( __( 'External ref: %s', 'myrk-feature-flags' ), $group->external_ref ) );
 		}
 		if ( $group->external_ref_url ) {
 			/* translators: %s: external reference URL */
-			WP_CLI::line( sprintf( __( 'Ref URL:      %s', 'myrk' ), $group->external_ref_url ) );
+			WP_CLI::line( sprintf( __( 'Ref URL:      %s', 'myrk-feature-flags' ), $group->external_ref_url ) );
 		}
 		WP_CLI::line( '' );
 
 		if ( empty( $flags ) ) {
-			WP_CLI::line( __( '(no flags in this group)', 'myrk' ) );
+			WP_CLI::line( __( '(no flags in this group)', 'myrk-feature-flags' ) );
 		} else {
 			$flag_rows = array_map(
 				fn( $f ) => [
@@ -194,12 +194,12 @@ class GroupsCommand extends WP_CLI_Command {
 	public function create( array $args, array $assoc_args ): void {
 		$name = trim( $args[0] ?? '' );
 		if ( '' === $name ) {
-			WP_CLI::error( __( 'name is required.', 'myrk' ) );
+			WP_CLI::error( __( 'name is required.', 'myrk-feature-flags' ) );
 		}
 
 		if ( null !== GroupRepository::get_by_name( $name ) ) {
 			/* translators: %s: group name */
-			WP_CLI::error( sprintf( __( "A group named '%s' already exists.", 'myrk' ), $name ) );
+			WP_CLI::error( sprintf( __( "A group named '%s' already exists.", 'myrk-feature-flags' ), $name ) );
 		}
 
 		$id = GroupRepository::create(
@@ -212,11 +212,11 @@ class GroupsCommand extends WP_CLI_Command {
 		);
 
 		if ( null === $id ) {
-			WP_CLI::error( __( 'Failed to create group.', 'myrk' ) );
+			WP_CLI::error( __( 'Failed to create group.', 'myrk-feature-flags' ) );
 		}
 
 		/* translators: 1: group name, 2: new group ID */
-		WP_CLI::success( sprintf( __( "Created group '%1\$s' (ID %2\$d).", 'myrk' ), $name, $id ) );
+		WP_CLI::success( sprintf( __( "Created group '%1\$s' (ID %2\$d).", 'myrk-feature-flags' ), $name, $id ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -272,14 +272,14 @@ class GroupsCommand extends WP_CLI_Command {
 		}
 
 		if ( empty( $changes ) ) {
-			WP_CLI::warning( __( 'No changes specified.', 'myrk' ) );
+			WP_CLI::warning( __( 'No changes specified.', 'myrk-feature-flags' ) );
 			return;
 		}
 
 		GroupRepository::update( (int) $group->id, $changes );
 
 		/* translators: %s: group name */
-		WP_CLI::success( sprintf( __( "Updated group '%s'.", 'myrk' ), $group->name ) );
+		WP_CLI::success( sprintf( __( "Updated group '%s'.", 'myrk-feature-flags' ), $group->name ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -312,17 +312,17 @@ class GroupsCommand extends WP_CLI_Command {
 
 		WP_CLI::confirm(
 			/* translators: %s: group name */
-			sprintf( __( "Delete group '%s'? Flags in this group will be ungrouped.", 'myrk' ), $group->name ),
+			sprintf( __( "Delete group '%s'? Flags in this group will be ungrouped.", 'myrk-feature-flags' ), $group->name ),
 			$assoc_args
 		);
 
 		if ( ! GroupRepository::delete( (int) $group->id ) ) {
 			/* translators: %s: group name */
-			WP_CLI::error( sprintf( __( "Failed to delete group '%s'.", 'myrk' ), $group->name ) );
+			WP_CLI::error( sprintf( __( "Failed to delete group '%s'.", 'myrk-feature-flags' ), $group->name ) );
 		}
 
 		/* translators: %s: group name */
-		WP_CLI::success( sprintf( __( "Deleted group '%s'.", 'myrk' ), $group->name ) );
+		WP_CLI::success( sprintf( __( "Deleted group '%s'.", 'myrk-feature-flags' ), $group->name ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -337,13 +337,13 @@ class GroupsCommand extends WP_CLI_Command {
 	 */
 	private function require_group( string $name ): object {
 		if ( '' === $name ) {
-			WP_CLI::error( __( 'name is required.', 'myrk' ) );
+			WP_CLI::error( __( 'name is required.', 'myrk-feature-flags' ) );
 		}
 
 		$group = GroupRepository::get_by_name( $name );
 		if ( null === $group ) {
 			/* translators: %s: group name */
-			WP_CLI::error( sprintf( __( "Group '%s' not found.", 'myrk' ), $name ) );
+			WP_CLI::error( sprintf( __( "Group '%s' not found.", 'myrk-feature-flags' ), $name ) );
 		}
 
 		return $group;

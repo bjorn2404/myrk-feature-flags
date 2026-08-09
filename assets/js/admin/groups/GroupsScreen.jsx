@@ -60,7 +60,7 @@ export function GroupsScreen() {
 				setNotice( {
 					type: 'error',
 					message:
-						err?.message ?? __( 'Failed to load groups.', 'myrk' ),
+						err?.message ?? __( 'Failed to load groups.', 'myrk-feature-flags' ),
 				} );
 				setLoading( false );
 			} );
@@ -97,13 +97,13 @@ export function GroupsScreen() {
 	const validatePanel = () => {
 		const errs = {};
 		if ( ! panel.name.trim() ) {
-			errs.name = __( 'Group name is required.', 'myrk' );
+			errs.name = __( 'Group name is required.', 'myrk-feature-flags' );
 		}
 		if (
 			panel.external_ref_url &&
 			! isValidUrl( panel.external_ref_url )
 		) {
-			errs.external_ref_url = __( 'Must be a valid URL.', 'myrk' );
+			errs.external_ref_url = __( 'Must be a valid URL.', 'myrk-feature-flags' );
 		}
 		setPanelErrors( errs );
 		return Object.keys( errs ).length === 0;
@@ -133,7 +133,7 @@ export function GroupsScreen() {
 		} catch ( err ) {
 			setNotice( {
 				type: 'error',
-				message: err?.message ?? __( 'Save failed.', 'myrk' ),
+				message: err?.message ?? __( 'Save failed.', 'myrk-feature-flags' ),
 			} );
 		} finally {
 			setSaving( false );
@@ -162,7 +162,7 @@ export function GroupsScreen() {
 				type: 'success',
 				message: sprintf(
 					/* translators: %s: group name */
-					__( '"%s" deleted.', 'myrk' ),
+					__( '"%s" deleted.', 'myrk-feature-flags' ),
 					group.name
 				),
 			} );
@@ -170,7 +170,7 @@ export function GroupsScreen() {
 		} catch ( err ) {
 			setNotice( {
 				type: 'error',
-				message: err?.message ?? __( 'Delete failed.', 'myrk' ),
+				message: err?.message ?? __( 'Delete failed.', 'myrk-feature-flags' ),
 			} );
 		}
 	};
@@ -183,13 +183,13 @@ export function GroupsScreen() {
 		() => [
 			{
 				id: 'name',
-				label: __( 'Name', 'myrk' ),
+				label: __( 'Name', 'myrk-feature-flags' ),
 				enableSorting: true,
 				getValue: ( { item } ) => item.name,
 			},
 			{
 				id: 'description',
-				label: __( 'Description', 'myrk' ),
+				label: __( 'Description', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.description ?? '',
 				render: ( { item } ) =>
 					item.description ? (
@@ -200,7 +200,7 @@ export function GroupsScreen() {
 			},
 			{
 				id: 'flag_count',
-				label: __( 'Flags', 'myrk' ),
+				label: __( 'Flags', 'myrk-feature-flags' ),
 				enableSorting: true,
 				getValue: ( { item } ) => Number( item.flag_count ?? 0 ),
 				render: ( { item } ) => {
@@ -223,7 +223,7 @@ export function GroupsScreen() {
 			},
 			{
 				id: 'external_ref',
-				label: __( 'External Ref', 'myrk' ),
+				label: __( 'External Ref', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.external_ref ?? '',
 				render: ( { item } ) => {
 					if ( ! item.external_ref ) {
@@ -256,13 +256,13 @@ export function GroupsScreen() {
 		() => [
 			{
 				id: 'edit',
-				label: __( 'Edit', 'myrk' ),
+				label: __( 'Edit', 'myrk-feature-flags' ),
 				icon: pencil,
 				callback: ( items ) => openEdit( items[ 0 ] ),
 			},
 			{
 				id: 'delete',
-				label: __( 'Delete', 'myrk' ),
+				label: __( 'Delete', 'myrk-feature-flags' ),
 				icon: trash,
 				isDestructive: true,
 				callback: ( items ) => handleDelete( items[ 0 ] ),
@@ -318,14 +318,14 @@ export function GroupsScreen() {
 				<span className="myrk-brand-mark__rune">ᛗ</span>
 				<span className="myrk-brand-mark__wordmark">myrk</span>
 			</div>
-			<h1 className="wp-heading-inline">{ __( 'Groups', 'myrk' ) }</h1>{ ' ' }
+			<h1 className="wp-heading-inline">{ __( 'Groups', 'myrk-feature-flags' ) }</h1>{ ' ' }
 			{ ! panel && (
 				<button
 					type="button"
 					className="page-title-action"
 					onClick={ openCreate }
 				>
-					{ __( 'Add New Group', 'myrk' ) }
+					{ __( 'Add New Group', 'myrk-feature-flags' ) }
 				</button>
 			) }
 			<hr className="wp-header-end" />
@@ -344,10 +344,10 @@ export function GroupsScreen() {
 					<CardHeader>
 						<strong>
 							{ isCreating
-								? __( 'New Group', 'myrk' )
+								? __( 'New Group', 'myrk-feature-flags' )
 								: sprintf(
 										/* translators: %s: group name */
-										__( 'Edit: %s', 'myrk' ),
+										__( 'Edit: %s', 'myrk-feature-flags' ),
 										panel.name
 								  ) }
 						</strong>
@@ -356,7 +356,7 @@ export function GroupsScreen() {
 						<div className="myrk-field-stack">
 							<div className="myrk-field-group">
 								<TextControl
-									label={ __( 'Name', 'myrk' ) }
+									label={ __( 'Name', 'myrk-feature-flags' ) }
 									value={ panel.name }
 									onChange={ updatePanel( 'name' ) }
 									placeholder={ __(
@@ -382,7 +382,7 @@ export function GroupsScreen() {
 							</div>
 
 							<TextareaControl
-								label={ __( 'Description', 'myrk' ) }
+								label={ __( 'Description', 'myrk-feature-flags' ) }
 								value={ panel.description }
 								onChange={ updatePanel( 'description' ) }
 								placeholder={ __(
@@ -394,7 +394,7 @@ export function GroupsScreen() {
 							/>
 
 							<TextControl
-								label={ __( 'External reference', 'myrk' ) }
+								label={ __( 'External reference', 'myrk-feature-flags' ) }
 								value={ panel.external_ref }
 								onChange={ updatePanel( 'external_ref' ) }
 								placeholder={ __(
@@ -443,8 +443,8 @@ export function GroupsScreen() {
 										disabled={ saving }
 									>
 										{ isCreating
-											? __( 'Create Group', 'myrk' )
-											: __( 'Update Group', 'myrk' ) }
+											? __( 'Create Group', 'myrk-feature-flags' )
+											: __( 'Update Group', 'myrk-feature-flags' ) }
 									</Button>
 								</FlexItem>
 								<FlexItem>
@@ -453,7 +453,7 @@ export function GroupsScreen() {
 										onClick={ closePanel }
 										disabled={ saving }
 									>
-										{ __( 'Cancel', 'myrk' ) }
+										{ __( 'Cancel', 'myrk-feature-flags' ) }
 									</Button>
 								</FlexItem>
 							</Flex>
@@ -481,7 +481,7 @@ function EmptyState( { onAdd } ) {
 		<div className="myrk-empty-state">
 			<span className="myrk-empty-state__rune">ᛗ</span>
 			<h2 className="myrk-empty-state__heading">
-				{ __( 'No groups yet', 'myrk' ) }
+				{ __( 'No groups yet', 'myrk-feature-flags' ) }
 			</h2>
 			<p className="myrk-empty-state__description">
 				{ __(
@@ -490,7 +490,7 @@ function EmptyState( { onAdd } ) {
 				) }
 			</p>
 			<p className="myrk-empty-state__description">
-				{ __( 'You can also create a group in code:', 'myrk' ) }
+				{ __( 'You can also create a group in code:', 'myrk-feature-flags' ) }
 			</p>
 			<pre className="myrk-empty-state__snippet">
 				{ [
@@ -504,7 +504,7 @@ function EmptyState( { onAdd } ) {
 				className="button button-primary button-large"
 				onClick={ onAdd }
 			>
-				{ __( 'Add your first group', 'myrk' ) }
+				{ __( 'Add your first group', 'myrk-feature-flags' ) }
 			</button>
 		</div>
 	);

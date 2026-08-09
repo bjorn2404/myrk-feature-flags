@@ -79,7 +79,7 @@ class EvaluateController extends AbstractController {
 			return new WP_Error(
 				'myrk_flag_not_found',
 				/* translators: %s: flag key */
-				sprintf( __( 'Flag "%s" is not registered.', 'myrk' ), $flag_key ),
+				sprintf( __( 'Flag "%s" is not registered.', 'myrk-feature-flags' ), $flag_key ),
 				[ 'status' => 404 ]
 			);
 		}
@@ -125,7 +125,7 @@ class EvaluateController extends AbstractController {
 		if ( $count >= self::RATE_LIMIT ) {
 			return new WP_Error(
 				'myrk_rate_limit_exceeded',
-				__( 'Rate limit exceeded. Maximum 60 requests per minute.', 'myrk' ),
+				__( 'Rate limit exceeded. Maximum 60 requests per minute.', 'myrk-feature-flags' ),
 				[ 'status' => 429 ]
 			);
 		}

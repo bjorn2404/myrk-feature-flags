@@ -81,7 +81,7 @@ class EnvsController extends AbstractController {
 		if ( $from === $to ) {
 			return new WP_Error(
 				'myrk_same_environment',
-				__( '"from" and "to" environments must differ.', 'myrk' ),
+				__( '"from" and "to" environments must differ.', 'myrk-feature-flags' ),
 				[ 'status' => 422 ]
 			);
 		}

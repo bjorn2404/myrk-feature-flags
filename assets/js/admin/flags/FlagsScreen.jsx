@@ -57,7 +57,7 @@ export function FlagsScreen() {
 				setNotice( {
 					type: 'error',
 					message:
-						err?.message ?? __( 'Failed to load flags.', 'myrk' ),
+						err?.message ?? __( 'Failed to load flags.', 'myrk-feature-flags' ),
 				} );
 				setLoading( false );
 			} );
@@ -107,7 +107,7 @@ export function FlagsScreen() {
 		() => [
 			{
 				id: 'flag_key',
-				label: __( 'Flag Key', 'myrk' ),
+				label: __( 'Flag Key', 'myrk-feature-flags' ),
 				enableSorting: true,
 				getValue: ( { item } ) => item.flag_key,
 				render: ( { item } ) => (
@@ -116,13 +116,13 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'label',
-				label: __( 'Label', 'myrk' ),
+				label: __( 'Label', 'myrk-feature-flags' ),
 				enableSorting: true,
 				getValue: ( { item } ) => item.label,
 			},
 			{
 				id: 'group',
-				label: __( 'Group', 'myrk' ),
+				label: __( 'Group', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.group_name ?? '',
 				render: ( { item } ) =>
 					item.group_name ? (
@@ -135,7 +135,7 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'tags',
-				label: __( 'Tags', 'myrk' ),
+				label: __( 'Tags', 'myrk-feature-flags' ),
 				getValue: ( { item } ) =>
 					item.tags
 						? item.tags
@@ -173,14 +173,14 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'status',
-				label: __( 'Status', 'myrk' ),
+				label: __( 'Status', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.environment?.status ?? 'unknown',
 				render: ( { item } ) => {
 					const status = item.environment?.status;
 					if ( ! status ) {
 						return (
 							<span className="myrk-badge myrk-badge--unknown">
-								{ __( 'No state', 'myrk' ) }
+								{ __( 'No state', 'myrk-feature-flags' ) }
 							</span>
 						);
 					}
@@ -189,22 +189,22 @@ export function FlagsScreen() {
 							className={ `myrk-badge myrk-badge--${ status }` }
 						>
 							{ status === 'enabled'
-								? __( 'Enabled', 'myrk' )
-								: __( 'Disabled', 'myrk' ) }
+								? __( 'Enabled', 'myrk-feature-flags' )
+								: __( 'Disabled', 'myrk-feature-flags' ) }
 						</span>
 					);
 				},
 				filterBy: {
 					operators: [ 'is' ],
 					elements: [
-						{ value: 'enabled', label: __( 'Enabled', 'myrk' ) },
-						{ value: 'disabled', label: __( 'Disabled', 'myrk' ) },
+						{ value: 'enabled', label: __( 'Enabled', 'myrk-feature-flags' ) },
+						{ value: 'disabled', label: __( 'Disabled', 'myrk-feature-flags' ) },
 					],
 				},
 			},
 			{
 				id: 'percentage',
-				label: __( 'Rollout', 'myrk' ),
+				label: __( 'Rollout', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.environment?.percentage ?? 0,
 				render: ( { item } ) => {
 					const pct = item.environment?.percentage ?? 0;
@@ -230,7 +230,7 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'targets',
-				label: __( 'Targets', 'myrk' ),
+				label: __( 'Targets', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => ( item.targets ?? [] ).length,
 				render: ( { item } ) => {
 					const count = ( item.targets ?? [] ).length;
@@ -243,7 +243,7 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'last_changed',
-				label: __( 'Last Changed', 'myrk' ),
+				label: __( 'Last Changed', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => item.environment?.updated_at ?? '',
 				render: ( { item } ) => {
 					const ts = item.environment?.updated_at;
@@ -258,24 +258,24 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'stale_badge',
-				label: __( 'Stale', 'myrk' ),
+				label: __( 'Stale', 'myrk-feature-flags' ),
 				getValue: ( { item } ) => ( item.is_stale ? 'stale' : '' ),
 				render: ( { item } ) =>
 					item.is_stale ? (
 						<span className="myrk-badge myrk-badge--stale">
-							{ __( 'Stale', 'myrk' ) }
+							{ __( 'Stale', 'myrk-feature-flags' ) }
 						</span>
 					) : null,
 			},
 			{
 				id: 'registered',
-				label: __( 'In Code', 'myrk' ),
+				label: __( 'In Code', 'myrk-feature-flags' ),
 				getValue: ( { item } ) =>
 					item.is_registered ? 'yes' : 'orphaned',
 				render: ( { item } ) =>
 					item.is_registered ? null : (
 						<span className="myrk-badge myrk-badge--orphaned">
-							{ __( 'Orphaned', 'myrk' ) }
+							{ __( 'Orphaned', 'myrk-feature-flags' ) }
 						</span>
 					),
 			},
@@ -291,7 +291,7 @@ export function FlagsScreen() {
 		() => [
 			{
 				id: 'enable',
-				label: __( 'Enable (100%)', 'myrk' ),
+				label: __( 'Enable (100%)', 'myrk-feature-flags' ),
 				isPrimary: true,
 				icon: check,
 				isEligible: ( item ) =>
@@ -311,14 +311,14 @@ export function FlagsScreen() {
 							type: 'error',
 							message:
 								err?.message ??
-								__( 'Failed to enable flag.', 'myrk' ),
+								__( 'Failed to enable flag.', 'myrk-feature-flags' ),
 						} );
 					}
 				},
 			},
 			{
 				id: 'disable',
-				label: __( 'Disable', 'myrk' ),
+				label: __( 'Disable', 'myrk-feature-flags' ),
 				isPrimary: true,
 				icon: closeSmall,
 				isEligible: ( item ) => item.environment?.status !== 'disabled',
@@ -336,14 +336,14 @@ export function FlagsScreen() {
 							type: 'error',
 							message:
 								err?.message ??
-								__( 'Failed to disable flag.', 'myrk' ),
+								__( 'Failed to disable flag.', 'myrk-feature-flags' ),
 						} );
 					}
 				},
 			},
 			{
 				id: 'edit',
-				label: __( 'Edit', 'myrk' ),
+				label: __( 'Edit', 'myrk-feature-flags' ),
 				icon: pencil,
 				callback: ( items ) => {
 					const item = items[ 0 ];
@@ -352,7 +352,7 @@ export function FlagsScreen() {
 			},
 			{
 				id: 'delete',
-				label: __( 'Delete', 'myrk' ),
+				label: __( 'Delete', 'myrk-feature-flags' ),
 				icon: trash,
 				isDestructive: true,
 				isEligible: ( item ) => ! item.is_registered,
@@ -382,7 +382,7 @@ export function FlagsScreen() {
 							type: 'success',
 							message: sprintf(
 								/* translators: %s: flag key */
-								__( '"%s" deleted.', 'myrk' ),
+								__( '"%s" deleted.', 'myrk-feature-flags' ),
 								item.flag_key
 							),
 						} );
@@ -392,7 +392,7 @@ export function FlagsScreen() {
 							type: 'error',
 							message:
 								err?.message ??
-								__( 'Failed to delete flag.', 'myrk' ),
+								__( 'Failed to delete flag.', 'myrk-feature-flags' ),
 						} );
 					}
 				},
@@ -419,7 +419,7 @@ export function FlagsScreen() {
 			return null;
 		}
 		const options = [
-			{ label: __( 'All groups', 'myrk' ), value: '' },
+			{ label: __( 'All groups', 'myrk-feature-flags' ), value: '' },
 			...groups.map( ( g ) => ( { label: g.name, value: g.name } ) ),
 		];
 		return (
@@ -449,7 +449,7 @@ export function FlagsScreen() {
 				<span className="myrk-brand-mark__wordmark">myrk</span>
 			</div>
 			<h1 className="wp-heading-inline">
-				{ __( 'Feature Flags', 'myrk' ) }
+				{ __( 'Feature Flags', 'myrk-feature-flags' ) }
 			</h1>
 			<hr className="wp-header-end" />
 			{ notice && (
@@ -494,7 +494,7 @@ function EmptyState() {
 		<div className="myrk-empty-state">
 			<span className="myrk-empty-state__rune">ᛗ</span>
 			<h2 className="myrk-empty-state__heading">
-				{ __( 'Flags are defined in code', 'myrk' ) }
+				{ __( 'Flags are defined in code', 'myrk-feature-flags' ) }
 			</h2>
 			<p className="myrk-empty-state__description">
 				{ __(
@@ -523,7 +523,7 @@ function EnvIndicator( { env: envName } ) {
 	return (
 		<div className="myrk-env-indicator">
 			<span className="myrk-env-indicator__label">
-				{ __( 'Environment', 'myrk' ) }
+				{ __( 'Environment', 'myrk-feature-flags' ) }
 			</span>
 			<span className="myrk-env-indicator__value">{ envName }</span>
 		</div>
@@ -547,7 +547,7 @@ function formatRelativeDate( isoString ) {
 	const diff = Math.floor( ( now - date ) / 1000 );
 
 	if ( diff < 60 ) {
-		return __( 'just now', 'myrk' );
+		return __( 'just now', 'myrk-feature-flags' );
 	}
 	if ( diff < 3600 ) {
 		return `${ Math.floor( diff / 60 ) }m ago`;

@@ -10,7 +10,7 @@
  * Author URI:        https://github.com/bjorn2404
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       myrk
+ * Text Domain:       myrk-feature-flags
  * Domain Path:       /languages
  *
  * @package Myrk

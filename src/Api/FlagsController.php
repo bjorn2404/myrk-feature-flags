@@ -276,7 +276,7 @@ class FlagsController extends AbstractController {
 			return new WP_Error(
 				'myrk_flag_exists',
 				/* translators: %s: flag key */
-				sprintf( __( 'Flag "%s" already exists.', 'myrk' ), $flag_key ),
+				sprintf( __( 'Flag "%s" already exists.', 'myrk-feature-flags' ), $flag_key ),
 				[ 'status' => 409 ]
 			);
 		}
@@ -297,7 +297,7 @@ class FlagsController extends AbstractController {
 		if ( null === $id ) {
 			return new WP_Error(
 				'myrk_create_failed',
-				__( 'Failed to create flag.', 'myrk' ),
+				__( 'Failed to create flag.', 'myrk-feature-flags' ),
 				[ 'status' => 500 ]
 			);
 		}
@@ -419,7 +419,7 @@ class FlagsController extends AbstractController {
 		if ( ! (bool) $request->get_param( 'confirm' ) ) {
 			return new WP_Error(
 				'myrk_confirm_required',
-				__( 'Pass confirm=true to permanently delete a flag and all its state.', 'myrk' ),
+				__( 'Pass confirm=true to permanently delete a flag and all its state.', 'myrk-feature-flags' ),
 				[ 'status' => 400 ]
 			);
 		}
@@ -431,7 +431,7 @@ class FlagsController extends AbstractController {
 		if ( ! FlagWriter::delete( $flag_key ) ) {
 			return new WP_Error(
 				'myrk_delete_failed',
-				__( 'Failed to delete flag.', 'myrk' ),
+				__( 'Failed to delete flag.', 'myrk-feature-flags' ),
 				[ 'status' => 500 ]
 			);
 		}
@@ -502,7 +502,7 @@ class FlagsController extends AbstractController {
 		if ( ! preg_match( '/^[a-z][a-z0-9_]*$/', (string) $value ) ) {
 			return new WP_Error(
 				'myrk_invalid_flag_key',
-				__( 'Flag key must start with a lowercase letter and contain only lowercase letters, digits, and underscores.', 'myrk' ),
+				__( 'Flag key must start with a lowercase letter and contain only lowercase letters, digits, and underscores.', 'myrk-feature-flags' ),
 				[ 'status' => 422 ]
 			);
 		}

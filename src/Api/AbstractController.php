@@ -43,7 +43,7 @@ abstract class AbstractController extends WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new WP_Error(
 				'myrk_forbidden',
-				__( 'You do not have permission to manage feature flags.', 'myrk' ),
+				__( 'You do not have permission to manage feature flags.', 'myrk-feature-flags' ),
 				[ 'status' => 403 ]
 			);
 		}
@@ -82,7 +82,7 @@ abstract class AbstractController extends WP_REST_Controller {
 		return new WP_Error(
 			'myrk_flag_not_found',
 			/* translators: %s: flag key */
-			sprintf( __( 'Flag "%s" not found.', 'myrk' ), $flag_key ),
+			sprintf( __( 'Flag "%s" not found.', 'myrk-feature-flags' ), $flag_key ),
 			[ 'status' => 404 ]
 		);
 	}
@@ -97,7 +97,7 @@ abstract class AbstractController extends WP_REST_Controller {
 		return new WP_Error(
 			'myrk_invalid_environment',
 			/* translators: %s: environment name */
-			sprintf( __( 'Invalid environment "%s". Must be one of: production, staging, development, local.', 'myrk' ), $env ),
+			sprintf( __( 'Invalid environment "%s". Must be one of: production, staging, development, local.', 'myrk-feature-flags' ), $env ),
 			[ 'status' => 422 ]
 		);
 	}

@@ -151,7 +151,7 @@ class EnvironmentsController extends AbstractController {
 		if ( empty( $changes ) ) {
 			return new WP_Error(
 				'myrk_no_changes',
-				__( 'No valid fields provided to update.', 'myrk' ),
+				__( 'No valid fields provided to update.', 'myrk-feature-flags' ),
 				[ 'status' => 422 ]
 			);
 		}
