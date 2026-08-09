@@ -5,9 +5,9 @@ declare( strict_types=1 );
 namespace Myrk\Pro;
 
 // Override the free-tier fallback. This file must be included before the
-// `if ( ! function_exists( 'myrk_is_licensed' ) )` guard in myrk.php.
+// `if ( ! function_exists( 'myrk_is_licensed' ) )` guard in myrk-feature-flags.php.
 // In the pro distribution, composer.json adds pro/ to autoload files or
-// myrk.php explicitly requires this file before the guard.
+// myrk-feature-flags.php explicitly requires this file before the guard.
 if ( ! function_exists( 'myrk_is_licensed' ) ) {
 	function myrk_is_licensed(): bool {
 		return License::is_valid();

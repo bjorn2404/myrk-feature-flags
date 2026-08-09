@@ -64,7 +64,7 @@ class UninstallTest extends WP_UnitTestCase {
 	 */
 	private function run_uninstall(): void {
 		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-			define( 'WP_UNINSTALL_PLUGIN', 'myrk/myrk.php' );
+			define( 'WP_UNINSTALL_PLUGIN', 'myrk/myrk-feature-flags.php' );
 		}
 
 		ob_start();
