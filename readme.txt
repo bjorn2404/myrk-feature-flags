@@ -36,9 +36,13 @@ Myrk works differently: your codebase is the source of truth. Flags are declared
 * **WP-CLI** — complete feature flag management from the command line
 * **No external dependencies** — no Redis, no Node, no third-party service
 
+== Source Code ==
+
+The compiled JavaScript in `build/` is generated from source files in `assets/js/` using `@wordpress/scripts` (webpack). Both the source and compiled files are included in the plugin zip. To rebuild the compiled assets, install Node.js dependencies with `pnpm install` and run `pnpm build`.
+
 == Installation ==
 
-1. Upload the `myrk` directory to `/wp-content/plugins/`.
+1. Upload the `myrk-feature-flags` directory to `/wp-content/plugins/`.
 2. Activate the plugin in **Plugins > Installed Plugins**.
 3. Navigate to **Myrk** in the admin menu.
 4. Register your first flag in code: `Myrk::register( 'my_flag', [ 'label' => 'My Flag' ] );`
