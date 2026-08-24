@@ -14,6 +14,7 @@
  * Domain Path:       /languages
  *
  * @package Myrk
+ * @author  Bjorn Holine <bjorn@myrk.build>
  */
 
 declare( strict_types=1 );
