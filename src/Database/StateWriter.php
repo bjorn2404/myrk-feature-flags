@@ -2,7 +2,11 @@
 /**
  * Writes environment state changes and state log entries to the database.
  *
- * @package Myrk
+ * @package   Myrk
+ * @author    Bjorn Holine <bjorn@myrk.build>
+ * @license   GPL-2.0-or-later
+ * @link      https://myrk.build/
+ * @copyright 2026 Bjorn Holine
  */
 
 declare( strict_types=1 );

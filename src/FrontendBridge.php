@@ -2,7 +2,11 @@
 /**
  * Injects evaluated flag states into the page for JS consumption.
  *
- * @package Myrk
+ * @package   Myrk
+ * @author    Bjorn Holine <bjorn@myrk.build>
+ * @license   GPL-2.0-or-later
+ * @link      https://myrk.build/
+ * @copyright 2026 Bjorn Holine
  */
 
 declare( strict_types=1 );
