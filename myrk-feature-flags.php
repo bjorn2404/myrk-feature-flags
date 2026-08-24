@@ -13,8 +13,13 @@
  * Text Domain:       myrk-feature-flags
  * Domain Path:       /languages
  *
- * @package Myrk
- * @author  Bjorn Holine <bjorn@myrk.build>
+ * @package   Myrk
+ * @author    Bjorn Holine <bjorn@myrk.build>
+ * @license   GPL-2.0-or-later
+ * @link      https://myrk.build/
+ * @copyright 2026 Bjorn Holine
+ *
+ * @wordpress-plugin
  */
 
 declare( strict_types=1 );
