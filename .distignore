@@ -4,6 +4,7 @@
 .github
 .distignore
 wp-org-assets
+design
 .claude
 node_modules
 vendor
