@@ -2,6 +2,7 @@
 .git
 .gitignore
 .github
+README.md
 .distignore
 wp-org-assets
 design
