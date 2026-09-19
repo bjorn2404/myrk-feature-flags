@@ -28,11 +28,19 @@ Myrk::register( 'new_checkout', [
 ] );
 ```
 
-Check the flag anywhere in your code:
+Check the flag in PHP:
 
 ```php
 if ( Myrk::is_enabled( 'new_checkout' ) ) {
     // show new experience
+}
+```
+
+Or in JavaScript — state is bootstrapped from PHP automatically, no extra request needed:
+
+```javascript
+if ( myrkIsEnabled( 'new_checkout' ) ) {
+    document.body.classList.add( 'checkout-v2' );
 }
 ```
 
