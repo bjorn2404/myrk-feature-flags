@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - readme.txt
+  workflow_dispatch:
 
 jobs:
   readme:
