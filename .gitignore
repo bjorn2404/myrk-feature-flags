@@ -24,6 +24,10 @@ vendor/
 # Internal docs
 myrk-brand.md
 myrk-spec.md
+myrk_updates_guide.md
+
+# Pro distribution (separate private repo)
+pro/
 
 # PHPUnit cache
 .phpunit.result.cache
