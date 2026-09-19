@@ -1,0 +1,28 @@
+name: Update WordPress.org Readme
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - readme.txt
+
+jobs:
+  readme:
+    name: Update readme
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SVN
+        run: sudo apt-get install -y subversion
+
+      - name: Push readme.txt to SVN trunk
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          svn checkout --depth immediates "https://plugins.svn.wordpress.org/myrk-feature-flags/trunk" svn-trunk
+          cp readme.txt svn-trunk/readme.txt
+          cd svn-trunk
+          svn commit --no-auth-cache --username "$SVN_USERNAME" --password "$SVN_PASSWORD" -m "Update readme.txt"
