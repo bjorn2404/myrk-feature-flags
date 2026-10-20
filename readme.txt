@@ -2,9 +2,9 @@
 Contributors: bjorn2404
 Tags: feature flags, feature toggles, progressive rollout, developer tools, a/b testing
 Requires at least: 7.0
-Tested up to: 7.1
+Tested up to: 7.1.3
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ Yes. The percentage rollout uses deterministic hashing so the same user always s
 * [Releases & Changelog](https://github.com/bjorn2404/myrk-feature-flags/releases)
 
 == Changelog ==
+
+= 1.0.1 =
+* Confirmed compatibility with WordPress 7.1.3.
+* Updated development dependencies.
 
 = 1.0.0 =
 * Initial release.

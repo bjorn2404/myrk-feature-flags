@@ -55,8 +55,22 @@ class EditScreen {
 		// Hide from nav via CSS — we cannot call remove_submenu_page() because
 		// that removes the entry from $submenu, which breaks get_plugin_page_hookname()
 		// and causes WordPress's access check to return false (access denied).
+		// Attached to core's always-enqueued 'admin-menu' handle so it applies on
+		// every admin screen, not just this one (enqueue_scripts() below is scoped
+		// to this screen only and would otherwise leave the item visible everywhere else).
+		add_action( 'admin_enqueue_scripts', [ $this, 'hide_from_nav' ] );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
+
+	/**
+	 * Hide the "Edit Flag" submenu item from the admin nav on every screen.
+	 */
+	public function hide_from_nav(): void {
+		wp_add_inline_style(
+			'admin-menu',
+			'#adminmenu .wp-submenu li:has(> a[href*="' . esc_attr( self::PAGE_SLUG ) . '"]) { display: none !important; }'
+		);
 	}
 
 	/**
@@ -100,11 +114,6 @@ class EditScreen {
 			MYRK_URL . 'assets/css/admin.css',
 			[],
 			MYRK_VERSION
-		);
-
-		wp_add_inline_style(
-			'myrk-admin',
-			'#adminmenu .wp-submenu li:has(> a[href*="' . esc_attr( self::PAGE_SLUG ) . '"]) { display: none !important; }'
 		);
 
 		// Tell React to render the edit form, and which flag to load (empty = create).

@@ -64,6 +64,15 @@ Flags registered in code appear in the WordPress admin automatically. Enable, di
 - WordPress 7.0+
 - PHP 8.1+
 
+## Changelog
+
+**1.0.1**
+- Confirmed compatibility with WordPress 7.1.3.
+- Updated development dependencies.
+
+**1.0.0**
+- Initial release.
+
 ## Contributing
 
 Bug reports and pull requests are welcome. Please review the [open issues](https://github.com/bjorn2404/myrk-feature-flags/issues) before submitting a new one.
